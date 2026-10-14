@@ -1,0 +1,87 @@
+[
+  {
+    "file": "reports/benchmark/linux_cloud_2vcpu_v1_baseline.json",
+    "sha256_trong_goi": "54d7251958b667524f0a9216b7683a84974c85c718c89c3c98e9bf2c91d46824",
+    "sha256_tren_repo": "221aed89da7ac15b68291d298a7bc1b371be8781947ebeac924b6785854b4f29"
+  },
+  {
+    "file": "reports/benchmark/linux_cloud_2vcpu_v2.json",
+    "sha256_trong_goi": "b0b5fe6da68f142126f410f6e57f96b6ae45a9e14eb3118c309990b4741151d0",
+    "sha256_tren_repo": "2ec891775b8dac4ab21b86439a2a6b378b8d79c94a5699a33e45321de03dd3e8"
+  },
+  {
+    "file": "reports/evidence/linux_selftest_final/selftest.json",
+    "sha256_trong_goi": "667db3283ec67f018fc61f4d7c61f6c372c2aafcc47a85d5b73f8fd3ffefe13d",
+    "sha256_tren_repo": "9f318892d0116dae8b9c2f9360107a029b4dc1ae2c47658802c300d2cf9f35ad"
+  },
+  {
+    "file": "reports/evidence/linux_selftest_final/selftest.txt",
+    "sha256_trong_goi": "9534097709d3519bef4fd33dd6ba66eab0634e57368872573950448d1d960fad",
+    "sha256_tren_repo": "96defd50851448d08dfa7d3f50d7a3f6ef5128ae27ed2660b041e0af4fc3ebc1"
+  },
+  {
+    "file": "reports/research/ctrl_dev_catnet.json",
+    "sha256_trong_goi": "9b1db1ba298710d210339ca7b65ff52dc4825b01bb4e7cc28f9c7b091b0c9613",
+    "sha256_tren_repo": "e55b91e56af2c1e7529405fc5f08bdb8031b8d6ff7ea20ad9144b1bd84c0285c"
+  },
+  {
+    "file": "reports/research/ctrl_dev_mesorch.json",
+    "sha256_trong_goi": "c8838a83d4d45df3c9521d77258e248a722ca345437e03085e6c3ac69f805feb",
+    "sha256_tren_repo": "eb445c953723d7681c59897415f855b2d2f742e9590e4fc207a9add4ad27b5e0"
+  },
+  {
+    "file": "reports/research/dff_dev_yermandy.json",
+    "sha256_trong_goi": "9030643561297aefb9bfdf0c1edd4e09e660b23e557ae47af82e4949003db5fd",
+    "sha256_tren_repo": "a89d20e6f1dbd638546faa5b56418e741e4a942e9afff1c4040f961df6526be1"
+  },
+  {
+    "file": "reports/research/korus_dev_mesorch_max.json",
+    "sha256_trong_goi": "2193f22b03a80d57a7954de3afd6ec0de25ec013bdfd3626f213aaee602b92f5",
+    "sha256_tren_repo": "c64a7b44356506848498f68650dffa645b9e1d2841b6c444ee7fdb27e233ca78"
+  },
+  {
+    "file": "reports/research/korus_dev_pscc_r256.json",
+    "sha256_trong_goi": "d42ef4685b83d5b8cd2cf34bfa91d9ebeb6218e90538a9765aac123533af23d5",
+    "sha256_tren_repo": "d4fff6e94859fe7a38664261efd4b6bd08bf332d42d7e21365c10a3dc33734ed"
+  },
+  {
+    "file": "reports/research/openfake_dev_commfor.json",
+    "sha256_trong_goi": "3cb4a17a7c42e0c27aa1a55e82d03c959778b1b8f30ad17b82def3933e5336e7",
+    "sha256_tren_repo": "fb5b96f46a30cda34b369b87eafcd97c1253d378d5e424299a646c3256d697a2"
+  },
+  {
+    "file": "reports/test/before_after_compare.json",
+    "sha256_trong_goi": "18e5aa25c59da1ad0e58c3ec413de2c1c29d21227fa42da68da089aee844c815",
+    "sha256_tren_repo": "dd42375692636d8c9318dc31db9ca340be8ec1c478085a764898e90d09bf3d81"
+  },
+  {
+    "file": "reports/test/failure_analysis.json",
+    "sha256_trong_goi": "b9ade86be7f5a99f30123158ee6c076a70b56ccdc0a48756b5240b4f3b0ccb62",
+    "sha256_tren_repo": "62a4751e848f301c4aaf733aa498fef77ef4c5a743ea74f24b607359836e0799"
+  },
+  {
+    "file": "reports/test/metrics_test_v1_baseline.json",
+    "sha256_trong_goi": "2e570a6cb6d9626a2e6d33be428638c0d36cfe7443b8cd4262898806db6584ee",
+    "sha256_tren_repo": "0ca071e4cd618521381bcdb31018a3222803d784b3aaa549df625a08f81f0f74"
+  },
+  {
+    "file": "reports/test/metrics_test_v2_standard.json",
+    "sha256_trong_goi": "b74ab8c662c24d283732f6f6e9b77b6974d1576b396cb9fe0e6f81878ff7a7da",
+    "sha256_tren_repo": "c614925f0dd0ff94fb630264235a6363093c0304e8952aa62ab66d95cc309549"
+  },
+  {
+    "file": "reports/test/metrics_test_v2_strict.json",
+    "sha256_trong_goi": "397a5f80fb4ca291b77f72954f99be86961f53b9eaca86350500431b10410805",
+    "sha256_tren_repo": "302165f7a17c7893dce6803bd36d9df31fad077fa56135062ca325c664b3716e"
+  },
+  {
+    "file": "reports/test/recheck_final_code.json",
+    "sha256_trong_goi": "9f46aa0f408ba5d1fceebdbfae06f1212ecb35f6fbc2468d828152669c9ea268",
+    "sha256_tren_repo": "a5abe8c65853cf210086dbf442bb0f9f21f4981b591eb24edc8d0b57db4b9bc8"
+  },
+  {
+    "file": "reports/test/robustness_summary.json",
+    "sha256_trong_goi": "7143ff6110ae246424868151c8e0b1c6103a71e828fe7062992d69ed2baf3baa",
+    "sha256_tren_repo": "7fc90b2a323c70d47d1305af6999ee041f2afd6d42c974b1a9393520e9282be8"
+  }
+]

@@ -1,0 +1,14 @@
+# Không đưa lên git: có trong gói ZIP ở mục Releases
+/runtime/
+/models/*.onnx
+/weights_source/*.pth
+/outputs/
+/reports/selftest/
+*.zip
+*.zip.[0-9][0-9][0-9]
+*.bundle
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env

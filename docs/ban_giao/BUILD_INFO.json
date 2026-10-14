@@ -1,0 +1,273 @@
+{
+ "zip": "ImageForgeryDetection_v2.zip",
+ "bytes": 993685858,
+ "sha256": "08bd9cfbcd728592e785654a200bfebcb33397dc7b8dfd30f482be55f1ab71b4",
+ "files": 1380,
+ "volumes": [
+  {
+   "file": "ImageForgeryDetection_v2.zip.001",
+   "bytes": 18874368,
+   "sha256": "7e24cee2188ebf6c6f2a4191a7bdd8f3f7ceb8a9848cdbdb41bd72d7f4d2f015"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.002",
+   "bytes": 18874368,
+   "sha256": "a77f6b9583fe8b725fb66fd9c42471ff79812f6e5d47f62a080936d01ad9b027"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.003",
+   "bytes": 18874368,
+   "sha256": "42ac72f51c36e16efca3882409b577852e4604809791ed114481620f5b485229"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.004",
+   "bytes": 18874368,
+   "sha256": "ac241013772bc447d8186c092aa7feaa1173835303f5d516529212a8fc11cf08"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.005",
+   "bytes": 18874368,
+   "sha256": "4df68c8593ce762b99389adc22dfdabc3201d53c3bbedb1f420cf229a8188564"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.006",
+   "bytes": 18874368,
+   "sha256": "a90edabf5f15fce3cb918e5904556592f2b6a95bbd9d2f2dd2bdb9cfa417babf"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.007",
+   "bytes": 18874368,
+   "sha256": "f454f4f089a1f656e6cef4c50ab5da566acc9aff99860a4bf22f592a743d7a2d"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.008",
+   "bytes": 18874368,
+   "sha256": "db7ea105bc94e70db833959ce78e3ddfe2ccf28527d22fd22ffc71625c6aa425"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.009",
+   "bytes": 18874368,
+   "sha256": "78d714107693575cd0b56760c3e8f33e8842d564e6b707f8e8450a44491f9fb5"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.010",
+   "bytes": 18874368,
+   "sha256": "0483f00332f25fc16f9f8fca98fc6953138d12ad9db98c8def68d26177a5dced"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.011",
+   "bytes": 18874368,
+   "sha256": "4662b4d4ba38cfd6ab77c4741afbd0a36ea1e7d75b11496d7019970a083171de"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.012",
+   "bytes": 18874368,
+   "sha256": "a14bdabed3e992695160dde518c824374a101f46575cba8e2b43c1e806633bb0"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.013",
+   "bytes": 18874368,
+   "sha256": "db1ffbde5a19521ee7e596c1fe850668b67ff40242c2de8d4bdd8de7403543d2"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.014",
+   "bytes": 18874368,
+   "sha256": "bc07c18c0fb6e5c3756f28385543225b3aede9f1bdcfa04c255fd56b48ae27da"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.015",
+   "bytes": 18874368,
+   "sha256": "aca80f233534de5c58fcb7b3e5e4ec559a3dd9f404a1e14b7729f0292d4fc840"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.016",
+   "bytes": 18874368,
+   "sha256": "27931d06398327b0917fa827314ed4ca907c53eecbc85dd8d032473bd96bb8cb"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.017",
+   "bytes": 18874368,
+   "sha256": "47f711e42549cb4b447f05d498c5ac2d5c3c10fa31c809ed6799be76e76e5d39"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.018",
+   "bytes": 18874368,
+   "sha256": "f908241b507de7fb4db9600d50df850b45d998117b1d46cbf2606d8b5d8ed51a"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.019",
+   "bytes": 18874368,
+   "sha256": "cb4d8510eb1eabf9ce60bc2cb0e133025df576bdf0fba9134bf3c61bd3487d93"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.020",
+   "bytes": 18874368,
+   "sha256": "b8268d68d60caba5dce7af3d83ea8c36d7b910f969ac6060fb0c28241eae2463"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.021",
+   "bytes": 18874368,
+   "sha256": "2b35fc23ab3203c28cefc88931c8c24340fbf1a1b53a575b28598d2f360624af"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.022",
+   "bytes": 18874368,
+   "sha256": "d80ee2ce26dbbc6fdce07e8b727bb4b3c869a80c21750e408b089be39c4dd32f"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.023",
+   "bytes": 18874368,
+   "sha256": "d8a7c847c35bb065564a0e49a7e744dece9bade83310de818f4294f8cfe79a63"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.024",
+   "bytes": 18874368,
+   "sha256": "6f6abba1125551689416da8e5a5a7a1e0d2a4c93b22029438cc9d758b3394533"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.025",
+   "bytes": 18874368,
+   "sha256": "1141fc741c879cb57b27897994da39d6f1676001330dbc47e76e182e51e2b2f0"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.026",
+   "bytes": 18874368,
+   "sha256": "99fa3345c7d048a7335c40326677d5255d929bdfd480839480be35d6ca35d3d7"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.027",
+   "bytes": 18874368,
+   "sha256": "62bf7efe2e2fdac40f5d52848b308453c19b8b67d7768cf3b041e78a4a4301c4"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.028",
+   "bytes": 18874368,
+   "sha256": "21b8e2599d29f341d9a0504e7847adf3b2c967ff8b680a73f7c70148d6457303"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.029",
+   "bytes": 18874368,
+   "sha256": "dd86b65dcaf11d3d52478198583e733475ecec2530c307e4e0fe9ae87bb156e9"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.030",
+   "bytes": 18874368,
+   "sha256": "7601efb33ccdb1cfd23484b65a265c62fbdd76be7f0c2332576a80ed6c3694a2"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.031",
+   "bytes": 18874368,
+   "sha256": "23b7ee2a83dfef94ce779169d565bca64df0638c38687d6361eb182708bf06fd"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.032",
+   "bytes": 18874368,
+   "sha256": "32bbfa2fb304f758ece808f5bd932f47b3d1abd1e3db41e9c812125a71a9a028"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.033",
+   "bytes": 18874368,
+   "sha256": "cbeb6ea01004a3e674e3d1de8a3fdd72528e402a636fe58ccb08618b7fcaf29d"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.034",
+   "bytes": 18874368,
+   "sha256": "feddcf55026cea184a936980241dd307fc039a2450a8ff2ee09c4d357db8cf7d"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.035",
+   "bytes": 18874368,
+   "sha256": "a96def40227ceacfb24c64e6c190ecd49f7332d71858205606b23f00e680183b"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.036",
+   "bytes": 18874368,
+   "sha256": "11c873a1c04d354026be32e9dd8cbe72e54ac78058190cbad2528452f52dc5cf"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.037",
+   "bytes": 18874368,
+   "sha256": "f46b8dbc2b4a277af0ff32b55b6a32fef27b5ed71162ba28b28f22bab9bf9cac"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.038",
+   "bytes": 18874368,
+   "sha256": "bee1e5ece1bca2b4196300e062253e6517e41cccd13696dd2fb2a1dd3f3d9e50"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.039",
+   "bytes": 18874368,
+   "sha256": "b819ab45c0bbe996a795c07744d4d7b83cde499ce13c4cbac11255d4c7218adc"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.040",
+   "bytes": 18874368,
+   "sha256": "baef8333a14830b703183ed5f6e4edc5b20dc41fe0b951c2611ccdc8c39cc328"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.041",
+   "bytes": 18874368,
+   "sha256": "9dc734fa1180dc240344a9c21363cf5e3665e8f1184544b52caf9cc0e1f65b41"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.042",
+   "bytes": 18874368,
+   "sha256": "9153e42343f6df823d4c215161976e5eec715af8966ca662aae3bc29e6c67850"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.043",
+   "bytes": 18874368,
+   "sha256": "d8a96046ffbcb1e9482d6a76878e81bfbcac426fb5ed291c17f2c82cc1dc6708"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.044",
+   "bytes": 18874368,
+   "sha256": "faba539c1f75916dbd06f3204a552bae5c9efcd04e318f6c65dccbfd0c4e1808"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.045",
+   "bytes": 18874368,
+   "sha256": "2222693c04c9d901dbe7fa162085708703a767a971f80895f394d3e5b35f78d6"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.046",
+   "bytes": 18874368,
+   "sha256": "d3df8440ed4dcd209e7b88a24e163ef4fcf51c58792e95abd2ea900326bed200"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.047",
+   "bytes": 18874368,
+   "sha256": "75aacbe38408189ce0585c792f0473ca43cc7befc13e7c1e26e882d8a124092f"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.048",
+   "bytes": 18874368,
+   "sha256": "011e4b7eddeb4642240f4034ce524f475ce403e8d81a8a833f9b2df05dbd35c6"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.049",
+   "bytes": 18874368,
+   "sha256": "dfb6bd8cb2236c72310f99b7e7d226dd4af18f7dec9a862519b1c40c9f1f1f04"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.050",
+   "bytes": 18874368,
+   "sha256": "537a932c218f047712aea5c027b9debec15fd7b4261cb2334d5b75d66b8a82e9"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.051",
+   "bytes": 18874368,
+   "sha256": "0f984770c3091d514aad7f52503ec7189d86ccd7fd5880b49c0b795de47cbba7"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.052",
+   "bytes": 18874368,
+   "sha256": "e1caa20ca5612377aeecac7cd4e918fff8cc7052a829fc8054beffd8f274d880"
+  },
+  {
+   "file": "ImageForgeryDetection_v2.zip.053",
+   "bytes": 12218722,
+   "sha256": "afe9374dc4726d38bfb4e0e5f1a84c19d51a7228c9d71e1f5d68fe11258985f4"
+  }
+ ]
+}
