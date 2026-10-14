@@ -1,0 +1,67 @@
+{
+ "schema_version": 2,
+ "limits": {
+  "max_file_mb": 25,
+  "max_pixels": 40000000,
+  "min_side": 16
+ },
+ "runtime": {
+  "threads": 0
+ },
+ "display": {
+  "overlay_alpha": 0.55
+ },
+ "detectors": {
+  "mesorch": {
+   "enabled": true,
+   "type": "mesorch_onnx",
+   "model": "../../models/mesorch.onnx",
+   "image_score": "max",
+   "thresholds": {
+    "low": 0.997501,
+    "high": 0.999892,
+    "pixel": 0.5,
+    "status": "Ngưỡng nghiêm (tùy chọn): chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤1 %, low: FPR≤5 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   }
+  },
+  "commfor_aigen": {
+   "enabled": true,
+   "type": "commfor_onnx",
+   "model": "../../models/commfor_vits16_384.onnx",
+   "thresholds": {
+    "low": 0.069494,
+    "high": 0.678799,
+    "status": "Ngưỡng nghiêm (tùy chọn): chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤1 %, low: FPR≤5 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   }
+  },
+  "face_clip": {
+   "enabled": true,
+   "type": "face_clip_onnx",
+   "model": "../../models/face_clip_vitl14.onnx",
+   "face_model": "../../models/face_detection_yunet_2023mar.onnx",
+   "max_faces": 3,
+   "face_score_threshold": 0.7,
+   "thresholds": {
+    "low": 0.478866,
+    "high": 0.748443,
+    "status": "Ngưỡng nghiêm (tùy chọn): chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤1 %, low: FPR≤5 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   }
+  },
+  "pscc_net": {
+   "enabled": false,
+   "type": "pscc_onnx",
+   "model": "../../models/pscc_net.onnx",
+   "policy": {
+    "mode": "bounded_native",
+    "max_side": 512,
+    "resample": "bilinear"
+   },
+   "thresholds": {
+    "low": 0.35,
+    "high": 0.65,
+    "pixel": 0.5,
+    "status": "v1 BASELINE (PSCC-Net, preprocessing and thresholds of v1) - kept only for before/after comparison; weak on independent data"
+   }
+  }
+ }
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiểm tra ảnh chỉnh sửa</title>
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Kiểm tra ảnh: chỉnh sửa cục bộ · ảnh sinh AI · deepfake khuôn mặt</h1>
+    <p class="sub">Chạy trên CPU tại máy này · ảnh không gửi ra Internet · <span id="version"></span></p>
+  </div>
+</header>
+<main class="wrap">
+  <div id="fatal" class="banner error" hidden></div>
+  <section class="card" id="scope">
+    <h2>Phạm vi kiểm tra</h2>
+    <div id="scope-body" class="muted">Đang nạp mô hình…</div>
+  </section>
+
+  <section class="card">
+    <h2>1. Chọn ảnh</h2>
+    <label id="drop" class="drop" for="file">
+      <input id="file" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
+      <span class="drop-main">Kéo thả ảnh vào đây hoặc bấm để chọn</span>
+      <span class="drop-hint">JPEG hoặc PNG · tối đa <span id="maxmb">25</span> MiB</span>
+    </label>
+    <div id="picked" class="picked" hidden>
+      <img id="pick-thumb" alt="Ảnh đã chọn">
+      <div>
+        <div id="pick-name" class="strong"></div>
+        <div id="pick-size" class="muted"></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="analyze" class="primary" disabled>Phân tích ảnh</button>
+      <span id="busy" class="busy" hidden><span class="spinner"></span> Đang phân tích trên CPU…</span>
+    </div>
+    <div id="req-error" class="banner error" hidden></div>
+  </section>
+
+  <section class="card" id="result" hidden>
+    <h2>2. Kết quả <span id="res-name" class="muted"></span></h2>
+    <div id="verdict" class="verdict">
+      <div id="verdict-title" class="verdict-title"></div>
+      <div id="verdict-scope" class="verdict-scope"></div>
+      <div class="verdict-note">Điểm là điểm thô của mô hình, <b>không phải xác suất</b> và không phải phần trăm ảnh bị sửa. Kết luận lấy mức cao nhất giữa các bài kiểm tra; chỉ để hỗ trợ người kiểm tra, không thay thế thẩm định.</div>
+    </div>
+    <div id="detectors" class="detectors"></div>
+    <div id="warnings"></div>
+    <div class="viewer">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-view="overlay">Chồng lớp</button>
+        <button class="tab" data-view="heatmap">Bản đồ nhiệt</button>
+        <button class="tab" data-view="faces">Khuôn mặt</button>
+        <button class="tab" data-view="original">Ảnh gốc</button>
+      </div>
+      <figure>
+        <img id="view-img" alt="Kết quả phân tích">
+        <figcaption>
+          <div id="legend"><div class="legend"><span>0</span><span class="scale"></span><span>1</span></div>
+          <div class="muted small">Thang màu cố định 0→1 (xanh → vàng → đỏ) cho mọi ảnh, không chuẩn hóa theo từng ảnh. Màu đỏ = điểm nghi vấn từng pixel cao, chưa phải vùng sửa đã xác minh. Kết luận dựa trên điểm và ngưỡng ở thẻ phía trên, không dựa vào màu.</div></div>
+          <div id="faces-legend" class="muted small" hidden>Khung đỏ = nghi vấn, cam = cần kiểm tra thêm, xanh = chưa thấy dấu hiệu rõ. Số trên khung là điểm thô của khuôn mặt đó.</div>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="downloads">
+      <h3>Tải kết quả</h3>
+      <div id="dl-links" class="dl-links"></div>
+    </div>
+    <details class="advanced">
+      <summary>Chi tiết kỹ thuật (nâng cao)</summary>
+      <div id="tech"></div>
+      <pre id="raw-json"></pre>
+    </details>
+  </section>
+
+  <section class="card notes">
+    <h2>Cách đọc kết quả</h2>
+    <ul>
+      <li><b>Chưa thấy dấu hiệu rõ</b> không chứng minh ảnh là ảnh gốc: ảnh có thể đã mất dấu vết (nén, thu nhỏ) hoặc dùng kỹ thuật nằm ngoài phạm vi.</li>
+      <li><b>Cần kiểm tra thêm</b> nghĩa là tín hiệu nằm giữa hai ngưỡng — nên xem ảnh gốc, nguồn gửi, ảnh khác cùng sự kiện.</li>
+      <li><b>Nghi vấn</b> nghĩa là điểm vượt ngưỡng cao đã chọn trên dữ liệu phát triển; vẫn có báo nhầm, đặc biệt với ảnh chụp màn hình, đồ họa, ảnh nén mạnh.</li>
+      <li>Ngưỡng và độ chính xác được đo trên dữ liệu công khai/kiểm soát, <b>chưa kiểm chứng trên dữ liệu của công ty</b>.</li>
+    </ul>
+  </section>
+</main>
+<footer class="wrap muted small">Ảnh được gửi từ trình duyệt tới tiến trình chạy tại máy (127.0.0.1); kết quả chỉ lưu trong RAM của ứng dụng tới khi bạn tải xuống.</footer>
+</body>
+</html>

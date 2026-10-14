@@ -1,0 +1,45 @@
+{
+ "results": "<THU_MUC_THI_NGHIEM>/dff_dev_yermandy.jsonl",
+ "split": "dev",
+ "score_key": "score",
+ "missing_from_manifest": 0,
+ "errors_or_missing_score": 2,
+ "identical_pixel_duplicates_skipped": 0,
+ "none_scores_replaced": 10,
+ "none_as": 0.0,
+ "overall": {
+  "n": 598,
+  "n_pos": 300,
+  "n_neg": 298,
+  "auroc": 0.9366834451901566,
+  "ap": 0.9546256006816276,
+  "auroc_ci95": [
+   0.9145823688866062,
+   0.9563301439022915
+  ],
+  "tpr_at_fpr01": {
+   "threshold": 0.7439128756523133,
+   "tpr": 0.66,
+   "fpr": 0.006711409395973154
+  },
+  "tpr_at_fpr05": {
+   "threshold": 0.5016326904296876,
+   "tpr": 0.8033333333333333,
+   "fpr": 0.04697986577181208
+  },
+  "tpr_at_fpr10": {
+   "threshold": 0.3779997527599335,
+   "tpr": 0.8633333333333333,
+   "fpr": 0.09731543624161074
+  },
+  "tpr_at_fpr20": {
+   "threshold": 0.2755194306373597,
+   "tpr": 0.9266666666666666,
+   "fpr": 0.19798657718120805
+  }
+ },
+ "seconds_p50_p95": [
+  0.43184562450005615,
+  0.8984620834999076
+ ]
+}

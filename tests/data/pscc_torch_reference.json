@@ -1,0 +1,33 @@
+{
+ "generator": "baseline ifd.model.Detector (PyTorch 2.6.0+cpu, official checkpoints)",
+ "cases": [
+  {
+   "seed": 0,
+   "h": 256,
+   "w": 256,
+   "score": 0.45811572670936584,
+   "mask_mean": 0.25623106956481934
+  },
+  {
+   "seed": 1,
+   "h": 96,
+   "w": 160,
+   "score": 0.42146414518356323,
+   "mask_mean": 0.25929924845695496
+  },
+  {
+   "seed": 2,
+   "h": 200,
+   "w": 136,
+   "score": 0.43247300386428833,
+   "mask_mean": 0.2656191885471344
+  }
+ ],
+ "author_samples_native": {
+  "authentic1.png": 0.0014447234570980072,
+  "authentic3.png": 0.002751617692410946,
+  "splice1.png": 0.9997219443321228,
+  "copymove2.png": 1.0,
+  "removal1.png": 0.9997140765190125
+ }
+}

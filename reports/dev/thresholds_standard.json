@@ -1,0 +1,215 @@
+{
+ "rule": "high: FPR<=0.05 on every dev negative source; low: FPR<=0.2 on every source",
+ "dev_runs": [
+  "reports/dev/dev_v2_product_predictions.jsonl"
+ ],
+ "detectors": {
+  "commfor_aigen": {
+   "task": "ai_generated",
+   "high": 0.06949358130292473,
+   "low": 0.00232601125039719,
+   "errors": 2,
+   "neg_sources": {
+    "ctrl_mei": {
+     "n": 199,
+     "fpr_at_high": 0.005025125628140704,
+     "fpr_at_low": 0.09045226130653267,
+     "uncertain_band_fraction": 0.08542713567839195
+    },
+    "dff:wiki": {
+     "n": 298,
+     "fpr_at_high": 0.013422818791946308,
+     "fpr_at_low": 0.08389261744966443,
+     "uncertain_band_fraction": 0.07046979865771812
+    },
+    "korus": {
+     "n": 72,
+     "fpr_at_high": 0.041666666666666664,
+     "fpr_at_low": 0.125,
+     "uncertain_band_fraction": 0.08333333333333333
+    },
+    "openfake:real_docci": {
+     "n": 156,
+     "fpr_at_high": 0.01282051282051282,
+     "fpr_at_low": 0.1987179487179487,
+     "uncertain_band_fraction": 0.1858974358974359
+    },
+    "openfake:real_imagenet": {
+     "n": 299,
+     "fpr_at_high": 0.0,
+     "fpr_at_low": 0.020066889632107024,
+     "uncertain_band_fraction": 0.020066889632107024
+    }
+   },
+   "pos_sources": {
+    "dff:text2img": {
+     "n": 300,
+     "tpr_at_high": 1.0,
+     "tpr_at_low": 1.0,
+     "uncertain_band_fraction": 0.0
+    },
+    "openfake:fake": {
+     "n": 114,
+     "tpr_at_high": 0.6403508771929824,
+     "tpr_at_low": 0.8771929824561403,
+     "uncertain_band_fraction": 0.23684210526315788
+    }
+   },
+   "dev_auroc_pooled": 0.9892790421195652,
+   "dev_confusion_at_high": {
+    "threshold": 0.06949358130292473,
+    "tp": 373,
+    "tn": 1014,
+    "fp": 10,
+    "fn": 41,
+    "precision": 0.9738903394255874,
+    "recall": 0.9009661835748792,
+    "f1": 0.9360100376411543,
+    "fpr": 0.009765625,
+    "fnr": 0.09903381642512077,
+    "accuracy": 0.9645340751043116,
+    "balanced_accuracy": 0.9456002792874396
+   }
+  },
+  "face_clip": {
+   "task": "face_deepfake",
+   "high": 0.47886592303083547,
+   "low": 0.274282547125749,
+   "errors": 2,
+   "neg_sources": {
+    "ctrl_mei": {
+     "n": 199,
+     "fpr_at_high": 0.01507537688442211,
+     "fpr_at_low": 0.06532663316582915,
+     "uncertain_band_fraction": 0.05025125628140704
+    },
+    "dff:wiki": {
+     "n": 298,
+     "fpr_at_high": 0.04697986577181208,
+     "fpr_at_low": 0.19798657718120805,
+     "uncertain_band_fraction": 0.15100671140939598
+    },
+    "korus": {
+     "n": 72,
+     "fpr_at_high": 0.027777777777777776,
+     "fpr_at_low": 0.05555555555555555,
+     "uncertain_band_fraction": 0.027777777777777776
+    },
+    "openfake:real_docci": {
+     "n": 156,
+     "fpr_at_high": 0.0,
+     "fpr_at_low": 0.00641025641025641,
+     "uncertain_band_fraction": 0.00641025641025641
+    },
+    "openfake:real_imagenet": {
+     "n": 299,
+     "fpr_at_high": 0.0,
+     "fpr_at_low": 0.006688963210702341,
+     "uncertain_band_fraction": 0.006688963210702341
+    }
+   },
+   "pos_sources": {
+    "dff:inpainting": {
+     "n": 300,
+     "tpr_at_high": 0.6066666666666667,
+     "tpr_at_low": 0.8333333333333334,
+     "uncertain_band_fraction": 0.22666666666666666
+    },
+    "dff:insight": {
+     "n": 300,
+     "tpr_at_high": 0.82,
+     "tpr_at_low": 0.9233333333333333,
+     "uncertain_band_fraction": 0.10333333333333333
+    }
+   },
+   "dev_auroc_pooled": 0.96227294921875,
+   "dev_confusion_at_high": {
+    "threshold": 0.47886592303083547,
+    "tp": 428,
+    "tn": 1005,
+    "fp": 19,
+    "fn": 172,
+    "precision": 0.9574944071588367,
+    "recall": 0.7133333333333334,
+    "f1": 0.8175740210124164,
+    "fpr": 0.0185546875,
+    "fnr": 0.2866666666666667,
+    "accuracy": 0.8823891625615764,
+    "balanced_accuracy": 0.8473893229166667
+   }
+  },
+  "mesorch": {
+   "task": "local_manipulation",
+   "high": 0.9975011944770814,
+   "low": 0.9609117507934571,
+   "errors": 2,
+   "neg_sources": {
+    "ctrl_mei": {
+     "n": 199,
+     "fpr_at_high": 0.03015075376884422,
+     "fpr_at_low": 0.16080402010050251,
+     "uncertain_band_fraction": 0.1306532663316583
+    },
+    "dff:wiki": {
+     "n": 298,
+     "fpr_at_high": 0.04697986577181208,
+     "fpr_at_low": 0.17785234899328858,
+     "uncertain_band_fraction": 0.13087248322147652
+    },
+    "korus": {
+     "n": 72,
+     "fpr_at_high": 0.027777777777777776,
+     "fpr_at_low": 0.09722222222222222,
+     "uncertain_band_fraction": 0.06944444444444445
+    },
+    "openfake:real_docci": {
+     "n": 156,
+     "fpr_at_high": 0.03205128205128205,
+     "fpr_at_low": 0.19230769230769232,
+     "uncertain_band_fraction": 0.16025641025641027
+    },
+    "openfake:real_imagenet": {
+     "n": 299,
+     "fpr_at_high": 0.030100334448160536,
+     "fpr_at_low": 0.19732441471571907,
+     "uncertain_band_fraction": 0.16722408026755853
+    }
+   },
+   "pos_sources": {
+    "ctrl_mei": {
+     "n": 219,
+     "tpr_at_high": 0.8036529680365296,
+     "tpr_at_low": 0.8949771689497716,
+     "uncertain_band_fraction": 0.091324200913242
+    },
+    "dff:inpainting": {
+     "n": 300,
+     "tpr_at_high": 0.03666666666666667,
+     "tpr_at_low": 0.23666666666666666,
+     "uncertain_band_fraction": 0.2
+    },
+    "korus": {
+     "n": 72,
+     "tpr_at_high": 0.125,
+     "tpr_at_low": 0.25,
+     "uncertain_band_fraction": 0.125
+    }
+   },
+   "dev_auroc_pooled": 0.6986296729589678,
+   "dev_confusion_at_high": {
+    "threshold": 0.9975011944770814,
+    "tp": 196,
+    "tn": 988,
+    "fp": 36,
+    "fn": 395,
+    "precision": 0.8448275862068966,
+    "recall": 0.3316412859560068,
+    "f1": 0.47630619684082626,
+    "fpr": 0.03515625,
+    "fnr": 0.6683587140439933,
+    "accuracy": 0.7331269349845201,
+    "balanced_accuracy": 0.6482425179780034
+   }
+  }
+ }
+}

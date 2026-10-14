@@ -1,0 +1,46 @@
+{
+ "results": "<THU_MUC_THI_NGHIEM>/korus/dev_pscc_r256.jsonl",
+ "split": "dev_korus",
+ "score_key": "score",
+ "missing_from_manifest": 0,
+ "errors_or_missing_score": 0,
+ "identical_pixel_duplicates_skipped": 0,
+ "none_scores_replaced": 0,
+ "none_as": null,
+ "manifest_excluded_rows": 0,
+ "overall": {
+  "n": 144,
+  "n_pos": 72,
+  "n_neg": 72,
+  "auroc": 0.49382716049382713,
+  "ap": 0.49608737974751005,
+  "auroc_ci95": [
+   0.467578125,
+   0.5198688271604939
+  ],
+  "tpr_at_fpr01": {
+   "threshold": 0.9999795292988956,
+   "tpr": 0.0,
+   "fpr": 0.0
+  },
+  "tpr_at_fpr05": {
+   "threshold": 0.998496111430422,
+   "tpr": 0.041666666666666664,
+   "fpr": 0.041666666666666664
+  },
+  "tpr_at_fpr10": {
+   "threshold": 0.9970194094131284,
+   "tpr": 0.08333333333333333,
+   "fpr": 0.09722222222222222
+  },
+  "tpr_at_fpr20": {
+   "threshold": 0.9904683711942414,
+   "tpr": 0.19444444444444445,
+   "fpr": 0.19444444444444445
+  }
+ },
+ "seconds_p50_p95": [
+  1.742111467500763,
+  3.8882702779494136
+ ]
+}

@@ -1,0 +1,12 @@
+# Research/export tools only (NOT needed to run the app): ONNX export, PyTorch reference adapters, evaluation.
+torch==2.6.0
+torchvision==0.21.0
+timm==1.0.15
+onnx==1.23.2
+safetensors
+einops
+yacs
+pyyaml
+pyarrow
+jpeglib
+pytest==8.4.2

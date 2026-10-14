@@ -1,0 +1,974 @@
+[
+{
+"psnr128": 42.81060721207772,
+"corr": 0.9990606477156332,
+"a": "dff_wiki_03_10970703_1984-05-21_2011",
+"a_split": "test",
+"b": "dff_insight_92_34430392_1883-04-20_1948",
+"b_split": "dev",
+"dhash_hamming": 0
+},
+{
+"psnr128": 39.624100492617856,
+"corr": 0.9990954351372799,
+"a": "dff_wiki_66_10357666_1917-05-05_2008",
+"a_split": "dev",
+"b": "dff_insight_66_36051666_1930-04-13_2012",
+"b_split": "test",
+"dhash_hamming": 0
+},
+{
+"psnr128": 38.823909481961515,
+"corr": 0.9992495061398159,
+"a": "dff_insight_50_1526250_1962-08-31_2010",
+"a_split": "dev",
+"b": "dff_wiki_68_2069268_1954-01-28_1994",
+"b_split": "test",
+"dhash_hamming": 0
+},
+{
+"psnr128": 37.855655187859675,
+"corr": 0.9989350958806036,
+"a": "dff_insight_35_410835_1961-11-18_2008",
+"a_split": "dev",
+"b": "dff_wiki_56_3218656_1957-07-30_2006",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 32.816248331892034,
+"corr": 0.9967295532318502,
+"a": "dff_wiki_35_410835_1961-11-18_2008",
+"a_split": "dev",
+"b": "dff_insight_56_3218656_1957-07-30_2006",
+"b_split": "test",
+"dhash_hamming": 1
+},
+{
+"psnr128": 30.873460443330593,
+"corr": 0.992511458498087,
+"a": "dff_insight_03_10970703_1984-05-21_2011",
+"a_split": "test",
+"b": "dff_wiki_92_34430392_1883-04-20_1948",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 29.7166612243994,
+"corr": 0.9932368988029322,
+"a": "dff_insight_35_410835_1961-11-18_2008",
+"a_split": "dev",
+"b": "dff_inpainting_56_3218656_1957-07-30_2006",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 29.48255000403787,
+"corr": 0.9934606353152422,
+"a": "dff_insight_50_1526250_1962-08-31_2010",
+"a_split": "dev",
+"b": "dff_inpainting_68_2069268_1954-01-28_1994",
+"b_split": "test",
+"dhash_hamming": 0
+},
+{
+"psnr128": 27.59762011111683,
+"corr": 0.9890859450160112,
+"a": "dff_insight_66_10357666_1917-05-05_2008",
+"a_split": "dev",
+"b": "dff_wiki_66_36051666_1930-04-13_2012",
+"b_split": "test",
+"dhash_hamming": 1
+},
+{
+"psnr128": 27.183843521812108,
+"corr": 0.9832347708892009,
+"a": "dff_wiki_50_1526250_1962-08-31_2010",
+"a_split": "dev",
+"b": "dff_insight_68_2069268_1954-01-28_1994",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 25.416410851039263,
+"corr": 0.9823467609061022,
+"a": "dff_insight_56_3218656_1957-07-30_2006",
+"a_split": "test",
+"b": "dff_inpainting_35_410835_1961-11-18_2008",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 24.050391417180602,
+"corr": 0.9334246860970925,
+"a": "openfake_openfake-bf93cada95849a4203afb1e784f712e3",
+"a_split": "dev",
+"b": "openfake_openfake-ce65e352f27c6b35f3c8302dc64337f8",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 21.618337661758154,
+"corr": 0.9662125676569987,
+"a": "openfake_openfake-a7bab6b6d400b5a5b99602973c7be3ff",
+"a_split": "test",
+"b": "openfake_openfake-7f6e6586dc908f811dddb7b2f5e39f99",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 21.14257231427896,
+"corr": 0.3708047400668627,
+"a": "mei_ab12822f97b7_1_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 21.139176387094906,
+"corr": 0.3704517320441525,
+"a": "mei_ab12822f97b7_0_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 21.135095352980034,
+"corr": 0.3713781611445633,
+"a": "mei_ab12822f97b7_0_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 19.478868567034652,
+"corr": 0.9315157200890984,
+"a": "dff_insight_66_10357666_1917-05-05_2008",
+"a_split": "dev",
+"b": "dff_inpainting_66_36051666_1930-04-13_2012",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 18.9867973754797,
+"corr": 0.908177397842652,
+"a": "dff_insight_68_2069268_1954-01-28_1994",
+"a_split": "test",
+"b": "dff_inpainting_50_1526250_1962-08-31_2010",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 15.505497132758158,
+"corr": 0.6761923112879117,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 15.18571402307475,
+"corr": 0.7099548079243405,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "dff_wiki_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 14.886579297469968,
+"corr": 0.665208408326834,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 14.275614826600751,
+"corr": 0.4663960191268006,
+"a": "openfake_openfake-1e4dee83e6e8d0c1d5647d144eaa9d26",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 13.173866515448783,
+"corr": 0.6987883075782356,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "dff_insight_03_39808403_1990-07-25_2012",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 13.077742167668303,
+"corr": 0.44588377477649327,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "openfake_openfake-bb859cb5307803f145dbd7a184e60d81",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 13.053850604765591,
+"corr": 0.35047916457890566,
+"a": "mei_5b363776d771_1_removal_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 13.05155847452797,
+"corr": 0.34931362428478036,
+"a": "mei_5b363776d771_0_auth_long1024_jpeg90",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 13.049586421060948,
+"corr": 0.3491839205912902,
+"a": "mei_5b363776d771_1_auth_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.856610350900453,
+"corr": 0.3782628314690751,
+"a": "mei_095fe8855f7e_0_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_auth_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.855260161113787,
+"corr": 0.3781768173154835,
+"a": "mei_095fe8855f7e_0_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_0_auth_jpeg75",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.843150212969396,
+"corr": 0.3777452342142877,
+"a": "mei_095fe8855f7e_1_auth_png",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_auth_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.84181000430192,
+"corr": 0.3776604270096292,
+"a": "mei_095fe8855f7e_1_auth_png",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_0_auth_jpeg75",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.826042856723776,
+"corr": 0.3761285570260716,
+"a": "mei_095fe8855f7e_0_removal_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_auth_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.82468901142234,
+"corr": 0.37604201634741863,
+"a": "mei_095fe8855f7e_0_removal_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_0_auth_jpeg75",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.809198854679742,
+"corr": 0.3640023570061185,
+"a": "mei_095fe8855f7e_0_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.795644698263803,
+"corr": 0.36346003675007377,
+"a": "mei_095fe8855f7e_1_auth_png",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.77896209525295,
+"corr": 0.3618604766409916,
+"a": "mei_095fe8855f7e_0_removal_half_jpeg85",
+"a_split": "dev",
+"b": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.72253705661199,
+"corr": 0.6749750394189912,
+"a": "mei_550921b29b57_0_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 12.721377339971784,
+"corr": 0.6750339800721079,
+"a": "mei_550921b29b57_1_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 12.692356557064013,
+"corr": 0.6711579416865443,
+"a": "mei_550921b29b57_1_removal_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 12.680854169189164,
+"corr": 0.6672599510740597,
+"a": "mei_550921b29b57_0_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 12.194214120200932,
+"corr": 0.38879566144389444,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "dff_wiki_50_33503950_1979-07-29_2011",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 12.155338216061295,
+"corr": 0.6792716660077034,
+"a": "openfake_openfake-5c2d2006547bb9273bdc4a1ed94fc1c1",
+"a_split": "test",
+"b": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.883295100983958,
+"corr": 0.1580848372793352,
+"a": "dff_wiki_50_33503950_1979-07-29_2011",
+"a_split": "dev",
+"b": "dff_inpainting_35_7138835_1949-12-12_2010",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.736053136330318,
+"corr": 0.6018216537630449,
+"a": "dff_wiki_50_34880550_1967-07-28_2010",
+"a_split": "test",
+"b": "dff_inpainting_03_317803_1920-03-03_2011",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.397478213953177,
+"corr": 0.6356694544041597,
+"a": "mei_56ba5341c300_1_copymove_png",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.264366194667616,
+"corr": 0.47914567598523694,
+"a": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+"a_split": "dev",
+"b": "dff_inpainting_32_8324332_1975-10-22_2014",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.225316290335288,
+"corr": 0.5910934982131709,
+"a": "dff_wiki_03_317803_1920-03-03_2011",
+"a_split": "dev",
+"b": "dff_wiki_50_34880550_1967-07-28_2010",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.04261987516255,
+"corr": 0.6150792062591357,
+"a": "mei_56ba5341c300_0_splice_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.016823388541182,
+"corr": 0.6161628855647893,
+"a": "mei_56ba5341c300_0_auth_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 11.015233034575616,
+"corr": 0.6161278551394328,
+"a": "mei_56ba5341c300_1_auth_png",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 10.912245901424305,
+"corr": 0.5227100126352859,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "dff_insight_95_11004095_1916-06-26_1940",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 10.677679607333257,
+"corr": 0.5331098688437353,
+"a": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+"a_split": "dev",
+"b": "dff_wiki_32_8324332_1975-10-22_2014",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 10.350352318967248,
+"corr": 0.5475509409208741,
+"a": "mei_550921b29b57_0_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 10.350229871545114,
+"corr": 0.5475503841628473,
+"a": "mei_550921b29b57_1_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 10.30815242533935,
+"corr": 0.5285921388288445,
+"a": "mei_550921b29b57_0_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 10.294128647458383,
+"corr": 0.5437629110184719,
+"a": "mei_550921b29b57_1_removal_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 9.827294492023416,
+"corr": 0.16614190579053803,
+"a": "mei_5b363776d771_1_removal_jpeg95",
+"a_split": "test",
+"b": "dff_insight_35_1652935_1981-04-12_2011",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 9.794097334535552,
+"corr": 0.15493123793506364,
+"a": "mei_5b363776d771_0_auth_long1024_jpeg90",
+"a_split": "test",
+"b": "dff_insight_35_1652935_1981-04-12_2011",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 9.792916681193699,
+"corr": 0.15500826439435433,
+"a": "mei_5b363776d771_1_auth_jpeg95",
+"a_split": "test",
+"b": "dff_insight_35_1652935_1981-04-12_2011",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 9.781721318913286,
+"corr": 0.1521172609203371,
+"a": "mei_5b363776d771_0_copymove_long1024_jpeg90",
+"a_split": "test",
+"b": "dff_insight_35_1652935_1981-04-12_2011",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.599990137602658,
+"corr": 0.35226082558369787,
+"a": "openfake_openfake-7b2e64f9a2621fa4df900c07cb81b2f3",
+"a_split": "test",
+"b": "dff_inpainting_35_7138835_1949-12-12_2010",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.491964147682408,
+"corr": 0.34932107457082306,
+"a": "mei_550921b29b57_0_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.429088418471819,
+"corr": 0.3490662964156659,
+"a": "mei_550921b29b57_0_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.428596727758782,
+"corr": 0.3490052746420431,
+"a": "mei_550921b29b57_1_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.398516356668855,
+"corr": 0.3510360352716377,
+"a": "mei_550921b29b57_1_removal_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.294833274693469,
+"corr": 0.45194313821342524,
+"a": "mei_550921b29b57_0_copymove_jpeg85",
+"a_split": "test",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.265765716135094,
+"corr": 0.4615487814619795,
+"a": "mei_550921b29b57_0_auth_jpeg85",
+"a_split": "test",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.265558729913305,
+"corr": 0.46153483784921445,
+"a": "mei_550921b29b57_1_auth_jpeg75",
+"a_split": "test",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 9.222590627022578,
+"corr": 0.4598779300404515,
+"a": "mei_550921b29b57_1_removal_jpeg75",
+"a_split": "test",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.648986904744067,
+"corr": 0.5738840546452224,
+"a": "openfake_openfake-1e4dee83e6e8d0c1d5647d144eaa9d26",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.542618699957858,
+"corr": 0.5000293135354229,
+"a": "openfake_openfake-865074984cb00726878720b880efa95c",
+"a_split": "test",
+"b": "openfake_openfake-402e3332bd2d7c59ab6152f011647b7c",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.418884909669815,
+"corr": 0.28592933067090714,
+"a": "mei_c9764caa78c1_1_removal_jpeg85",
+"a_split": "test",
+"b": "dff_insight_69_31716269_1921-03-11_2011",
+"b_split": "dev",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.417555756275352,
+"corr": 0.4246428512967026,
+"a": "mei_d9f9c7681310_0_auth_png",
+"a_split": "test",
+"b": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.416750962625544,
+"corr": 0.42453256402419076,
+"a": "mei_d9f9c7681310_1_auth_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.4163346089701,
+"corr": 0.42453442846160727,
+"a": "mei_d9f9c7681310_1_removal_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.411676899028786,
+"corr": 0.28258750132556604,
+"a": "mei_c9764caa78c1_1_auth_jpeg85",
+"a_split": "test",
+"b": "dff_insight_69_31716269_1921-03-11_2011",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.411562147625245,
+"corr": 0.2825681173455948,
+"a": "mei_c9764caa78c1_0_auth_jpeg95",
+"a_split": "test",
+"b": "dff_insight_69_31716269_1921-03-11_2011",
+"b_split": "dev",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.396100279135583,
+"corr": 0.42948964650514004,
+"a": "mei_ab12822f97b7_0_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.39168784083487,
+"corr": 0.4287944914368338,
+"a": "mei_ab12822f97b7_0_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.391379965200013,
+"corr": 0.4288299482027522,
+"a": "mei_ab12822f97b7_1_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 8.38439364136332,
+"corr": 0.2737173259640795,
+"a": "mei_f5e58a1e0463_1_auth_jpeg85",
+"a_split": "test",
+"b": "dff_wiki_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.383723032204227,
+"corr": 0.4319073054790455,
+"a": "mei_ab12822f97b7_1_removal_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.382914651136213,
+"corr": 0.2738271844159423,
+"a": "mei_f5e58a1e0463_0_auth_jpeg75",
+"a_split": "test",
+"b": "dff_wiki_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.380678831533023,
+"corr": 0.27291560496986567,
+"a": "mei_f5e58a1e0463_1_copymove_jpeg85",
+"a_split": "test",
+"b": "dff_wiki_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.300442205161781,
+"corr": 0.28032829005150406,
+"a": "mei_f5e58a1e0463_1_auth_jpeg85",
+"a_split": "test",
+"b": "dff_inpainting_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.299038477428724,
+"corr": 0.28045103948795336,
+"a": "mei_f5e58a1e0463_0_auth_jpeg75",
+"a_split": "test",
+"b": "dff_inpainting_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 8.297017158219484,
+"corr": 0.27956244721836326,
+"a": "mei_f5e58a1e0463_1_copymove_jpeg85",
+"a_split": "test",
+"b": "dff_inpainting_51_2362451_1948-02-14_2007",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 7.988871431056266,
+"corr": 0.5636518906193052,
+"a": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"a_split": "dev",
+"b": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 7.939452570353702,
+"corr": 0.5780145951170587,
+"a": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"a_split": "test",
+"b": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"b_split": "dev",
+"dhash_hamming": 1
+},
+{
+"psnr128": 7.74145626198459,
+"corr": 0.3151823265225664,
+"a": "mei_f5e58a1e0463_1_copymove_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 7.741188554442982,
+"corr": 0.3152049574757223,
+"a": "mei_f5e58a1e0463_1_auth_jpeg85",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 7.739601986278678,
+"corr": 0.31525734696019536,
+"a": "mei_f5e58a1e0463_0_auth_jpeg75",
+"a_split": "test",
+"b": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+"b_split": "test",
+"dhash_hamming": 4
+},
+{
+"psnr128": 7.320125305086634,
+"corr": 0.5809887111445973,
+"a": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+"a_split": "dev",
+"b": "dff_insight_68_38479368_1951-06-11_2009",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 6.968174146017436,
+"corr": 0.15105169612651478,
+"a": "mei_d9f9c7681310_0_auth_png",
+"a_split": "test",
+"b": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 6.967596322159089,
+"corr": 0.15097973960189323,
+"a": "mei_d9f9c7681310_1_auth_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 6.967286492433287,
+"corr": 0.15097161935829553,
+"a": "mei_d9f9c7681310_1_removal_jpeg95",
+"a_split": "test",
+"b": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+"b_split": "test",
+"dhash_hamming": 3
+},
+{
+"psnr128": 6.944333197036059,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_auth_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.944333197036059,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_copymove_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.944333197036059,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.944333197036059,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.943667176834211,
+"corr": NaN,
+"a": "mei_da5a43ae7025_1_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_auth_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.943667176834211,
+"corr": NaN,
+"a": "mei_da5a43ae7025_1_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_copymove_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.943667176834211,
+"corr": NaN,
+"a": "mei_da5a43ae7025_1_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.943667176834211,
+"corr": NaN,
+"a": "mei_da5a43ae7025_1_auth_half_jpeg85",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.937030487861454,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_auth_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.937030487861454,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_0_copymove_png",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.937030487861454,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+},
+{
+"psnr128": 6.937030487861454,
+"corr": NaN,
+"a": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+"a_split": "dev",
+"b": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+"b_split": "test",
+"dhash_hamming": 2
+}
+]

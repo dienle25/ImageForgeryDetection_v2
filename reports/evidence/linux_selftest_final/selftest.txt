@@ -1,0 +1,17 @@
+ifd 2.0.0 self-test 20261012T211257Z
+{"os": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39", "machine": "x86_64", "python": "3.13.16", "python_executable": "<PYTHON_MAY_BUILD>", "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz", "logical_cpus": 2, "ram_mb": 8029.609375}
+
+PASS  imports  (0.132s)
+PASS  model_files_sha256  (1.378s)
+PASS  model_numeric_parity_vs_build_machine  (11.11s)
+PASS  cli_folder_full_pipeline_subprocess  (12.355s)
+PASS  analyzer_load_and_reference_samples  (16.613s)
+PASS  input_formats_and_rejections  (12.221s)
+PASS  config_validation  (0.002s)
+PASS  corrupt_or_missing_model  (0.003s)
+PASS  cli_runs_and_artifacts  (4.301s)
+PASS  company_validation_kit  (5.465s)
+PASS  web_ui_api_downloads_security_port  (2.488s)
+PASS  cpu_timing  (68.798s)
+
+PASS=12 FAIL=0 SKIP=0

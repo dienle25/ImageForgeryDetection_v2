@@ -1,0 +1,28 @@
+# Mục tiêu chất lượng ĐỀ XUẤT — ghi ngày 2026-10-12 TRƯỚC khi chạy final test.
+# status: provisional — CHƯA được công ty chấp thuận. Số liệu cuối đối chiếu với file này, không sửa sau khi xem test.
+version: 1
+written_before_final_test: true
+company_approved: false
+selection_rules:
+  - "Chỉ chọn cấu hình/mô hình dựa trên development split; final test chạy một lần với cấu hình đã khóa."
+  - "Ứng viên thay baseline khi AUROC dev cao hơn >= 0.05 hoặc FPR tại cùng TPR thấp hơn rõ rệt, và không làm hỏng tập khác quá 0.05 AUROC."
+  - "Một detector chỉ BẬT mặc định nếu cận dưới CI 95% (bootstrap theo nhóm nguồn) của AUROC trên test độc lập > 0.60; nếu không: tắt hoặc gắn nhãn thử nghiệm."
+  - "Không dùng accuracy tổng thể đơn lẻ; báo TP/TN/FP/FN, precision, recall, FPR, FNR, AUROC, AP và theo từng nhóm."
+targets:
+  local_manipulation:
+    image_auroc_min: 0.75          # trên từng final test độc lập
+    fpr_at_high_threshold_max: 0.10 # trên ảnh gốc/benign của test
+    pixel_f1_report: required        # trên ảnh có mask; mask rỗng: không tính macro (chính sách ghi trong báo cáo)
+  ai_generated:
+    image_auroc_min_holdout_generators: 0.85
+    fpr_on_camera_photos_at_high_threshold_max: 0.05
+  face_deepfake:
+    image_auroc_min: 0.80
+    fpr_at_high_threshold_max: 0.10
+  runtime_cpu:
+    model_load_seconds_max: 30
+    end_to_end_p95_seconds_max_12mp: 60   # trên máy 2-4 lõi; chưa đo trên laptop người dùng
+operating_point_policy:
+  high_threshold: "chọn trên dev sao cho FPR(dev, ảnh âm) <= 5%"
+  low_threshold: "chọn trên dev sao cho FPR(dev, ảnh âm) <= 20% (vùng 'cần kiểm tra thêm')"
+  calibration: "không hiệu chỉnh xác suất trừ khi có tập hiệu chỉnh riêng; nếu có, báo Brier/ECE"

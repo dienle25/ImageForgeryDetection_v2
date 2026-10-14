@@ -1,0 +1,33 @@
+{
+ "schema": 1,
+ "display_only": true,
+ "rule": "cận dưới CI95 AUROC > 0.6 trên mọi tập final test chính",
+ "source_metrics": "reports/test/metrics_test_v2_standard.json",
+ "evaluated_decision_configs": [
+  {
+   "name": "chuẩn (FPR ≤ 5 % / ≤ 20 % trên dev)",
+   "sha256": "4098db0d92df14762c8833326b3ff0e9ef812733f2916dbbde0898fae80370c9"
+  },
+  {
+   "name": "nghiêm (FPR ≤ 1 % / ≤ 5 % trên dev, tùy chọn)",
+   "sha256": "d0776ab8638a5d0bfa4958aab3c533c43dec3f3e19c3ce7292dd1effef578477"
+  }
+ ],
+ "detectors": {
+  "mesorch": {
+   "status": "experimental",
+   "text_vi": "THỬ NGHIỆM — trên dữ liệu kiểm thử công khai: ảnh ghép/copy-move/xóa vật thể tổng hợp (ctrl_mei test): 78,0 % ảnh giả/sửa và 0,5 % ảnh thật bị “Nghi vấn” (AUROC 0,96, CI95 0,95–0,98); chỉnh sửa thủ công chuyên nghiệp (Korus test): 10,1 % ảnh giả/sửa và 2,0 % ảnh thật bị “Nghi vấn” (AUROC 0,62, CI95 0,58–0,67); chỉnh sửa cục bộ bằng AI inpainting (CocoGlide): 26,4 % ảnh giả/sửa và 5,7 % ảnh thật bị “Nghi vấn” (AUROC 0,72, CI95 0,70–0,75). Không đạt quy tắc bật mặc định (cận dưới CI95 AUROC ≤ 0,60) với: chỉnh sửa thủ công chuyên nghiệp (Korus test). “Chưa thấy dấu hiệu rõ” KHÔNG có nghĩa ảnh thật; cần người thẩm định.",
+   "short_vi": "THỬ NGHIỆM — trên dữ liệu kiểm thử công khai không đạt với: chỉnh sửa thủ công chuyên nghiệp (Korus test). Chỉ dùng để sàng lọc; chi tiết ở mục “Phạm vi kiểm tra”."
+  },
+  "commfor_aigen": {
+   "status": "public_test_passed",
+   "text_vi": "Đạt quy tắc bật mặc định trên dữ liệu kiểm thử công khai — ảnh AI từ các generator của OpenFake test: 47,8 % ảnh giả/sửa và 0,7 % ảnh thật bị “Nghi vấn” (AUROC 0,92, CI95 0,90–0,93); ảnh chân dung tạo bằng Stable Diffusion (DeepFakeFace): 100,0 % ảnh giả/sửa và 0,0 % ảnh thật bị “Nghi vấn” (AUROC 1,00, CI95 1,00–1,00). Chưa kiểm chứng trên ảnh của công ty; điểm không phải xác suất.",
+   "short_vi": "Đạt kiểm thử công khai (chi tiết ở mục “Phạm vi kiểm tra”); chưa kiểm chứng trên ảnh của công ty."
+  },
+  "face_clip": {
+   "status": "public_test_passed",
+   "text_vi": "Đạt quy tắc bật mặc định trên dữ liệu kiểm thử công khai — hoán đổi khuôn mặt InsightFace (DeepFakeFace): 81,2 % ảnh giả/sửa và 4,2 % ảnh thật bị “Nghi vấn” (AUROC 0,94, CI95 0,92–0,96); vẽ lại khuôn mặt bằng SD inpainting (DeepFakeFace): 58,3 % ảnh giả/sửa và 4,2 % ảnh thật bị “Nghi vấn” (AUROC 0,89, CI95 0,87–0,91). Chưa kiểm chứng trên ảnh của công ty; điểm không phải xác suất.",
+   "short_vi": "Đạt kiểm thử công khai (chi tiết ở mục “Phạm vi kiểm tra”); chưa kiểm chứng trên ảnh của công ty."
+  }
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "generated_on": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39",
+ "onnxruntime": "1.29.0",
+ "config_sha256": "b0260b11ef18260b4561da7167d4fc129b5db2d438622565a83dca7d2ae2b1ef",
+ "tolerance": 0.002,
+ "images": {
+  "authentic1.png": {
+   "scores": {
+    "mesorch": 0.3991968035697937,
+    "commfor_aigen": 1.6208265359076568e-05,
+    "face_clip": null
+   },
+   "overall": "no_clear_sign"
+  },
+  "authentic3.png": {
+   "scores": {
+    "mesorch": 0.687086820602417,
+    "commfor_aigen": 0.0002457482958486102,
+    "face_clip": null
+   },
+   "overall": "no_clear_sign"
+  },
+  "copymove2.png": {
+   "scores": {
+    "mesorch": 0.9998682737350464,
+    "commfor_aigen": 0.0007832615011274937,
+    "face_clip": null
+   },
+   "overall": "suspicious"
+  },
+  "removal1.png": {
+   "scores": {
+    "mesorch": 0.6948229670524597,
+    "commfor_aigen": 3.0432584258157045e-05,
+    "face_clip": null
+   },
+   "overall": "no_clear_sign"
+  },
+  "splice1.png": {
+   "scores": {
+    "mesorch": 0.999998152256012,
+    "commfor_aigen": 9.730147629916538e-06,
+    "face_clip": null
+   },
+   "overall": "suspicious"
+  }
+ }
+}

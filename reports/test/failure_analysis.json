@@ -1,0 +1,609 @@
+{
+ "run": "<THU_MUC_THI_NGHIEM>/product/test_v2.jsonl",
+ "config": "config.json",
+ "n": 4938,
+ "thresholds": {
+  "mesorch": {
+   "low": 0.960912,
+   "high": 0.997501,
+   "pixel": 0.5,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  },
+  "commfor_aigen": {
+   "low": 0.002326,
+   "high": 0.069494,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  },
+  "face_clip": {
+   "low": 0.274283,
+   "high": 0.478866,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  }
+ },
+ "real_flagged_suspicious_by_detector_source_resolution_encoding": {
+  "mesorch": {
+   "cocoglide | <0.5MP | PNG": {
+    "n": 512,
+    "suspicious": 29,
+    "rate": 0.056640625
+   },
+   "ctrl_mei | 0.5-2MP | JPEG": {
+    "n": 144,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "ctrl_mei | 0.5-2MP | PNG": {
+    "n": 33,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "ctrl_mei | <0.5MP | JPEG": {
+    "n": 42,
+    "suspicious": 1,
+    "rate": 0.023809523809523808
+   },
+   "ctrl_mei | <0.5MP | PNG": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | 0.5-2MP | ?": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | <0.5MP | ?": {
+    "n": 495,
+    "suspicious": 23,
+    "rate": 0.046464646464646465
+   },
+   "korus | 2-8MP | PNG": {
+    "n": 148,
+    "suspicious": 3,
+    "rate": 0.02027027027027027
+   },
+   "openfake | 0.5-2MP | JPEG": {
+    "n": 13,
+    "suspicious": 1,
+    "rate": 0.07692307692307693
+   },
+   "openfake | 2-8MP | JPEG": {
+    "n": 128,
+    "suspicious": 6,
+    "rate": 0.046875
+   },
+   "openfake | <0.5MP | JPEG": {
+    "n": 281,
+    "suspicious": 18,
+    "rate": 0.06405693950177936
+   },
+   "openfake | >=8MP | JPEG": {
+    "n": 4,
+    "suspicious": 0,
+    "rate": 0.0
+   }
+  },
+  "commfor_aigen": {
+   "cocoglide | <0.5MP | PNG": {
+    "n": 512,
+    "suspicious": 44,
+    "rate": 0.0859375
+   },
+   "ctrl_mei | 0.5-2MP | JPEG": {
+    "n": 144,
+    "suspicious": 1,
+    "rate": 0.006944444444444444
+   },
+   "ctrl_mei | 0.5-2MP | PNG": {
+    "n": 33,
+    "suspicious": 1,
+    "rate": 0.030303030303030304
+   },
+   "ctrl_mei | <0.5MP | JPEG": {
+    "n": 42,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "ctrl_mei | <0.5MP | PNG": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | 0.5-2MP | ?": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | <0.5MP | ?": {
+    "n": 495,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "korus | 2-8MP | PNG": {
+    "n": 148,
+    "suspicious": 4,
+    "rate": 0.02702702702702703
+   },
+   "openfake | 0.5-2MP | JPEG": {
+    "n": 13,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "openfake | 2-8MP | JPEG": {
+    "n": 128,
+    "suspicious": 2,
+    "rate": 0.015625
+   },
+   "openfake | <0.5MP | JPEG": {
+    "n": 281,
+    "suspicious": 1,
+    "rate": 0.0035587188612099642
+   },
+   "openfake | >=8MP | JPEG": {
+    "n": 4,
+    "suspicious": 0,
+    "rate": 0.0
+   }
+  },
+  "face_clip": {
+   "cocoglide | <0.5MP | PNG": {
+    "n": 512,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "ctrl_mei | 0.5-2MP | JPEG": {
+    "n": 144,
+    "suspicious": 2,
+    "rate": 0.013888888888888888
+   },
+   "ctrl_mei | 0.5-2MP | PNG": {
+    "n": 33,
+    "suspicious": 1,
+    "rate": 0.030303030303030304
+   },
+   "ctrl_mei | <0.5MP | JPEG": {
+    "n": 42,
+    "suspicious": 2,
+    "rate": 0.047619047619047616
+   },
+   "ctrl_mei | <0.5MP | PNG": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | 0.5-2MP | ?": {
+    "n": 1,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "dff_wiki | <0.5MP | ?": {
+    "n": 495,
+    "suspicious": 21,
+    "rate": 0.04242424242424243
+   },
+   "korus | 2-8MP | PNG": {
+    "n": 148,
+    "suspicious": 4,
+    "rate": 0.02702702702702703
+   },
+   "openfake | 0.5-2MP | JPEG": {
+    "n": 13,
+    "suspicious": 0,
+    "rate": 0.0
+   },
+   "openfake | 2-8MP | JPEG": {
+    "n": 128,
+    "suspicious": 1,
+    "rate": 0.0078125
+   },
+   "openfake | <0.5MP | JPEG": {
+    "n": 281,
+    "suspicious": 1,
+    "rate": 0.0035587188612099642
+   },
+   "openfake | >=8MP | JPEG": {
+    "n": 4,
+    "suspicious": 0,
+    "rate": 0.0
+   }
+  }
+ },
+ "fakes_missed_overall_no_clear_sign_by_subtype": {
+  "cocoglide | ai_inpainting_glide": {
+   "n": 512,
+   "missed": 81,
+   "rate": 0.158203125
+  },
+  "ctrl_mei | copymove/large": {
+   "n": 24,
+   "missed": 2,
+   "rate": 0.08333333333333333
+  },
+  "ctrl_mei | copymove/medium": {
+   "n": 24,
+   "missed": 1,
+   "rate": 0.041666666666666664
+  },
+  "ctrl_mei | copymove/small": {
+   "n": 25,
+   "missed": 8,
+   "rate": 0.32
+  },
+  "ctrl_mei | removal/large": {
+   "n": 23,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "ctrl_mei | removal/medium": {
+   "n": 25,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "ctrl_mei | removal/small": {
+   "n": 24,
+   "missed": 3,
+   "rate": 0.125
+  },
+  "ctrl_mei | splice/large": {
+   "n": 24,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "ctrl_mei | splice/medium": {
+   "n": 24,
+   "missed": 1,
+   "rate": 0.041666666666666664
+  },
+  "ctrl_mei | splice/small": {
+   "n": 25,
+   "missed": 3,
+   "rate": 0.12
+  },
+  "dff_inpainting | face_inpainting_sd": {
+   "n": 496,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "dff_insight | face_swap_insightface": {
+   "n": 496,
+   "missed": 25,
+   "rate": 0.05040322580645161
+  },
+  "dff_text2img | generated:stable-diffusion-1.5": {
+   "n": 496,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "korus | Canon_60D": {
+   "n": 37,
+   "missed": 25,
+   "rate": 0.6756756756756757
+  },
+  "korus | Nikon_D7000": {
+   "n": 37,
+   "missed": 13,
+   "rate": 0.35135135135135137
+  },
+  "korus | Nikon_D90": {
+   "n": 37,
+   "missed": 20,
+   "rate": 0.5405405405405406
+  },
+  "korus | Sony_A57": {
+   "n": 37,
+   "missed": 22,
+   "rate": 0.5945945945945946
+  },
+  "openfake | ernie-image": {
+   "n": 5,
+   "missed": 1,
+   "rate": 0.2
+  },
+  "openfake | flux.2-klein-9b": {
+   "n": 163,
+   "missed": 61,
+   "rate": 0.37423312883435583
+  },
+  "openfake | gpt-image-1.5": {
+   "n": 115,
+   "missed": 13,
+   "rate": 0.11304347826086956
+  },
+  "openfake | halfmoon-4-4-25": {
+   "n": 6,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "openfake | illustrious": {
+   "n": 135,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "openfake | midjourney-7": {
+   "n": 63,
+   "missed": 4,
+   "rate": 0.06349206349206349
+  },
+  "openfake | recraft-v2": {
+   "n": 2,
+   "missed": 0,
+   "rate": 0.0
+  },
+  "openfake | seedream-v5.0": {
+   "n": 5,
+   "missed": 1,
+   "rate": 0.2
+  },
+  "openfake | veo-3": {
+   "n": 34,
+   "missed": 5,
+   "rate": 0.14705882352941177
+  },
+  "openfake | z-image-turbo": {
+   "n": 242,
+   "missed": 33,
+   "rate": 0.13636363636363635
+  }
+ },
+ "face_not_found_by_dff_source": {
+  "dff_inpainting": {
+   "n": 496,
+   "no_face": 6,
+   "rate": 0.012096774193548387
+  },
+  "dff_insight": {
+   "n": 496,
+   "no_face": 8,
+   "rate": 0.016129032258064516
+  },
+  "dff_text2img": {
+   "n": 496,
+   "no_face": 7,
+   "rate": 0.014112903225806451
+  },
+  "dff_wiki": {
+   "n": 496,
+   "no_face": 9,
+   "rate": 0.018145161290322582
+  }
+ },
+ "most_confident_false_positives": {
+  "mesorch": {
+   "highest_scored_real_images": [
+    {
+     "id": "openfake_openfake-bbb2bfa25b6186f862ea591d269cb328",
+     "src": "openfake",
+     "score": 0.9999999403953552
+    },
+    {
+     "id": "cocoglide_real_283038",
+     "src": "cocoglide",
+     "score": 0.9999995231628418
+    },
+    {
+     "id": "cocoglide_real_131938",
+     "src": "cocoglide",
+     "score": 0.9999987483024597
+    },
+    {
+     "id": "cocoglide_real_559707",
+     "src": "cocoglide",
+     "score": 0.999998152256012
+    },
+    {
+     "id": "dff_wiki_95_4510495_1931-06-06_1960",
+     "src": "dff_wiki",
+     "score": 0.9999971389770508
+    },
+    {
+     "id": "openfake_openfake-1f338e3328cc35e5cb25feea5beb612d",
+     "src": "openfake",
+     "score": 0.9999963045120239
+    },
+    {
+     "id": "cocoglide_real_369771",
+     "src": "cocoglide",
+     "score": 0.999984860420227
+    },
+    {
+     "id": "cocoglide_real_51326",
+     "src": "cocoglide",
+     "score": 0.9999741315841675
+    },
+    {
+     "id": "dff_wiki_92_1226492_1971-01-25_2007",
+     "src": "dff_wiki",
+     "score": 0.9999718070030212
+    },
+    {
+     "id": "cocoglide_real_180798",
+     "src": "cocoglide",
+     "score": 0.9999693632125854
+    },
+    {
+     "id": "cocoglide_real_172856",
+     "src": "cocoglide",
+     "score": 0.9999674558639526
+    },
+    {
+     "id": "cocoglide_real_183965",
+     "src": "cocoglide",
+     "score": 0.9999386072158813
+    },
+    {
+     "id": "dff_wiki_66_43534366_1954-08-27_2014",
+     "src": "dff_wiki",
+     "score": 0.9999072551727295
+    },
+    {
+     "id": "openfake_openfake-4b20124baa861ba038ac0eb76d46f165",
+     "src": "openfake",
+     "score": 0.9999055862426758
+    },
+    {
+     "id": "openfake_openfake-129fd09665381ae962adbc5b36b6d8b7",
+     "src": "openfake",
+     "score": 0.9998887777328491
+    }
+   ]
+  },
+  "commfor_aigen": {
+   "highest_scored_real_images": [
+    {
+     "id": "cocoglide_real_375078",
+     "src": "cocoglide",
+     "score": 0.999406432723083
+    },
+    {
+     "id": "cocoglide_real_433192",
+     "src": "cocoglide",
+     "score": 0.9811852414958689
+    },
+    {
+     "id": "cocoglide_real_131131",
+     "src": "cocoglide",
+     "score": 0.9573341449394079
+    },
+    {
+     "id": "cocoglide_real_28809",
+     "src": "cocoglide",
+     "score": 0.9551849098117297
+    },
+    {
+     "id": "cocoglide_real_98839",
+     "src": "cocoglide",
+     "score": 0.9518968644087673
+    },
+    {
+     "id": "cocoglide_real_285",
+     "src": "cocoglide",
+     "score": 0.946116502811835
+    },
+    {
+     "id": "cocoglide_real_252332",
+     "src": "cocoglide",
+     "score": 0.927812731281482
+    },
+    {
+     "id": "cocoglide_real_570456",
+     "src": "cocoglide",
+     "score": 0.9260873136949407
+    },
+    {
+     "id": "openfake_openfake-26aea1e21c7ca0a18a1f80149c1fd9b3",
+     "src": "openfake",
+     "score": 0.7909963171436155
+    },
+    {
+     "id": "cocoglide_real_320632",
+     "src": "cocoglide",
+     "score": 0.7866150409929018
+    },
+    {
+     "id": "cocoglide_real_435299",
+     "src": "cocoglide",
+     "score": 0.7621648336977811
+    },
+    {
+     "id": "cocoglide_real_23023",
+     "src": "cocoglide",
+     "score": 0.7294724599433748
+    },
+    {
+     "id": "cocoglide_real_300842",
+     "src": "cocoglide",
+     "score": 0.7174698311630903
+    },
+    {
+     "id": "cocoglide_real_393014",
+     "src": "cocoglide",
+     "score": 0.7149027506677668
+    },
+    {
+     "id": "cocoglide_real_136772",
+     "src": "cocoglide",
+     "score": 0.6854216624927274
+    }
+   ]
+  },
+  "face_clip": {
+   "highest_scored_real_images": [
+    {
+     "id": "dff_wiki_56_33733956_1995-02-16_2012",
+     "src": "dff_wiki",
+     "score": 0.91221341493245
+    },
+    {
+     "id": "dff_wiki_50_3716850_1978-12-30_2007",
+     "src": "dff_wiki",
+     "score": 0.8846103588478382
+    },
+    {
+     "id": "dff_wiki_68_7218368_1979-11-09_2012",
+     "src": "dff_wiki",
+     "score": 0.8592616692212564
+    },
+    {
+     "id": "dff_wiki_95_15979195_1949-01-31_2012",
+     "src": "dff_wiki",
+     "score": 0.841619716822206
+    },
+    {
+     "id": "mei_ac9bca3d0959_1_auth_png",
+     "src": "ctrl_mei",
+     "score": 0.830793782240891
+    },
+    {
+     "id": "dff_wiki_04_9285904_1988-02-20_2013",
+     "src": "dff_wiki",
+     "score": 0.8231811859684659
+    },
+    {
+     "id": "dff_wiki_66_4164366_1978-06-17_2008",
+     "src": "dff_wiki",
+     "score": 0.801271256082694
+    },
+    {
+     "id": "mei_b25e7b0bcdc4_0_auth_jpeg95",
+     "src": "ctrl_mei",
+     "score": 0.7841181863719568
+    },
+    {
+     "id": "openfake_openfake-21b55a9527c0c2faa9e018da43cbc6b4",
+     "src": "openfake",
+     "score": 0.7324663674495034
+    },
+    {
+     "id": "dff_wiki_66_3518066_1926-04-28_1971",
+     "src": "dff_wiki",
+     "score": 0.7289183533335893
+    },
+    {
+     "id": "mei_b25e7b0bcdc4_1_auth_jpeg75",
+     "src": "ctrl_mei",
+     "score": 0.7287810098334938
+    },
+    {
+     "id": "dff_wiki_68_2025868_1973-11-02_2012",
+     "src": "dff_wiki",
+     "score": 0.6874537575516428
+    },
+    {
+     "id": "korus_pristine_Nikon_D90_r2c07a32bt",
+     "src": "korus",
+     "score": 0.6550670983876621
+    },
+    {
+     "id": "dff_wiki_69_47175169_1936-01-04_1960",
+     "src": "dff_wiki",
+     "score": 0.6439120569320277
+    },
+    {
+     "id": "mei_8ff0028190b3_0_auth_long1024_jpeg90",
+     "src": "ctrl_mei",
+     "score": 0.6346857052779818
+    }
+   ]
+  }
+ }
+}

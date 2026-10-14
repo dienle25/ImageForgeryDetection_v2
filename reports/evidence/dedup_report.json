@@ -1,0 +1,1646 @@
+{
+ "images": 7311,
+ "datasets": [
+  "cocoglide",
+  "ctrl_mei",
+  "dff",
+  "korus_png",
+  "openfake"
+ ],
+ "exact_sha_duplicate_sets_crossing_split_or_group": [],
+ "exact_sha_duplicate_sets_within_one_group": 42,
+ "exact_pix_duplicate_sets_crossing_split_or_group": [],
+ "exact_pix_duplicate_sets_within_one_group": 42,
+ "near_duplicates": {
+  "max_hamming": 4,
+  "pairs_total": 2109,
+  "pairs_same_group": 1985,
+  "pairs_cross_split_different_group": 58,
+  "pairs_same_split_different_group": 66,
+  "cross_split_examples": [
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_copymove_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_copymove_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_0_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_0_copymove_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_da5a43ae7025_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_aa935f733d62_1_removal_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_removal_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_removal_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_0_removal_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_1_auth_png",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_1_auth_png",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_auth_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_095fe8855f7e_1_auth_png",
+     "ds": "ctrl_mei",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "mei_7b7164074e3b_1_copymove_half_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_c9764caa78c1_0_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_69_31716269_1921-03-11_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_c9764caa78c1_1_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_69_31716269_1921-03-11_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_c9764caa78c1_1_removal_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_69_31716269_1921-03-11_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_removal_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-5c2d2006547bb9273bdc4a1ed94fc1c1",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-1e4dee83e6e8d0c1d5647d144eaa9d26",
+     "ds": "openfake",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 1
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_03_39808403_1990-07-25_2012",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_50_33503950_1979-07-29_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_95_11004095_1916-06-26_1940",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_32_8324332_1975-10-22_2014",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-7b63a3df39c44db832fab2a5c9b7f6bb",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_32_8324332_1975-10-22_2014",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-d4552ccd737394c31a97167b7e29225f",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "dff_wiki_03_10970703_1984-05-21_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_92_34430392_1883-04-20_1948",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 0
+   },
+   {
+    "a": {
+     "id": "dff_insight_03_10970703_1984-05-21_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_92_34430392_1883-04-20_1948",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "dff_wiki_03_317803_1920-03-03_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_wiki_50_34880550_1967-07-28_2010",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "dff_wiki_35_410835_1961-11-18_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_56_3218656_1957-07-30_2006",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 1
+   },
+   {
+    "a": {
+     "id": "dff_insight_35_410835_1961-11-18_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_56_3218656_1957-07-30_2006",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "dff_insight_35_410835_1961-11-18_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_56_3218656_1957-07-30_2006",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "dff_wiki_50_1526250_1962-08-31_2010",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_68_2069268_1954-01-28_1994",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "dff_insight_50_1526250_1962-08-31_2010",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_68_2069268_1954-01-28_1994",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 0
+   },
+   {
+    "a": {
+     "id": "dff_insight_50_1526250_1962-08-31_2010",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_68_2069268_1954-01-28_1994",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 0
+   },
+   {
+    "a": {
+     "id": "dff_wiki_50_33503950_1979-07-29_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_inpainting_35_7138835_1949-12-12_2010",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "dff_wiki_50_34880550_1967-07-28_2010",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_inpainting_03_317803_1920-03-03_2011",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "dff_insight_56_3218656_1957-07-30_2006",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_35_410835_1961-11-18_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "dff_wiki_66_10357666_1917-05-05_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_66_36051666_1930-04-13_2012",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 0
+   },
+   {
+    "a": {
+     "id": "dff_insight_66_10357666_1917-05-05_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_66_36051666_1930-04-13_2012",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 1
+   },
+   {
+    "a": {
+     "id": "dff_insight_66_10357666_1917-05-05_2008",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_66_36051666_1930-04-13_2012",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "dff_insight_68_2069268_1954-01-28_1994",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_50_1526250_1962-08-31_2010",
+     "ds": "dff",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 3
+   }
+  ],
+  "same_split_examples": [
+   {
+    "a": {
+     "id": "mei_5b363776d771_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_0_auth_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_35_1652935_1981-04-12_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_0_copymove_long1024_jpeg90",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_35_1652935_1981-04-12_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_1_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_1_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_35_1652935_1981-04-12_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_1_removal_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_5b363776d771_1_removal_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_35_1652935_1981-04-12_2011",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_56ba5341c300_0_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_56ba5341c300_0_splice_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_56ba5341c300_1_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_56ba5341c300_1_copymove_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_0_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_0_auth_png",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_1_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_1_auth_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_1_removal_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-abcc34caa3556ccad6ee3124637e6f80",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_d9f9c7681310_1_removal_jpeg95",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-8ef2b8863bb7e76b9908d24d5e9bb3e6",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_wiki_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_0_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_inpainting_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_wiki_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_inpainting_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_f5e58a1e0463_1_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_inpainting_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_ab12822f97b7_1_removal_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_auth_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_0_copymove_jpeg85",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_auth_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_removal_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_removal_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-259c939d81107048030bdb7c72a37a2c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 3
+   },
+   {
+    "a": {
+     "id": "mei_550921b29b57_1_removal_jpeg75",
+     "ds": "ctrl_mei",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-865074984cb00726878720b880efa95c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-402e3332bd2d7c59ab6152f011647b7c",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-a7bab6b6d400b5a5b99602973c7be3ff",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-7f6e6586dc908f811dddb7b2f5e39f99",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 2
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-bf93cada95849a4203afb1e784f712e3",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-ce65e352f27c6b35f3c8302dc64337f8",
+     "ds": "openfake",
+     "split": "dev",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-7b2e64f9a2621fa4df900c07cb81b2f3",
+     "ds": "openfake",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "dff_inpainting_35_7138835_1949-12-12_2010",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-1e4dee83e6e8d0c1d5647d144eaa9d26",
+     "ds": "openfake",
+     "split": "test",
+     "label": 0
+    },
+    "b": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "openfake_openfake-bb859cb5307803f145dbd7a184e60d81",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_wiki_51_2362451_1948-02-14_2007",
+     "ds": "dff",
+     "split": "test",
+     "label": 0
+    },
+    "hamming": 4
+   },
+   {
+    "a": {
+     "id": "openfake_openfake-27dea8b886abc24e829b683558012b49",
+     "ds": "openfake",
+     "split": "test",
+     "label": 1
+    },
+    "b": {
+     "id": "dff_insight_68_38479368_1951-06-11_2009",
+     "ds": "dff",
+     "split": "test",
+     "label": 1
+    },
+    "hamming": 4
+   }
+  ],
+  "note": "dHash ignores colour and fine detail; flagged pairs need visual review (e.g. uniform/dark images collide)."
+ }
+}

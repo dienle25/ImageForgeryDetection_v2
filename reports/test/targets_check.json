@@ -1,0 +1,286 @@
+{
+ "source_metrics": "reports/test/metrics_test_v2_standard.json",
+ "rule_detail": {
+  "mesorch": {
+   "status": "experimental",
+   "comparisons": [
+    {
+     "task": "local_manipulation",
+     "set": "ctrl_mei",
+     "label_vi": "ảnh ghép/copy-move/xóa vật thể tổng hợp (ctrl_mei test)",
+     "available": true,
+     "n_pos": 218,
+     "n_neg": 202,
+     "auroc": 0.9630983740575892,
+     "auroc_ci95": [
+      0.9466374277072882,
+      0.9782429117171108
+     ],
+     "tpr_at_high": 0.7798165137614679,
+     "fpr_at_high": 0.0049504950495049506,
+     "passes": true
+    },
+    {
+     "task": "local_manipulation",
+     "set": "korus",
+     "label_vi": "chỉnh sửa thủ công chuyên nghiệp (Korus test)",
+     "available": true,
+     "n_pos": 148,
+     "n_neg": 148,
+     "auroc": 0.6221694667640614,
+     "auroc_ci95": [
+      0.5849114317019722,
+      0.6663737216946677
+     ],
+     "tpr_at_high": 0.10135135135135136,
+     "fpr_at_high": 0.02027027027027027,
+     "passes": false
+    },
+    {
+     "task": "local_manipulation",
+     "set": "cocoglide",
+     "label_vi": "chỉnh sửa cục bộ bằng AI inpainting (CocoGlide)",
+     "available": true,
+     "n_pos": 512,
+     "n_neg": 512,
+     "auroc": 0.7222957611083984,
+     "auroc_ci95": [
+      0.6950777530670166,
+      0.7497097969055175
+     ],
+     "tpr_at_high": 0.263671875,
+     "fpr_at_high": 0.056640625,
+     "passes": true
+    }
+   ]
+  },
+  "commfor_aigen": {
+   "status": "public_test_passed",
+   "comparisons": [
+    {
+     "task": "ai_generated",
+     "set": "openfake_holdout_generators",
+     "label_vi": "ảnh AI từ các generator của OpenFake test",
+     "available": true,
+     "n_pos": 770,
+     "n_neg": 426,
+     "auroc": 0.9155539296384366,
+     "auroc_ci95": [
+      0.8995906114498897,
+      0.9299692418763058
+     ],
+     "tpr_at_high": 0.4779220779220779,
+     "fpr_at_high": 0.007042253521126761,
+     "passes": true
+    },
+    {
+     "task": "ai_generated",
+     "set": "dff_text2img_vs_wiki",
+     "label_vi": "ảnh chân dung tạo bằng Stable Diffusion (DeepFakeFace)",
+     "available": true,
+     "n_pos": 496,
+     "n_neg": 496,
+     "auroc": 1.0,
+     "auroc_ci95": [
+      1.0,
+      1.0
+     ],
+     "tpr_at_high": 1.0,
+     "fpr_at_high": 0.0,
+     "passes": true
+    }
+   ]
+  },
+  "face_clip": {
+   "status": "public_test_passed",
+   "comparisons": [
+    {
+     "task": "face_deepfake",
+     "set": "faceswap_insightface_vs_real",
+     "label_vi": "hoán đổi khuôn mặt InsightFace (DeepFakeFace)",
+     "available": true,
+     "n_pos": 496,
+     "n_neg": 496,
+     "auroc": 0.9411176508844953,
+     "auroc_ci95": [
+      0.924703982667794,
+      0.9575515921728668
+     ],
+     "tpr_at_high": 0.8125,
+     "fpr_at_high": 0.04233870967741935,
+     "passes": true
+    },
+    {
+     "task": "face_deepfake",
+     "set": "face_inpainting_sd_vs_real",
+     "label_vi": "vẽ lại khuôn mặt bằng SD inpainting (DeepFakeFace)",
+     "available": true,
+     "n_pos": 496,
+     "n_neg": 496,
+     "auroc": 0.8885194458896982,
+     "auroc_ci95": [
+      0.8669863443841052,
+      0.9093260702555932
+     ],
+     "tpr_at_high": 0.5826612903225806,
+     "fpr_at_high": 0.04233870967741935,
+     "passes": true
+    }
+   ]
+  }
+ },
+ "targets": [
+  {
+   "target": "local_manipulation.image_auroc_min",
+   "where": "ctrl_mei",
+   "value": 0.9630983740575892,
+   "limit": 0.75,
+   "kind": "min",
+   "met": true
+  },
+  {
+   "target": "local_manipulation.fpr_at_high_threshold_max",
+   "where": "ctrl_mei",
+   "value": 0.0049504950495049506,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "local_manipulation.image_auroc_min",
+   "where": "korus",
+   "value": 0.6221694667640614,
+   "limit": 0.75,
+   "kind": "min",
+   "met": false
+  },
+  {
+   "target": "local_manipulation.fpr_at_high_threshold_max",
+   "where": "korus",
+   "value": 0.02027027027027027,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "local_manipulation.image_auroc_min",
+   "where": "cocoglide",
+   "value": 0.7222957611083984,
+   "limit": 0.75,
+   "kind": "min",
+   "met": false
+  },
+  {
+   "target": "local_manipulation.fpr_at_high_threshold_max",
+   "where": "cocoglide",
+   "value": 0.056640625,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "ai_generated.image_auroc_min_holdout_generators",
+   "where": "openfake_test",
+   "value": 0.9155539296384366,
+   "limit": 0.85,
+   "kind": "min",
+   "met": true
+  },
+  {
+   "target": "ai_generated.fpr_on_camera_photos_at_high_threshold_max",
+   "where": "ctrl_mei",
+   "value": 0.009900990099009901,
+   "limit": 0.05,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "ai_generated.fpr_on_camera_photos_at_high_threshold_max",
+   "where": "korus",
+   "value": 0.02702702702702703,
+   "limit": 0.05,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "ai_generated.fpr_on_camera_photos_at_high_threshold_max",
+   "where": "cocoglide",
+   "value": 0.0859375,
+   "limit": 0.05,
+   "kind": "max",
+   "met": false
+  },
+  {
+   "target": "ai_generated.fpr_on_camera_photos_at_high_threshold_max",
+   "where": "openfake",
+   "value": 0.007042253521126761,
+   "limit": 0.05,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "ai_generated.fpr_on_camera_photos_at_high_threshold_max",
+   "where": "dff_wiki",
+   "value": 0.0,
+   "limit": 0.05,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.image_auroc_min",
+   "where": "faceswap_insightface_vs_real",
+   "value": 0.9411176508844953,
+   "limit": 0.8,
+   "kind": "min",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.image_auroc_min",
+   "where": "face_inpainting_sd_vs_real",
+   "value": 0.8885194458896982,
+   "limit": 0.8,
+   "kind": "min",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.fpr_at_high_threshold_max",
+   "where": "dff_wiki_real_faces",
+   "value": 0.04233870967741935,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.fpr_at_high_threshold_max",
+   "where": "ctrl_mei_real_images",
+   "value": 0.024752475247524754,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.fpr_at_high_threshold_max",
+   "where": "korus_real_images",
+   "value": 0.02702702702702703,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.fpr_at_high_threshold_max",
+   "where": "cocoglide_real_images",
+   "value": 0.0,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  },
+  {
+   "target": "face_deepfake.fpr_at_high_threshold_max",
+   "where": "openfake_real_images",
+   "value": 0.004694835680751174,
+   "limit": 0.1,
+   "kind": "max",
+   "met": true
+  }
+ ]
+}

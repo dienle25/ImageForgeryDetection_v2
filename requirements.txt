@@ -1,0 +1,5 @@
+# Runtime of the shipped app (CPU only, no PyTorch). Exact versions tested; see requirements-lock-*.txt for hashes.
+numpy==2.5.3
+pillow==12.3.0
+onnxruntime==1.29.0
+opencv-python-headless==5.0.0.93

@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "files": {
+  "mesorch.onnx": {
+   "size_bytes": 348769325,
+   "sha256": "c8e7063d70264867429c69d4bb9b0f5a04d6ae5a6e2bb27b690551d188e25c76",
+   "task": "local_manipulation",
+   "source": "https://github.com/scu-zjz/Mesorch (README checkpoint 'mesorch-98.pth', sha256 6d8fcd7ce7616d819bec6a9ed461b27187101e67247f8b2d2483fdc1f25f685a)",
+   "conversion": "tools/export_mesorch_onnx.py (torch 2.6 TorchScript exporter, opset 17, fp32); max |diff| vs PyTorch 8.7e-7 on probe input",
+   "license_code": "MIT (Copyright (c) 2024 K-Squad)",
+   "license_weights": "no separate licence stated for the checkpoint; trained on CASIA v2, Fantastic Reality, IMD2020, tampCOCO (research-oriented dataset terms) - commercial use needs legal review"
+  },
+  "commfor_vits16_384.onnx": {
+   "size_bytes": 87384016,
+   "sha256": "ec914a6008e38704886e994852d5d53503a49f3b413006dfe7ee221447ba7bfb",
+   "task": "ai_generated",
+   "source": "https://huggingface.co/OwensLab/commfor-model-384 (revision 6076002b)",
+   "conversion": "tools/export_commfor_onnx.py (timm vit_small_patch16_384 + Linear(384,1), opset 17, fp32) from model.safetensors sha256 b89f36275f3bf5e2b040eee36597a8f19db051bff9a473a9cf7b2466284fb387; max |logit diff| vs PyTorch 5.8e-6",
+   "license_code": "MIT (Community Forensics, Park & Owens, CVPR 2025)",
+   "license_weights": "MIT per model card; training images come from many generators with their own terms - commercial use needs legal review"
+  },
+  "face_clip_vitl14.onnx": {
+   "size_bytes": 606651363,
+   "sha256": "55730bd19b0fab9684dce2e1d1629a055f04a84911755c3cac468be1a6866361",
+   "task": "face_deepfake",
+   "source": "https://huggingface.co/yermandy/deepfake-detection (model.torchscript, sha256 55c54d3f4d301ce07f0d08126fc4202572d20ea6952b039bc7a949a43714157d)",
+   "conversion": "tools/export_face_clip_onnx.py: plain-PyTorch rebuild verified bit-identical to the TorchScript in bf16, exported with bf16 weights + Cast->float32 compute (ONNX vs torch fp32 |diff| 1.9e-6)",
+   "license_code": "MIT (Copyright (c) 2025 Andy / yermandy)",
+   "license_weights": "MIT per repository; base CLIP ViT-L/14 (OpenAI, MIT); fine-tuned on FaceForensics++ (research-only terms) - commercial use needs legal review"
+  },
+  "face_detection_yunet_2023mar.onnx": {
+   "size_bytes": 232589,
+   "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+   "task": "face_detection (support for face_deepfake)",
+   "source": "https://github.com/opencv/opencv_zoo/tree/main/models/face_detection_yunet",
+   "conversion": "none (original file)",
+   "license_code": "MIT (OpenCV Zoo YuNet)",
+   "license_weights": "MIT"
+  },
+  "pscc_net.onnx": {
+   "size_bytes": 14678547,
+   "sha256": "8ce24603935deb717be347f04906b44ac2c2a8ac74c8ce4fabc655a03d9c352f",
+   "task": "local_manipulation (v1 baseline, disabled by default)",
+   "source": "https://github.com/proteus1991/PSCC-Net @ 53e5ff77d8dc5feddda060cd085f9b765761f816 (checkpoint/HRNet, NLCDetection, DetectionHead)",
+   "conversion": "tools/pscc_onnx.py (no torch; BatchNorm folded; deterministic) from weights_source/*.pth",
+   "license_code": "MIT (PSCC-Net repository)",
+   "license_weights": "no separate weights licence found"
+  }
+ }
+}

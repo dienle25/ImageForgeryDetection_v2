@@ -1,0 +1,397 @@
+{
+ "config": "config.json",
+ "base_run": "<THU_MUC_THI_NGHIEM>/product/test_v2.jsonl",
+ "thresholds": {
+  "mesorch": {
+   "low": 0.960912,
+   "high": 0.997501,
+   "pixel": 0.5,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  },
+  "commfor_aigen": {
+   "low": 0.002326,
+   "high": 0.069494,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  },
+  "face_clip": {
+   "low": 0.274283,
+   "high": 0.478866,
+   "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+  }
+ },
+ "results": {
+  "commfor_aigen": {
+   "bright115_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.016304347826086956,
+     "ge_high_transformed": 0.005434782608695652,
+     "ge_low_original": 0.10326086956521739,
+     "ge_low_transformed": 0.08967391304347826,
+     "crossed_up_to_suspicious": 0,
+     "crossed_down_from_suspicious": 4,
+     "median_score_original": 6.848445623606732e-05,
+     "median_score_transformed": 4.2555680221889424e-05
+    }
+   },
+   "contrast085_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.016304347826086956,
+     "ge_high_transformed": 0.016304347826086956,
+     "ge_low_original": 0.10326086956521739,
+     "ge_low_transformed": 0.11141304347826086,
+     "crossed_up_to_suspicious": 4,
+     "crossed_down_from_suspicious": 4,
+     "median_score_original": 6.848445623606732e-05,
+     "median_score_transformed": 7.076527622976849e-05
+    }
+   },
+   "crop80_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.016304347826086956,
+     "ge_high_transformed": 0.019021739130434784,
+     "ge_low_original": 0.10326086956521739,
+     "ge_low_transformed": 0.08967391304347826,
+     "crossed_up_to_suspicious": 5,
+     "crossed_down_from_suspicious": 4,
+     "median_score_original": 6.848445623606732e-05,
+     "median_score_transformed": 4.3066417877253116e-05
+    }
+   },
+   "half_jpeg85": {
+    "n": 1196,
+    "n_pos": 770,
+    "n_neg": 426,
+    "errors": 0,
+    "auroc_original": 0.9155539296384366,
+    "auroc_transformed": 0.8742515700262179,
+    "auroc_transformed_ci95": [
+     0.8544961600810301,
+     0.893637100584246
+    ],
+    "real_or_authentic": {
+     "n": 426,
+     "ge_high_original": 0.007042253521126761,
+     "ge_high_transformed": 0.007042253521126761,
+     "ge_low_original": 0.09859154929577464,
+     "ge_low_transformed": 0.12441314553990611,
+     "crossed_up_to_suspicious": 1,
+     "crossed_down_from_suspicious": 1,
+     "median_score_original": 2.0494807677952857e-05,
+     "median_score_transformed": 5.296744873827848e-05
+    },
+    "manipulated_or_generated": {
+     "n": 770,
+     "ge_high_original": 0.4779220779220779,
+     "ge_high_transformed": 0.41948051948051945,
+     "ge_low_original": 0.7389610389610389,
+     "ge_low_transformed": 0.6961038961038961,
+     "crossed_up_to_suspicious": 23,
+     "crossed_down_from_suspicious": 68,
+     "median_score_original": 0.049493231515210304,
+     "median_score_transformed": 0.02296141247939917
+    }
+   },
+   "jpeg75": {
+    "n": 1196,
+    "n_pos": 770,
+    "n_neg": 426,
+    "errors": 0,
+    "auroc_original": 0.9155539296384366,
+    "auroc_transformed": 0.8450338394000366,
+    "auroc_transformed_ci95": [
+     0.8218044131248263,
+     0.8672086461673916
+    ],
+    "real_or_authentic": {
+     "n": 426,
+     "ge_high_original": 0.007042253521126761,
+     "ge_high_transformed": 0.014084507042253521,
+     "ge_low_original": 0.09859154929577464,
+     "ge_low_transformed": 0.1267605633802817,
+     "crossed_up_to_suspicious": 3,
+     "crossed_down_from_suspicious": 0,
+     "median_score_original": 2.0494807677952857e-05,
+     "median_score_transformed": 7.590194266785002e-05
+    },
+    "manipulated_or_generated": {
+     "n": 770,
+     "ge_high_original": 0.4779220779220779,
+     "ge_high_transformed": 0.36363636363636365,
+     "ge_low_original": 0.7389610389610389,
+     "ge_low_transformed": 0.6597402597402597,
+     "crossed_up_to_suspicious": 7,
+     "crossed_down_from_suspicious": 95,
+     "median_score_original": 0.049493231515210304,
+     "median_score_transformed": 0.012023541147012672
+    }
+   },
+   "jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.016304347826086956,
+     "ge_high_transformed": 0.005434782608695652,
+     "ge_low_original": 0.10326086956521739,
+     "ge_low_transformed": 0.09782608695652174,
+     "crossed_up_to_suspicious": 0,
+     "crossed_down_from_suspicious": 4,
+     "median_score_original": 6.848445623606732e-05,
+     "median_score_transformed": 5.364911172065481e-05
+    }
+   },
+   "long1024_jpeg80": {
+    "n": 1196,
+    "n_pos": 770,
+    "n_neg": 426,
+    "errors": 0,
+    "auroc_original": 0.9155539296384366,
+    "auroc_transformed": 0.8585543564416804,
+    "auroc_transformed_ci95": [
+     0.8367578788802157,
+     0.8793340279959162
+    ],
+    "real_or_authentic": {
+     "n": 426,
+     "ge_high_original": 0.007042253521126761,
+     "ge_high_transformed": 0.02112676056338028,
+     "ge_low_original": 0.09859154929577464,
+     "ge_low_transformed": 0.12441314553990611,
+     "crossed_up_to_suspicious": 6,
+     "crossed_down_from_suspicious": 0,
+     "median_score_original": 2.0494807677952857e-05,
+     "median_score_transformed": 6.86971432040688e-05
+    },
+    "manipulated_or_generated": {
+     "n": 770,
+     "ge_high_original": 0.4779220779220779,
+     "ge_high_transformed": 0.3922077922077922,
+     "ge_low_original": 0.7389610389610389,
+     "ge_low_transformed": 0.6935064935064935,
+     "crossed_up_to_suspicious": 16,
+     "crossed_down_from_suspicious": 82,
+     "median_score_original": 0.049493231515210304,
+     "median_score_transformed": 0.017411916849015587
+    }
+   },
+   "rot90_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.016304347826086956,
+     "ge_high_transformed": 0.01358695652173913,
+     "ge_low_original": 0.10326086956521739,
+     "ge_low_transformed": 0.08967391304347826,
+     "crossed_up_to_suspicious": 2,
+     "crossed_down_from_suspicious": 3,
+     "median_score_original": 6.848445623606732e-05,
+     "median_score_transformed": 3.5137198528000286e-05
+    }
+   }
+  },
+  "face_clip": {
+   "bright115_jpeg95": {
+    "n": 496,
+    "n_pos": 0,
+    "n_neg": 496,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 496,
+     "ge_high_original": 0.04233870967741935,
+     "ge_high_transformed": 0.04838709677419355,
+     "ge_low_original": 0.15725806451612903,
+     "ge_low_transformed": 0.17943548387096775,
+     "crossed_up_to_suspicious": 8,
+     "crossed_down_from_suspicious": 5,
+     "median_score_original": 0.17730243010871505,
+     "median_score_transformed": 0.17460861820055024,
+     "no_face_original": 0.018145161290322582,
+     "no_face_transformed": 0.018145161290322582
+    }
+   },
+   "contrast085_jpeg95": {
+    "n": 496,
+    "n_pos": 0,
+    "n_neg": 496,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 496,
+     "ge_high_original": 0.04233870967741935,
+     "ge_high_transformed": 0.04233870967741935,
+     "ge_low_original": 0.15725806451612903,
+     "ge_low_transformed": 0.17943548387096775,
+     "crossed_up_to_suspicious": 6,
+     "crossed_down_from_suspicious": 6,
+     "median_score_original": 0.17730243010871505,
+     "median_score_transformed": 0.17603923394604104,
+     "no_face_original": 0.018145161290322582,
+     "no_face_transformed": 0.020161290322580645
+    }
+   },
+   "crop80_jpeg95": {
+    "n": 496,
+    "n_pos": 0,
+    "n_neg": 496,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 496,
+     "ge_high_original": 0.04233870967741935,
+     "ge_high_transformed": 0.04032258064516129,
+     "ge_low_original": 0.15725806451612903,
+     "ge_low_transformed": 0.17943548387096775,
+     "crossed_up_to_suspicious": 11,
+     "crossed_down_from_suspicious": 12,
+     "median_score_original": 0.17730243010871505,
+     "median_score_transformed": 0.17570632544575437,
+     "no_face_original": 0.018145161290322582,
+     "no_face_transformed": 0.03024193548387097
+    }
+   },
+   "jpeg95": {
+    "n": 496,
+    "n_pos": 0,
+    "n_neg": 496,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 496,
+     "ge_high_original": 0.04233870967741935,
+     "ge_high_transformed": 0.04838709677419355,
+     "ge_low_original": 0.15725806451612903,
+     "ge_low_transformed": 0.18346774193548387,
+     "crossed_up_to_suspicious": 5,
+     "crossed_down_from_suspicious": 2,
+     "median_score_original": 0.17730243010871505,
+     "median_score_transformed": 0.17649418967150476,
+     "no_face_original": 0.018145161290322582,
+     "no_face_transformed": 0.016129032258064516
+    }
+   },
+   "rot90_jpeg95": {
+    "n": 496,
+    "n_pos": 0,
+    "n_neg": 496,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 496,
+     "ge_high_original": 0.04233870967741935,
+     "ge_high_transformed": 0.018145161290322582,
+     "ge_low_original": 0.15725806451612903,
+     "ge_low_transformed": 0.05846774193548387,
+     "crossed_up_to_suspicious": 7,
+     "crossed_down_from_suspicious": 19,
+     "median_score_original": 0.17730243010871505,
+     "median_score_transformed": -1.0,
+     "no_face_original": 0.018145161290322582,
+     "no_face_transformed": 0.7641129032258065
+    }
+   }
+  },
+  "mesorch": {
+   "bright115_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.010869565217391304,
+     "ge_high_transformed": 0.01358695652173913,
+     "ge_low_original": 0.10054347826086957,
+     "ge_low_transformed": 0.09510869565217392,
+     "crossed_up_to_suspicious": 2,
+     "crossed_down_from_suspicious": 1,
+     "median_score_original": 0.51980921626091,
+     "median_score_transformed": 0.5212408304214478
+    }
+   },
+   "contrast085_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.010869565217391304,
+     "ge_high_transformed": 0.005434782608695652,
+     "ge_low_original": 0.10054347826086957,
+     "ge_low_transformed": 0.08967391304347826,
+     "crossed_up_to_suspicious": 1,
+     "crossed_down_from_suspicious": 3,
+     "median_score_original": 0.51980921626091,
+     "median_score_transformed": 0.5083338618278503
+    }
+   },
+   "crop80_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.010869565217391304,
+     "ge_high_transformed": 0.005434782608695652,
+     "ge_low_original": 0.10054347826086957,
+     "ge_low_transformed": 0.08967391304347826,
+     "crossed_up_to_suspicious": 2,
+     "crossed_down_from_suspicious": 4,
+     "median_score_original": 0.51980921626091,
+     "median_score_transformed": 0.5267884135246277
+    }
+   },
+   "jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.010869565217391304,
+     "ge_high_transformed": 0.005434782608695652,
+     "ge_low_original": 0.10054347826086957,
+     "ge_low_transformed": 0.09239130434782608,
+     "crossed_up_to_suspicious": 1,
+     "crossed_down_from_suspicious": 3,
+     "median_score_original": 0.51980921626091,
+     "median_score_transformed": 0.5057337284088135
+    }
+   },
+   "rot90_jpeg95": {
+    "n": 368,
+    "n_pos": 0,
+    "n_neg": 368,
+    "errors": 0,
+    "real_or_authentic": {
+     "n": 368,
+     "ge_high_original": 0.010869565217391304,
+     "ge_high_transformed": 0.02717391304347826,
+     "ge_low_original": 0.10054347826086957,
+     "ge_low_transformed": 0.09782608695652174,
+     "crossed_up_to_suspicious": 9,
+     "crossed_down_from_suspicious": 3,
+     "median_score_original": 0.51980921626091,
+     "median_score_transformed": 0.550690084695816
+    }
+   }
+  }
+ }
+}

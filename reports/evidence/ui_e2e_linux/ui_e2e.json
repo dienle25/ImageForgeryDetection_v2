@@ -1,0 +1,47 @@
+{
+ "title": "Kiểm tra ảnh chỉnh sửa",
+ "loading_message_seen": true,
+ "ready_seconds": 17.3,
+ "scope_items": 4,
+ "verdict_text": "Có dấu hiệu nghi vấn — cần người kiểm tra xem xét",
+ "detector_cards": 3,
+ "chips": [
+  "Nghi vấn",
+  "Chưa thấy dấu hiệu rõ",
+  "Không áp dụng"
+ ],
+ "tabs_visible": [
+  "overlay",
+  "heatmap",
+  "original"
+ ],
+ "preview_natural_width": 256,
+ "zip_members": [
+  "original.png",
+  "heatmap.png",
+  "overlay.png",
+  "mask.png",
+  "heatmap_gray16.png",
+  "heatmap.npy",
+  "result.json"
+ ],
+ "zip_has_result_json": true,
+ "zip_result_source_name": "splice1.png",
+ "invalid_file_error": "Không đọc được ảnh JPEG/PNG hợp lệ: file hỏng hoặc không phải ảnh.",
+ "face_tabs_visible": [
+  "overlay",
+  "heatmap",
+  "faces",
+  "original"
+ ],
+ "face_card_text": [
+  "Deepfake / hoán đổi khuôn mặt\nNghi vấn\nTìm khuôn mặt rồi đánh giá từng khuôn mặt có bị hoán đổi/tạo giả.\n0.882\nVạch: “cần kiểm tra thêm” từ 0.274, “nghi vấn” từ 0.479.\nPhát hiện 1 khuôn mặt, đã kiểm tra 1. Xem tab “Khuôn mặt”.\nMặt #1: 0.882 — nghi vấn\nCLIP deepfake: max softmax(fake) trên các khuôn mặt — điểm thô, CHƯA hiệu chỉnh xác suất"
+ ],
+ "wrong_token_status": 403,
+ "console_errors_ignored_expected_422": [
+  "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)"
+ ],
+ "console_errors": [],
+ "ok": true,
+ "server_log_tail": "ng. Nhấn Ctrl+C hoặc đóng cửa sổ để dừng.\nĐang nạp và kiểm tra mô hình (lần đầu có thể mất 30–120 giây)...\n2026-10-12 13:49:20,986 INFO 127.0.0.1 - \"GET /?t=<token> HTTP/1.1\" 200 -\n2026-10-12 13:49:21,016 INFO 127.0.0.1 - \"GET /static/style.css HTTP/1.1\" 200 -\n2026-10-12 13:49:21,016 INFO 127.0.0.1 - \"GET /static/app.js HTTP/1.1\" 200 -\n2026-10-12 13:49:21,040 INFO 127.0.0.1 - \"GET /api/status HTTP/1.1\" 200 -\n2026-10-12 13:49:35,452 INFO 127.0.0.1 - \"GET /api/status HTTP/1.1\" 200 -\nSẵn sàng sau 16 giây. Mở trình duyệt theo địa chỉ ở trên.\n2026-10-12 13:49:36,963 INFO 127.0.0.1 - \"GET /api/status HTTP/1.1\" 200 -\n2026-10-12 13:49:39,919 INFO 127.0.0.1 - \"POST /api/analyze HTTP/1.1\" 200 -\n2026-10-12 13:49:39,937 INFO 127.0.0.1 - \"GET /api/result/0b503f21ca13bb2e/preview_overlay.jpg?t=<token> HTTP/1.1\" 200 -\n2026-10-12 13:49:40,505 INFO 127.0.0.1 - \"GET /api/result/0b503f21ca13bb2e/preview_heatmap.jpg?t=<token> HTTP/1.1\" 200 -\n2026-10-12 13:49:40,911 INFO 127.0.0.1 - \"GET /api/result/0b503f21ca13bb2e/results.zip?t=<token>&download=1 HTTP/1.1\" 200 -\n2026-10-12 13:49:41,033 INFO 127.0.0.1 - \"POST /api/analyze HTTP/1.1\" 422 -\n2026-10-12 13:49:46,253 INFO 127.0.0.1 - \"POST /api/analyze HTTP/1.1\" 200 -\n2026-10-12 13:49:46,262 INFO 127.0.0.1 - \"GET /api/result/4629a8229b370c6d/preview_overlay.jpg?t=<token> HTTP/1.1\" 200 -\n2026-10-12 13:49:46,606 INFO 127.0.0.1 - \"GET /api/status?t=wrong HTTP/1.1\" 403 -\n"
+}

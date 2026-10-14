@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/proteus1991/PSCC-Net",
+  "commit": "53e5ff77d8dc5feddda060cd085f9b765761f816",
+  "hash_provenance": "SHA-256 computed from downloaded bytes; Git blob IDs independently matched to GitHub API tree; no publisher-signed SHA-256 was found.",
+  "files": {
+    "NLCDetection.pth": {
+      "url": "https://raw.githubusercontent.com/proteus1991/PSCC-Net/53e5ff77d8dc5feddda060cd085f9b765761f816/checkpoint/NLCDetection_checkpoint/NLCDetection.pth",
+      "size_bytes": 2900709,
+      "sha256": "11ea3461253cf059b299ad4b6b89008485f94a2d2b2da83ec28c2282a095b00b",
+      "git_blob_sha1": "248f06583d15e37ff3c9f76eea9dd6f099e0bb54"
+    },
+    "DetectionHead.pth": {
+      "url": "https://raw.githubusercontent.com/proteus1991/PSCC-Net/53e5ff77d8dc5feddda060cd085f9b765761f816/checkpoint/DetectionHead_checkpoint/DetectionHead.pth",
+      "size_bytes": 3739969,
+      "sha256": "a17581e8a3489a360257a266ca9b2db1b7c9b43337fbcc4aeb8d751f593f66f5",
+      "git_blob_sha1": "e08360041cbacfee7d9e9eb45e91c66f2d3e6303"
+    },
+    "HRNet.pth": {
+      "url": "https://raw.githubusercontent.com/proteus1991/PSCC-Net/53e5ff77d8dc5feddda060cd085f9b765761f816/checkpoint/HRNet_checkpoint/HRNet.pth",
+      "size_bytes": 8305545,
+      "sha256": "d3b21edc4930187a6801cc818bd7b999fb5d8078d8f2e2193572e91ea5160096",
+      "git_blob_sha1": "84c29f7bb2bc511c2783c18d6da66adb8df8f217"
+    }
+  }
+}

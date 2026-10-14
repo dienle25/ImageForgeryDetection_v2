@@ -1,0 +1,15 @@
+ifd 2.0.0 self-test 20261012T141134Z
+{"os": "Windows-11-10.0.26200-SP0", "machine": "AMD64", "python": "3.13.16", "python_executable": "<THU_MUC_GIAI_NEN>\\ImageForgeryDetection_v2\\runtime\\python.exe", "cpu": "AMD Ryzen 7 4800H with Radeon Graphics", "logical_cpus": 16, "ram_mb": 7599.109375}
+
+PASS  imports  (1.213s)
+PASS  model_files_sha256  (1.332s)
+PASS  model_numeric_parity_vs_build_machine  (20.091s)
+PASS  analyzer_load_and_reference_samples  (42.452s)
+PASS  input_formats_and_rejections  (28.964s)
+PASS  config_validation  (0.015s)
+PASS  corrupt_or_missing_model  (0.076s)
+PASS  cli_runs_and_artifacts  (46.825s)
+PASS  web_ui_api_downloads_security_port  (5.222s)
+PASS  cpu_timing  (19.288s)
+
+PASS=10 FAIL=0 SKIP=0

@@ -1,0 +1,33 @@
+{
+ "schema_version": 2,
+ "_comment": "BEFORE baseline: v1 behaviour (PSCC-Net, cạnh dài 512 bilinear + đệm, ngưỡng 0.35/0.65, giới hạn v1) chạy trên runtime v2; chỉ dùng để so sánh trước/sau.",
+ "limits": {
+  "max_file_mb": 20,
+  "max_pixels": 20000000,
+  "min_side": 16
+ },
+ "runtime": {
+  "threads": 0
+ },
+ "display": {
+  "overlay_alpha": 0.55
+ },
+ "detectors": {
+  "pscc_net": {
+   "enabled": true,
+   "type": "pscc_onnx",
+   "model": "../../models/pscc_net.onnx",
+   "policy": {
+    "mode": "bounded_native",
+    "max_side": 512,
+    "resample": "bilinear"
+   },
+   "thresholds": {
+    "low": 0.35,
+    "high": 0.65,
+    "pixel": 0.5,
+    "status": "v1 thresholds (uncalibrated)"
+   }
+  }
+ }
+}

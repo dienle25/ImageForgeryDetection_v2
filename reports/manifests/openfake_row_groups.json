@@ -1,0 +1,110 @@
+[
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 0,
+  "start": 4,
+  "end_excl": 102491875,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 6,
+  "start": 607977563,
+  "end_excl": 710081578,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 12,
+  "start": 1241735339,
+  "end_excl": 1375823638,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 18,
+  "start": 1884906089,
+  "end_excl": 2032502098,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 24,
+  "start": 2611892400,
+  "end_excl": 2721392978,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 30,
+  "start": 3297680393,
+  "end_excl": 3407401776,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 36,
+  "start": 3924917720,
+  "end_excl": 4032946488,
+  "rows": 148
+ },
+ {
+  "shard": "test0",
+  "remote": "core/test-00000-of-00013.parquet",
+  "total": 5142119947,
+  "rg": 42,
+  "start": 4513498908,
+  "end_excl": 4655704434,
+  "rows": 148
+ },
+ {
+  "shard": "test7",
+  "remote": "core/test-00007-of-00013.parquet",
+  "total": 5294812334,
+  "rg": 3,
+  "start": 341529228,
+  "end_excl": 454240974,
+  "rows": 148
+ },
+ {
+  "shard": "test7",
+  "remote": "core/test-00007-of-00013.parquet",
+  "total": 5294812334,
+  "rg": 15,
+  "start": 1695449571,
+  "end_excl": 1794113634,
+  "rows": 148
+ },
+ {
+  "shard": "test7",
+  "remote": "core/test-00007-of-00013.parquet",
+  "total": 5294812334,
+  "rg": 27,
+  "start": 2930185167,
+  "end_excl": 3036302470,
+  "rows": 148
+ },
+ {
+  "shard": "test7",
+  "remote": "core/test-00007-of-00013.parquet",
+  "total": 5294812334,
+  "rg": 39,
+  "start": 4261781566,
+  "end_excl": 4387935487,
+  "rows": 148
+ }
+]

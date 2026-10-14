@@ -1,0 +1,8 @@
+{
+ "run": "<THU_MUC_THI_NGHIEM>/product/test_v2.jsonl",
+ "n": 150,
+ "max_abs_score_diff": 0.0,
+ "tolerance": 1e-06,
+ "mismatches": [],
+ "ok": true
+}
