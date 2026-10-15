@@ -1,0 +1,141 @@
+﻿{
+ "app_version": "2.0.0",
+ "created_utc": "20261015T063734Z",
+ "environment": {
+  "os": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "python": "3.13.16",
+  "python_executable": "D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\python.exe",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12500H",
+  "logical_cpus": 16,
+  "ram_mb": 7896.0546875
+ },
+ "counts": {
+  "PASS": 3,
+  "FAIL": 7,
+  "SKIP": 0
+ },
+ "checks": [
+  {
+   "check": "imports",
+   "status": "FAIL",
+   "seconds": 1.582,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing onnxruntime_pybind11_state: The filename or extension is too long.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 93, in check_imports\n    import onnxruntime\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\__init__.py\", line 78, in <module>\n    raise import_capi_exception\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\__init__.py\", line 26, in <module>\n    from onnxruntime.capi._pybind_state import (\n    ...<42 lines>...\n    )\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\capi\\_pybind_state.py\", line 32, in <module>\n    from .onnxruntime_pybind11_state import *  # noqa\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nImportError: DLL load failed while importing onnxruntime_pybind11_state: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "model_files_sha256",
+   "status": "PASS",
+   "seconds": 1.416,
+   "detail": {
+    "assembled_from_parts": [],
+    "models": {
+     "mesorch.onnx": {
+      "sha256": "c8e7063d70264867429c69d4bb9b0f5a04d6ae5a6e2bb27b690551d188e25c76",
+      "bytes": 348769325,
+      "verify_seconds": 0.4
+     },
+     "commfor_vits16_384.onnx": {
+      "sha256": "ec914a6008e38704886e994852d5d53503a49f3b413006dfe7ee221447ba7bfb",
+      "bytes": 87384016,
+      "verify_seconds": 0.17
+     },
+     "face_clip_vitl14.onnx": {
+      "sha256": "55730bd19b0fab9684dce2e1d1629a055f04a84911755c3cac468be1a6866361",
+      "bytes": 606651363,
+      "verify_seconds": 0.69
+     },
+     "face_detection_yunet_2023mar.onnx": {
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "bytes": 232589,
+      "verify_seconds": 0.05
+     },
+     "pscc_net.onnx": {
+      "sha256": "8ce24603935deb717be347f04906b44ac2c2a8ac74c8ce4fabc655a03d9c352f",
+      "bytes": 14678547,
+      "verify_seconds": 0.1
+     }
+    }
+   }
+  },
+  {
+   "check": "model_numeric_parity_vs_build_machine",
+   "status": "FAIL",
+   "seconds": 0.005,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing onnxruntime_pybind11_state: The filename or extension is too long.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 116, in check_probes\n    import onnxruntime as ort\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\__init__.py\", line 78, in <module>\n    raise import_capi_exception\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\__init__.py\", line 26, in <module>\n    from onnxruntime.capi._pybind_state import (\n    ...<42 lines>...\n    )\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\onnxruntime\\capi\\_pybind_state.py\", line 32, in <module>\n    from .onnxruntime_pybind11_state import *  # noqa\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nImportError: DLL load failed while importing onnxruntime_pybind11_state: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "cli_folder_full_pipeline_subprocess",
+   "status": "FAIL",
+   "seconds": 0.483,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing _imaging: The filename or extension is too long.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 402, in check_cli_full_subprocess\n    src = _make_cli_inputs(tmp)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 324, in _make_cli_inputs\n    (src / \"a.jpg\").write_bytes(_jpeg_bytes(_photo_like(240, 320, 5)))\n                                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 56, in _jpeg_bytes\n    from PIL import Image\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\PIL\\Image.py\", line 95, in <module>\n    from . import _imaging as core\nImportError: DLL load failed while importing _imaging: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "analyzer_load_and_reference_samples",
+   "status": "FAIL",
+   "seconds": 0.046,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing _imaging: The filename or extension is too long.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 140, in check_analyzer_and_samples\n    from .analysis import Analyzer, report_files\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\analysis.py\", line 22, in <module>\n    from .image_io import LoadedImage, decoded_pixel_hash, read_image\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\image_io.py\", line 11, in <module>\n    from PIL import Image, ImageOps, UnidentifiedImageError\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\PIL\\Image.py\", line 95, in <module>\n    from . import _imaging as core\nImportError: DLL load failed while importing _imaging: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "config_validation",
+   "status": "PASS",
+   "seconds": 0.005,
+   "detail": {
+    "low_gt_high": "Ngưỡng mesorch: cần low ≤ high.",
+    "threshold_out_of_range": "Cấu hình 'mesorch.high' phải trong khoảng [0, 1].",
+    "unknown_type": "Detector 'mesorch': loại 'nope' không hỗ trợ.",
+    "nan_limit": "Cấu hình 'limits.max_file_mb' phải là số hữu hạn.",
+    "broken_json": "Không đọc được cấu hình config.json: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)"
+   }
+  },
+  {
+   "check": "corrupt_or_missing_model",
+   "status": "PASS",
+   "seconds": 0.099,
+   "detail": {
+    "flipped_byte": "File mô hình face_detection_yunet_2023mar.onnx sai SHA-256; không sử dụng file này.",
+    "truncated": "File mô hình face_detection_yunet_2023mar.onnx sai dung lượng (hỏng hoặc tải chưa đủ).",
+    "missing": "Thiếu file mô hình face_detection_yunet_2023mar.onnx. Chạy: python scripts/fetch_models.py (xem README)."
+   }
+  },
+  {
+   "check": "cli_runs_and_artifacts",
+   "status": "FAIL",
+   "seconds": 0.058,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing _imaging: The filename or extension is too long.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 333, in check_cli\n    from .cli import main as cli_main\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\cli.py\", line 15, in <module>\n    from .analysis import Analyzer, report_files\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\analysis.py\", line 22, in <module>\n    from .image_io import LoadedImage, decoded_pixel_hash, read_image\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\image_io.py\", line 11, in <module>\n    from PIL import Image, ImageOps, UnidentifiedImageError\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\PIL\\Image.py\", line 95, in <module>\n    from . import _imaging as core\nImportError: DLL load failed while importing _imaging: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "company_validation_kit",
+   "status": "FAIL",
+   "seconds": 0.074,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing _imaging: The filename or extension is too long.",
+    "traceback": " \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 368, in check_company_eval\n    from .company_eval import main as kit_main\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\company_eval.py\", line 39, in <module>\n    from .analysis import config_hash, decision_config_hash, load_evaluated_configs\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\analysis.py\", line 22, in <module>\n    from .image_io import LoadedImage, decoded_pixel_hash, read_image\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\image_io.py\", line 11, in <module>\n    from PIL import Image, ImageOps, UnidentifiedImageError\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\PIL\\Image.py\", line 95, in <module>\n    from . import _imaging as core\nImportError: DLL load failed while importing _imaging: The filename or extension is too long.\n"
+   }
+  },
+  {
+   "check": "web_ui_api_downloads_security_port",
+   "status": "FAIL",
+   "seconds": 0.033,
+   "detail": {
+    "exception": "ImportError: DLL load failed while importing _imaging: The filename or extension is too long.",
+    "traceback": "xxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\selftest.py\", line 429, in check_web\n    from .webapp.server import LocalHTTPServer, State, free_port, make_handler, main as server_main\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\webapp\\server.py\", line 29, in <module>\n    from ..analysis import Analyzer, report_files, zip_bytes\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\analysis.py\", line 22, in <module>\n    from .image_io import LoadedImage, decoded_pixel_hash, read_image\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\ifd\\image_io.py\", line 11, in <module>\n    from PIL import Image, ImageOps, UnidentifiedImageError\n  File \"D:\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\IFD\\runtime\\Lib\\site-packages\\PIL\\Image.py\", line 95, in <module>\n    from . import _imaging as core\nImportError: DLL load failed while importing _imaging: The filename or extension is too long.\n"
+   }
+  }
+ ]
+}
+

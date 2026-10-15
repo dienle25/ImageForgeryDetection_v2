@@ -1,0 +1,186 @@
+﻿{
+ "app_version": "2.0.0",
+ "created_utc": "20261015T062331Z",
+ "environment": {
+  "os": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "python": "3.13.16",
+  "python_executable": "D:\\Thử nghiệm ảnh\\IFD v2\\runtime\\python.exe",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12500H",
+  "logical_cpus": 16,
+  "ram_mb": 7896.0546875
+ },
+ "counts": {
+  "PASS": 7,
+  "FAIL": 3,
+  "SKIP": 0
+ },
+ "checks": [
+  {
+   "check": "imports",
+   "status": "PASS",
+   "seconds": 3.143,
+   "detail": {
+    "numpy": "2.5.3",
+    "pillow": "12.3.0",
+    "onnxruntime": "1.29.0",
+    "opencv": "5.0.0",
+    "ort_providers": [
+     "AzureExecutionProvider",
+     "CPUExecutionProvider"
+    ]
+   }
+  },
+  {
+   "check": "model_files_sha256",
+   "status": "PASS",
+   "seconds": 2.944,
+   "detail": {
+    "assembled_from_parts": [],
+    "models": {
+     "mesorch.onnx": {
+      "sha256": "c8e7063d70264867429c69d4bb9b0f5a04d6ae5a6e2bb27b690551d188e25c76",
+      "bytes": 348769325,
+      "verify_seconds": 0.98
+     },
+     "commfor_vits16_384.onnx": {
+      "sha256": "ec914a6008e38704886e994852d5d53503a49f3b413006dfe7ee221447ba7bfb",
+      "bytes": 87384016,
+      "verify_seconds": 0.27
+     },
+     "face_clip_vitl14.onnx": {
+      "sha256": "55730bd19b0fab9684dce2e1d1629a055f04a84911755c3cac468be1a6866361",
+      "bytes": 606651363,
+      "verify_seconds": 1.45
+     },
+     "face_detection_yunet_2023mar.onnx": {
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "bytes": 232589,
+      "verify_seconds": 0.06
+     },
+     "pscc_net.onnx": {
+      "sha256": "8ce24603935deb717be347f04906b44ac2c2a8ac74c8ce4fabc655a03d9c352f",
+      "bytes": 14678547,
+      "verify_seconds": 0.17
+     }
+    }
+   }
+  },
+  {
+   "check": "model_numeric_parity_vs_build_machine",
+   "status": "PASS",
+   "seconds": 48.135,
+   "detail": {
+    "mesorch.onnx": {
+     "max_abs_diff_sampled": 8.940696716308594e-08,
+     "mean_diff": 1.8968648873851635e-09,
+     "tolerance": 0.002
+    },
+    "commfor_vits16_384.onnx": {
+     "max_abs_diff_sampled": 6.556510925292969e-07,
+     "mean_diff": 6.556510925292969e-07,
+     "tolerance": 0.02
+    },
+    "face_clip_vitl14.onnx": {
+     "max_abs_diff_sampled": 5.662441253662109e-07,
+     "mean_diff": 3.725290298461914e-08,
+     "tolerance": 0.02
+    },
+    "pscc_net.onnx": {
+     "max_abs_diff_sampled": 8.940696716308594e-08,
+     "mean_diff": 6.139089236967266e-11,
+     "tolerance": 0.002
+    }
+   }
+  },
+  {
+   "check": "cli_folder_full_pipeline_subprocess",
+   "status": "FAIL",
+   "seconds": 15.303,
+   "detail": {
+    "assertion": "expected exit 1, got 2; stderr: Lỗi: Không nạp được mô hình phát hiện khuôn mặt (D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx): OpenCV(5.0.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\dnn\\src\\onnx\\onnx_importer2.cpp:341: error: (-5:Bad argument) Can't read ONNX file: D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx in function 'cv::dnn::dnn5_v20260605::ONNXImporter2::parseFile'\n"
+   }
+  },
+  {
+   "check": "analyzer_load_and_reference_samples",
+   "status": "FAIL",
+   "seconds": 9.852,
+   "detail": {
+    "exception": "ForgeryError: Không nạp được mô hình phát hiện khuôn mặt (D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx): OpenCV(5.0.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\dnn\\src\\onnx\\onnx_importer2.cpp:341: error: (-5:Bad argument) Can't read ONNX file: D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx in function 'cv::dnn::dnn5_v20260605::ONNXImporter2::parseFile'",
+    "traceback": "st recent call last):\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\detectors\\face.py\", line 57, in __init__\n    self.det = cv2.FaceDetectorYN.create(str(model_path), \"\", (320, 320), score_threshold, 0.3, 5000)\n               ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ncv2.error: OpenCV(5.0.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\dnn\\src\\onnx\\onnx_importer2.cpp:341: error: (-5:Bad argument) Can't read ONNX file: D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx in function 'cv::dnn::dnn5_v20260605::ONNXImporter2::parseFile'\n\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\selftest.py\", line 39, in run\n    detail = fn(*args, **kw)\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\selftest.py\", line 145, in check_analyzer_and_samples\n    an = Analyzer(cfg)\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\analysis.py\", line 81, in __init__\n    self.detectors[key] = FaceDeepfakeDetector(model_path, face_path, det, config.threads)\n                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\detectors\\face.py\", line 100, in __init__\n    self.finder = FaceFinder(face_model_path, float(settings.get(\"face_score_threshold\", 0.7)))\n                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Thử nghiệm ảnh\\IFD v2\\ifd\\detectors\\face.py\", line 59, in __init__\n    raise model_load_error(\"phát hiện khuôn mặt\", model_path, exc) from exc\nifd.errors.ForgeryError: Không nạp được mô hình phát hiện khuôn mặt (D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx): OpenCV(5.0.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\dnn\\src\\onnx\\onnx_importer2.cpp:341: error: (-5:Bad argument) Can't read ONNX file: D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx in function 'cv::dnn::dnn5_v20260605::ONNXImporter2::parseFile'\n"
+   }
+  },
+  {
+   "check": "config_validation",
+   "status": "PASS",
+   "seconds": 0.01,
+   "detail": {
+    "low_gt_high": "Ngưỡng mesorch: cần low ≤ high.",
+    "threshold_out_of_range": "Cấu hình 'mesorch.high' phải trong khoảng [0, 1].",
+    "unknown_type": "Detector 'mesorch': loại 'nope' không hỗ trợ.",
+    "nan_limit": "Cấu hình 'limits.max_file_mb' phải là số hữu hạn.",
+    "broken_json": "Không đọc được cấu hình config.json: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)"
+   }
+  },
+  {
+   "check": "corrupt_or_missing_model",
+   "status": "PASS",
+   "seconds": 0.125,
+   "detail": {
+    "flipped_byte": "File mô hình face_detection_yunet_2023mar.onnx sai SHA-256; không sử dụng file này.",
+    "truncated": "File mô hình face_detection_yunet_2023mar.onnx sai dung lượng (hỏng hoặc tải chưa đủ).",
+    "missing": "Thiếu file mô hình face_detection_yunet_2023mar.onnx. Chạy: python scripts/fetch_models.py (xem README)."
+   }
+  },
+  {
+   "check": "cli_runs_and_artifacts",
+   "status": "PASS",
+   "seconds": 5.582,
+   "detail": {
+    "run1": "20261015T062451Z_723df04a",
+    "run2": "20261015T062455Z_7181c9be",
+    "exit_codes": [
+     1,
+     0,
+     2
+    ],
+    "csv_columns": "input,status,overall_decision,overall_decision_vi,commfor_aigen_score,commfor_aigen_decision,pscc_net_score,pscc_net_decision,faces_found,output_dir,error"
+   }
+  },
+  {
+   "check": "company_validation_kit",
+   "status": "PASS",
+   "seconds": 7.184,
+   "detail": {
+    "counts": {
+     "found": 6,
+     "ok": 5,
+     "errors": 1,
+     "real": 3,
+     "fake": 2
+    },
+    "product_by_type": [
+     "that/(tất cả)",
+     "that/máy ảnh",
+     "sua/(tất cả)",
+     "sua/ghép"
+    ],
+    "report_files": [
+     "bao_cao_kiem_dinh.html",
+     "bao_cao_kiem_dinh.md",
+     "du_doan.csv",
+     "metrics.json"
+    ]
+   }
+  },
+  {
+   "check": "web_ui_api_downloads_security_port",
+   "status": "FAIL",
+   "seconds": 7.1,
+   "detail": {
+    "assertion": "Không nạp được mô hình phát hiện khuôn mặt (D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx): OpenCV(5.0.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\dnn\\src\\onnx\\onnx_importer2.cpp:341: error: (-5:Bad argument) Can't read ONNX file: D:\\Thử nghiệm ảnh\\IFD v2\\models\\face_detection_yunet_2023mar.onnx in function 'cv::dnn::dnn5_v20260605::ONNXImporter2::parseFile'"
+   }
+  }
+ ]
+}
+

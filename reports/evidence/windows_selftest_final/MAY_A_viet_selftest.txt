@@ -1,0 +1,16 @@
+﻿ifd 2.0.0 self-test 20261015T062331Z
+{"os": "Windows-11-10.0.26200-SP0", "machine": "AMD64", "python": "3.13.16", "python_executable": "D:\\Thử nghiệm ảnh\\IFD v2\\runtime\\python.exe", "cpu": "12th Gen Intel(R) Core(TM) i5-12500H", "logical_cpus": 16, "ram_mb": 7896.0546875}
+
+PASS  imports  (3.143s)
+PASS  model_files_sha256  (2.944s)
+PASS  model_numeric_parity_vs_build_machine  (48.135s)
+FAIL  cli_folder_full_pipeline_subprocess  (15.303s)
+FAIL  analyzer_load_and_reference_samples  (9.852s)
+PASS  config_validation  (0.01s)
+PASS  corrupt_or_missing_model  (0.125s)
+PASS  cli_runs_and_artifacts  (5.582s)
+PASS  company_validation_kit  (7.184s)
+FAIL  web_ui_api_downloads_security_port  (7.1s)
+
+PASS=7 FAIL=3 SKIP=0
+
