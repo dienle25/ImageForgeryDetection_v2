@@ -1,0 +1,18 @@
+﻿ifd 2.0.0 self-test 20261014T181540Z
+{"os": "Windows-11-10.0.26200-SP0", "machine": "AMD64", "python": "3.13.16", "python_executable": "D:\\IFD\\ImageForgeryDetection_v2\\runtime\\python.exe", "cpu": "12th Gen Intel(R) Core(TM) i5-12500H", "logical_cpus": 16, "ram_mb": 7896.0546875}
+
+PASS  imports  (0.126s)
+PASS  model_files_sha256  (0.983s)
+PASS  model_numeric_parity_vs_build_machine  (18.368s)
+PASS  cli_folder_full_pipeline_subprocess  (24.633s)
+PASS  analyzer_load_and_reference_samples  (39.667s)
+PASS  input_formats_and_rejections  (32.866s)
+PASS  config_validation  (0.026s)
+PASS  corrupt_or_missing_model  (0.106s)
+PASS  cli_runs_and_artifacts  (12.716s)
+PASS  company_validation_kit  (17.369s)
+PASS  web_ui_api_downloads_security_port  (6.106s)
+PASS  cpu_timing  (87.752s)
+
+PASS=12 FAIL=0 SKIP=0
+

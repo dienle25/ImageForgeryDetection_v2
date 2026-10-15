@@ -1,0 +1,340 @@
+﻿{
+ "app_version": "2.0.0",
+ "created_utc": "20261014T181540Z",
+ "environment": {
+  "os": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "python": "3.13.16",
+  "python_executable": "D:\\IFD\\ImageForgeryDetection_v2\\runtime\\python.exe",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12500H",
+  "logical_cpus": 16,
+  "ram_mb": 7896.0546875
+ },
+ "counts": {
+  "PASS": 12,
+  "FAIL": 0,
+  "SKIP": 0
+ },
+ "checks": [
+  {
+   "check": "imports",
+   "status": "PASS",
+   "seconds": 0.126,
+   "detail": {
+    "numpy": "2.5.3",
+    "pillow": "12.3.0",
+    "onnxruntime": "1.29.0",
+    "opencv": "5.0.0",
+    "ort_providers": [
+     "AzureExecutionProvider",
+     "CPUExecutionProvider"
+    ]
+   }
+  },
+  {
+   "check": "model_files_sha256",
+   "status": "PASS",
+   "seconds": 0.983,
+   "detail": {
+    "assembled_from_parts": [],
+    "models": {
+     "mesorch.onnx": {
+      "sha256": "c8e7063d70264867429c69d4bb9b0f5a04d6ae5a6e2bb27b690551d188e25c76",
+      "bytes": 348769325,
+      "verify_seconds": 0.34
+     },
+     "commfor_vits16_384.onnx": {
+      "sha256": "ec914a6008e38704886e994852d5d53503a49f3b413006dfe7ee221447ba7bfb",
+      "bytes": 87384016,
+      "verify_seconds": 0.08
+     },
+     "face_clip_vitl14.onnx": {
+      "sha256": "55730bd19b0fab9684dce2e1d1629a055f04a84911755c3cac468be1a6866361",
+      "bytes": 606651363,
+      "verify_seconds": 0.54
+     },
+     "face_detection_yunet_2023mar.onnx": {
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "bytes": 232589,
+      "verify_seconds": 0.0
+     },
+     "pscc_net.onnx": {
+      "sha256": "8ce24603935deb717be347f04906b44ac2c2a8ac74c8ce4fabc655a03d9c352f",
+      "bytes": 14678547,
+      "verify_seconds": 0.02
+     }
+    }
+   }
+  },
+  {
+   "check": "model_numeric_parity_vs_build_machine",
+   "status": "PASS",
+   "seconds": 18.368,
+   "detail": {
+    "mesorch.onnx": {
+     "max_abs_diff_sampled": 8.940696716308594e-08,
+     "mean_diff": 1.8968648873851635e-09,
+     "tolerance": 0.002
+    },
+    "commfor_vits16_384.onnx": {
+     "max_abs_diff_sampled": 6.556510925292969e-07,
+     "mean_diff": 6.556510925292969e-07,
+     "tolerance": 0.02
+    },
+    "face_clip_vitl14.onnx": {
+     "max_abs_diff_sampled": 5.662441253662109e-07,
+     "mean_diff": 3.725290298461914e-08,
+     "tolerance": 0.02
+    },
+    "pscc_net.onnx": {
+     "max_abs_diff_sampled": 8.940696716308594e-08,
+     "mean_diff": 6.139089236967266e-11,
+     "tolerance": 0.002
+    }
+   }
+  },
+  {
+   "check": "cli_folder_full_pipeline_subprocess",
+   "status": "PASS",
+   "seconds": 24.633,
+   "detail": {
+    "seconds_incl_model_load": 24.2,
+    "detectors": [
+     "commfor_aigen",
+     "face_clip",
+     "mesorch"
+    ],
+    "counts": {
+     "ok": 2,
+     "error": 1
+    }
+   }
+  },
+  {
+   "check": "analyzer_load_and_reference_samples",
+   "status": "PASS",
+   "seconds": 39.667,
+   "detail": {
+    "model_load_seconds": 13.02,
+    "rss_after_load_mb": 1190.8046875,
+    "peak_rss_so_far_mb": 3098.16796875,
+    "images": {
+     "authentic1.png": {
+      "seconds": 5.29,
+      "scores": {
+       "mesorch": 0.3991970121860504,
+       "commfor_aigen": 1.6208234444794353e-05,
+       "face_clip": null
+      },
+      "overall": "no_clear_sign",
+      "reference_overall": "no_clear_sign"
+     },
+     "authentic3.png": {
+      "seconds": 4.99,
+      "scores": {
+       "mesorch": 0.6870869398117065,
+       "commfor_aigen": 0.0002457482958486102,
+       "face_clip": null
+      },
+      "overall": "no_clear_sign",
+      "reference_overall": "no_clear_sign"
+     },
+     "copymove2.png": {
+      "seconds": 5.19,
+      "scores": {
+       "mesorch": 0.9998682737350464,
+       "commfor_aigen": 0.000783258515567984,
+       "face_clip": null
+      },
+      "overall": "suspicious",
+      "reference_overall": "suspicious"
+     },
+     "removal1.png": {
+      "seconds": 5.33,
+      "scores": {
+       "mesorch": 0.6948229670524597,
+       "commfor_aigen": 3.043249719260933e-05,
+       "face_clip": null
+      },
+      "overall": "no_clear_sign",
+      "reference_overall": "no_clear_sign"
+     },
+     "splice1.png": {
+      "seconds": 5.33,
+      "scores": {
+       "mesorch": 0.9999980926513672,
+       "commfor_aigen": 9.730119792051561e-06,
+       "face_clip": null
+      },
+      "overall": "suspicious",
+      "reference_overall": "suspicious"
+     }
+    },
+    "max_abs_score_diff_vs_linux_reference": 2.086162567138672e-07
+   }
+  },
+  {
+   "check": "input_formats_and_rejections",
+   "status": "PASS",
+   "seconds": 32.866,
+   "detail": {
+    "exif_orientation_6": [
+     300,
+     400
+    ],
+    "png_alpha": "composited on white",
+    "gray_png": "suspicious",
+    "png_16bit": "suspicious",
+    "jpeg_cmyk": "needs_review",
+    "non_square_4200x700": "needs_review",
+    "rejected_with_message": {
+     "truncated_jpeg": "Không đọc được ảnh JPEG/PNG hợp lệ (file hỏng hoặc bị cắt cụt): image file is truncated (19 bytes not processed)",
+     "text_as_jpg": "Không đọc được ảnh JPEG/PNG hợp lệ: file hỏng hoặc không phải ảnh.",
+     "empty": "File ảnh trống.",
+     "tiny_8x8": "Cạnh nhỏ nhất của ảnh phải ít nhất 16 pixel.",
+     "BMP": "Chỉ hỗ trợ nội dung JPEG hoặc PNG; đổi đuôi file không đổi định dạng.",
+     "GIF": "Chỉ hỗ trợ nội dung JPEG hoặc PNG; đổi đuôi file không đổi định dạng.",
+     "WEBP": "Chỉ hỗ trợ nội dung JPEG hoặc PNG; đổi đuôi file không đổi định dạng.",
+     "TIFF": "Chỉ hỗ trợ nội dung JPEG hoặc PNG; đổi đuôi file không đổi định dạng.",
+     "missing_path": "Không tìm thấy file ảnh: C:\\Users\\USER_A\\AppData\\Local\\Temp\\khong_ton_tai_ifd_selftest.jpg",
+     "oversize": "Ảnh vượt giới hạn 0.1 MiB."
+    }
+   }
+  },
+  {
+   "check": "config_validation",
+   "status": "PASS",
+   "seconds": 0.026,
+   "detail": {
+    "low_gt_high": "Ngưỡng mesorch: cần low ≤ high.",
+    "threshold_out_of_range": "Cấu hình 'mesorch.high' phải trong khoảng [0, 1].",
+    "unknown_type": "Detector 'mesorch': loại 'nope' không hỗ trợ.",
+    "nan_limit": "Cấu hình 'limits.max_file_mb' phải là số hữu hạn.",
+    "broken_json": "Không đọc được cấu hình config.json: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)"
+   }
+  },
+  {
+   "check": "corrupt_or_missing_model",
+   "status": "PASS",
+   "seconds": 0.106,
+   "detail": {
+    "flipped_byte": "File mô hình face_detection_yunet_2023mar.onnx sai SHA-256; không sử dụng file này.",
+    "truncated": "File mô hình face_detection_yunet_2023mar.onnx sai dung lượng (hỏng hoặc tải chưa đủ).",
+    "missing": "Thiếu file mô hình face_detection_yunet_2023mar.onnx. Chạy: python scripts/fetch_models.py (xem README)."
+   }
+  },
+  {
+   "check": "cli_runs_and_artifacts",
+   "status": "PASS",
+   "seconds": 12.716,
+   "detail": {
+    "run1": "20261014T181739Z_ce0ae38c",
+    "run2": "20261014T181747Z_fbeeac3e",
+    "exit_codes": [
+     1,
+     0,
+     2
+    ],
+    "csv_columns": "input,status,overall_decision,overall_decision_vi,commfor_aigen_score,commfor_aigen_decision,pscc_net_score,pscc_net_decision,faces_found,output_dir,error"
+   }
+  },
+  {
+   "check": "company_validation_kit",
+   "status": "PASS",
+   "seconds": 17.369,
+   "detail": {
+    "counts": {
+     "found": 6,
+     "ok": 5,
+     "errors": 1,
+     "real": 3,
+     "fake": 2
+    },
+    "product_by_type": [
+     "that/(tất cả)",
+     "that/máy ảnh",
+     "sua/(tất cả)",
+     "sua/ghép"
+    ],
+    "report_files": [
+     "bao_cao_kiem_dinh.html",
+     "bao_cao_kiem_dinh.md",
+     "du_doan.csv",
+     "metrics.json"
+    ]
+   }
+  },
+  {
+   "check": "web_ui_api_downloads_security_port",
+   "status": "PASS",
+   "seconds": 6.106,
+   "detail": {
+    "status_detectors": [
+     "mesorch",
+     "commfor_aigen",
+     "face_clip"
+    ],
+    "analyze_overall": "needs_review",
+    "downloads_ok": [
+     "heatmap.npy",
+     "heatmap.png",
+     "heatmap_gray16.png",
+     "mask.png",
+     "original.png",
+     "overlay.png",
+     "result.json",
+     "results.zip"
+    ],
+    "corrupt_upload": "Không đọc được ảnh JPEG/PNG hợp lệ: file hỏng hoặc không phải ảnh.",
+    "oversize_upload": 413,
+    "port_in_use_exit_code": 2
+   }
+  },
+  {
+   "check": "cpu_timing",
+   "status": "PASS",
+   "seconds": 87.752,
+   "detail": {
+    "2MP_1920x1080": {
+     "seconds": [
+      4.68,
+      4.66,
+      4.68,
+      4.72,
+      4.85
+     ],
+     "analyze_p50_s": 4.68,
+     "analyze_p95_s": 4.82,
+     "end_to_end_p50_s": 5.98,
+     "end_to_end_p95_s": 6.12,
+     "per_detector_last": {
+      "mesorch": 3.38,
+      "commfor_aigen": 1.24,
+      "face_clip": 0.16
+     }
+    },
+    "12MP_4000x3000": {
+     "seconds": [
+      4.91,
+      5.14,
+      5.08,
+      5.03,
+      5.04
+     ],
+     "analyze_p50_s": 5.04,
+     "analyze_p95_s": 5.13,
+     "end_to_end_p50_s": 11.14,
+     "end_to_end_p95_s": 11.17,
+     "per_detector_last": {
+      "mesorch": 3.36,
+      "commfor_aigen": 1.06,
+      "face_clip": 0.19
+     }
+    },
+    "rss_now_mb": 1136.25390625,
+    "peak_rss_mb": 3098.16796875
+   }
+  }
+ ]
+}
+

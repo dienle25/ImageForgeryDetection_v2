@@ -1,0 +1,9 @@
+﻿MAY_A
+Windows: Microsoft Windows 11 Home Single Language (build 26200)
+CPU: 12th Gen Intel(R) Core(TM) i5-12500H
+RAM: 7.7 GB
+Diệt virus: Windows Defender
+Đường dẫn chạy: D:\IFD\ImageForgeryDetection_v2
+Kết quả SELF_TEST: PASS=12 FAIL=0 SKIP=0
+Ghi chú: Nhóm chỉ dùng 1 máy. MAY_B: NOT RUN (không có thiết bị thứ hai).
+Ghi chú: mục web_ui_api_downloads_security_port in WinError 10048 là kiểm tra cổng bận, mục vẫn PASS.
