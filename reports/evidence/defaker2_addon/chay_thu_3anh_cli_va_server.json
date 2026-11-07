@@ -1,0 +1,72 @@
+{
+ "ngay": "2026-11-07",
+ "che_do": "GPU fp16 + nén 8-bit (bitsandbytes LLM.int8), MIN_PIXELS=262144, MAX_PIXELS=2408448",
+ "swift_infer_cli": {
+  "lenh": "swift infer ... --torch_dtype float16 --quant_method bnb --quant_bits 8 (xem KET_QUA_CHAY_THU.md)",
+  "tong_suy_luan_3_anh_s": 37.86,
+  "tong_lenh_s": 107.1,
+  "ram_dinh_gib": 4.09,
+  "vram_dinh_mib": 3687
+ },
+ "anh": [
+  {
+   "ten": "anh_1.jpg",
+   "kich_thuoc_wh": [
+    1170,
+    1433
+   ],
+   "dau_vao_mo_hinh_wh": [
+    1184,
+    1440
+   ],
+   "tra_loi": "Real",
+   "p_fake_swift_infer": 0.039639,
+   "p_fake_server_bytes_goc": 0.039639,
+   "p_fake_server_png_nhu_app": 0.039639,
+   "giay_server_da_khoi_dong": [
+    23.45,
+    23.0
+   ]
+  },
+  {
+   "ten": "anh_2.png",
+   "kich_thuoc_wh": [
+    862,
+    872
+   ],
+   "dau_vao_mo_hinh_wh": [
+    864,
+    864
+   ],
+   "tra_loi": "Real",
+   "p_fake_swift_infer": 0.00407,
+   "p_fake_server_bytes_goc": 0.00407,
+   "p_fake_server_png_nhu_app": 0.00407,
+   "giay_server_da_khoi_dong": [
+    8.77,
+    8.56
+   ]
+  },
+  {
+   "ten": "anh_3.png",
+   "kich_thuoc_wh": [
+    335,
+    267
+   ],
+   "dau_vao_mo_hinh_wh": [
+    576,
+    480
+   ],
+   "tra_loi": "Fake",
+   "p_fake_swift_infer": 0.942506,
+   "p_fake_server_bytes_goc": 0.942506,
+   "p_fake_server_png_nhu_app": 0.942506,
+   "giay_server_da_khoi_dong": [
+    3.94,
+    4.07
+   ]
+  }
+ ],
+ "nan_inf_trong_logprobs": 0,
+ "ghi_chu": "p_fake làm tròn 6 chữ số như logprob2score.py. Tên ảnh gốc đã thay bằng anh_1..3."
+}

@@ -74,3 +74,8 @@ footer{padding:4px 16px 28px}
 .fine{margin-top:6px;font-size:11.5px}
 .badge-exp{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:.4px;color:#fff;background:var(--amber);border-radius:4px;padding:1px 6px;vertical-align:middle}
 .scope-item.exp{background:var(--amber-bg)}
+.det.exp{border-style:dashed;border-color:#e3c77d;background:#fffdf5}
+.chip.experimental{background:var(--amber-bg);color:var(--amber)}
+.det.main{border:2px solid var(--accent)}
+.badge-main{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:.4px;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;vertical-align:middle}
+.verdict.unavailable{background:var(--gray-bg);color:var(--muted)}

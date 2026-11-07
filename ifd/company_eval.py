@@ -38,7 +38,7 @@ import numpy as np
 from . import __version__
 from .analysis import config_hash, decision_config_hash, load_evaluated_configs
 from .config import DEFAULT_CONFIG, load_config
-from .detectors.base import TASKS, decide
+from .detectors.base import decide, is_experimental, is_primary, task_label
 from .errors import ForgeryError
 
 try:
@@ -51,7 +51,9 @@ LABEL_NAMES = {0: {"that", "real", "goc", "anh_that", "authentic", "pristine"},
                1: {"sua", "gia", "fake", "anh_sua", "anh_gia", "edited", "manipulated", "forged"}}
 ORDER = {"no_clear_sign": 1, "needs_review": 2, "suspicious": 3}
 TYPE_TASK = {"pscc_onnx": "local_manipulation", "mesorch_onnx": "local_manipulation",
-             "commfor_onnx": "ai_generated", "face_clip_onnx": "face_deepfake"}
+             "commfor_onnx": "ai_generated", "face_clip_onnx": "face_deepfake",
+             "defaker2_http": "whole_image_authenticity"}
+MODEL_ANSWER_POINT = 0.5     # experimental DefakerOne2: p_fake >= 0.5 <=> the model answers "Fake" (not a tuned threshold)
 DEC_VI = {"suspicious": "Nghi vấn", "needs_review": "Cần kiểm tra thêm", "no_clear_sign": "Chưa thấy dấu hiệu rõ",
           "not_applicable": "Không áp dụng", "": ""}
 log = logging.getLogger("ifd.company_eval")
@@ -134,6 +136,19 @@ def collect_csv(root: Path, csv_path: Path) -> tuple[list[dict], list[str]]:
     return items, notes
 
 
+def split_detectors(cfg) -> tuple[dict, list]:
+    """(thresholds of the evaluated detectors, keys of experimental add-ons).  Only the evaluated detectors make
+    decisions, the application-level result and the reference thresholds; experimental add-ons (e.g. DefakerOne2 over
+    HTTP: no validated thresholds, never in the overall decision) are scored and reported separately."""
+    enabled = {k: d for k, d in cfg.data["detectors"].items() if d.get("enabled")}
+    th = {k: d["thresholds"] for k, d in enabled.items() if not is_experimental(d)}   # includes a primary model
+    return th, [k for k, d in enabled.items() if is_experimental(d)]
+
+
+def primary_key(cfg) -> str | None:
+    return next((k for k, d in cfg.data["detectors"].items() if d.get("enabled") and is_primary(d)), None)
+
+
 def score_settings_key(cfg) -> str:
     """Hash of everything that can change a SCORE (not a decision): model manifest + non-threshold settings."""
     dets = {k: {kk: vv for kk, vv in d.items() if kk != "thresholds"} for k, d in cfg.data["detectors"].items()
@@ -150,6 +165,8 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
             try:
                 r = json.loads(l)
             except ValueError:
+                continue
+            if r.get("experimental_unavailable"):   # an add-on server was down/slow: score this image again
                 continue
             cache[(r["file"], r["sha256"], r["score_key"])] = r
     analyzer = None
@@ -179,6 +196,13 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
                                faces_found={r.key: r.details.get("faces_found") for r in rep.results
                                             if r.task == "face_deepfake"},
                                size_wh=rep.metadata["image"]["display_size_wh"])
+                    missing = {r.key: (r.warnings[0] if r.warnings else "") for r in rep.results
+                               if (not r.in_summary or r.primary) and r.score is None}
+                    if missing:
+                        hit["experimental_unavailable"] = missing
+                    p_miss = [r for r in rep.results if r.primary and r.score is None]
+                    if p_miss:     # no decision without the primary model: not counted, scored again next run
+                        hit.update(status="error", error="Mô hình chính chưa chấm được: " + (p_miss[0].warnings or [""])[0])
                 except ForgeryError as exc:
                     hit.update(status="error", error=str(exc), scores={})
                 except Exception as exc:  # keep going; the traceback goes to the console log
@@ -189,17 +213,19 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
                 f.flush()
                 progress(f"[{i}/{n}] {it['file']} — {'OK' if hit['status'] == 'ok' else 'LỖI'} ({hit['seconds']:.1f} s)")
             rec.update({k: hit.get(k) for k in ("status", "error", "sha256", "decoded_rgb_sha256", "scores",
-                                                 "faces_found", "seconds")})
+                                                 "faces_found", "seconds", "experimental_unavailable")})
             out.append(rec)
     return out
 
 
-def decisions(rec: dict, th: dict) -> tuple[dict, str]:
+def decisions(rec: dict, th: dict, primary: str | None = None) -> tuple[dict, str]:
     per = {}
     for k, t in th.items():
         s = (rec.get("scores") or {}).get(k)
         per[k] = "not_applicable" if s is None else decide(float(s), t["low"], t["high"])
-    applicable = [d for d in per.values() if d in ORDER]
+    if primary is not None and per.get(primary) in ORDER:       # the primary model decides
+        return per, per[primary]
+    applicable = [d for k, d in per.items() if d in ORDER and k != primary]
     overall = max(applicable, key=lambda d: ORDER[d], default="no_clear_sign")
     return per, overall
 
@@ -251,9 +277,35 @@ def det_block(recs, det, t) -> dict:
     return out
 
 
-def product_block(recs, th) -> dict:
+def exp_block(recs, det) -> dict:
+    """Experimental add-on: threshold-free metrics on the images it could score (an unavailable server is missing
+    data, not "nothing found"), plus the model's own answer point p_fake >= 0.5 — information only, never a threshold."""
+    scored = [r for r in recs if (r.get("scores") or {}).get(det) is not None]
+    out = {"n_scored": len(scored), "n_unavailable": len(recs) - len(scored), "answer_point": MODEL_ANSWER_POINT}
+    if scored:
+        y = np.array([r["label"] for r in scored])
+        s = np.array([float(r["scores"][det]) for r in scored])
+        out.update(n_pos=int(y.sum()), n_neg=int((y == 0).sum()))
+        if out["n_pos"] and out["n_neg"]:
+            out["auroc"] = auroc(y, s)
+            out["ap"] = average_precision(y, s)
+            out["auroc_ci95"] = bootstrap_ci(auroc, y, s, [group_of(r) for r in scored])
+        out["at_answer_point"] = confusion(y, s, MODEL_ANSWER_POINT)
+    by = {}
+    for lab in (0, 1):
+        for loai in sorted({r["loai"] for r in recs if r["label"] == lab}):
+            group = [r for r in recs if r["label"] == lab and r["loai"] == loai]
+            ss = np.array([float(r["scores"][det]) for r in group if (r.get("scores") or {}).get(det) is not None])
+            by[f"{'that' if lab == 0 else 'sua'}/{loai}"] = {
+                "n": len(group), "n_scored": int(ss.size), "median_score": float(np.median(ss)) if ss.size else None,
+                "ge_answer_point": float((ss >= MODEL_ANSWER_POINT).mean()) if ss.size else None}
+    out["by_type"] = by
+    return out
+
+
+def product_block(recs, th, primary=None) -> dict:
     y = np.array([r["label"] for r in recs])
-    dec = np.array([ORDER[decisions(r, th)[1]] for r in recs])
+    dec = np.array([ORDER[decisions(r, th, primary)[1]] for r in recs])
     out = {}
     for name, flag in (("nghi_van_la_duong", dec >= 3), ("tu_can_kiem_tra_tro_len_la_duong", dec >= 2)):
         tp, fp = int((flag & (y == 1)).sum()), int((flag & (y == 0)).sum())
@@ -337,7 +389,7 @@ def render(m: dict) -> tuple[str, str]:
     for det, b in m["detectors"].items():
         t = m["thresholds"][det]
         task = m.get("detector_tasks", {}).get(det, "")
-        L += [f"### {det} — {TASKS.get(task, task)} (low {f3(t['low'])} / high {f3(t['high'])})", ""]
+        L += [f"### {det} — {task_label(task)} (low {f3(t['low'])} / high {f3(t['high'])})", ""]
         ci = b.get("auroc_ci95")
         L.append(f"- AUROC: {f3(b.get('auroc'))}" + (f" [CI 95 %: {f3(ci[0])}–{f3(ci[1])}]" if ci else "") +
                  f" · AP: {f3(b.get('ap'))} · tỷ lệ áp dụng được: {pc(b.get('applicable_fraction'))} · vùng “cần kiểm tra”: {pc(b.get('abstain_fraction'))}")
@@ -348,6 +400,28 @@ def render(m: dict) -> tuple[str, str]:
         L += ["", "| Nhóm | n | ≥ high | ≥ low |", "|---|---|---|---|"]
         for k, v in b["by_type"].items():
             L.append(f"| {k} | {v['n']} | {pc(v['ge_high'])} | {pc(v['ge_low'])} |")
+        L.append("")
+    if m.get("experimental"):
+        L += ["## Bộ phát hiện THỬ NGHIỆM (không tính vào kết luận cấp ứng dụng, không có ngưỡng)", "",
+              "> Điểm thô, chưa hiệu chỉnh. Mốc 0,5 là câu trả lời Real/Fake của chính mô hình, KHÔNG phải ngưỡng đã "
+              "kiểm chứng. Không dùng tập ảnh này để chọn ngưỡng cho bộ phát hiện thử nghiệm.", ""]
+    for det, b in (m.get("experimental") or {}).items():
+        task = m.get("detector_tasks", {}).get(det, "")
+        L += [f"### {det} — {task_label(task)}", ""]
+        ci = b.get("auroc_ci95")
+        L.append(f"- Chấm được {b['n_scored']}/{b['n_scored'] + b['n_unavailable']} ảnh · AUROC: {f3(b.get('auroc'))}"
+                 + (f" [CI 95 %: {f3(ci[0])}–{f3(ci[1])}]" if ci else "") + f" · AP: {f3(b.get('ap'))}")
+        if b["n_unavailable"]:
+            L.append(f"- Lưu ý: {b['n_unavailable']} ảnh không chấm được (server tắt hoặc quá thời gian); không tính vào "
+                     "các chỉ số của bộ này. Bật server rồi chạy lại kiểm định để chấm bù (ảnh đã chấm không bị chấm lại).")
+        c = b.get("at_answer_point")
+        if c:
+            L += ["", "| Mốc | TP | FP | TN | FN | Precision | TPR | FPR | FNR |", "|---|---|---|---|---|---|---|---|---|",
+                  f"| p_fake ≥ {f3(b['answer_point'])} (mô hình trả lời “Fake”) | {c['tp']} | {c['fp']} | {c['tn']} | {c['fn']} | "
+                  f"{pc(c['precision'])} | {pc(c['recall'])} | {pc(c['fpr'])} | {pc(c['fnr'])} |"]
+        L += ["", "| Nhóm | n | chấm được | p_fake trung vị | p_fake ≥ 0,5 |", "|---|---|---|---|---|"]
+        for k, v in b["by_type"].items():
+            L.append(f"| {k} | {v['n']} | {v['n_scored']} | {f3(v['median_score'])} | {pc(v['ge_answer_point'])} |")
         L.append("")
     L += ["## Ngưỡng tham khảo theo ảnh thật của chính tập này (KHÔNG tự áp dụng)", "",
           "Chọn trên nửa A (chia ngẫu nhiên theo nhóm), kiểm tra trên nửa B. Chỉ để thảo luận; muốn áp dụng phải ghi quyết định và kiểm tra lại trên tập mới.", ""]
@@ -424,7 +498,10 @@ def main(argv=None) -> int:
         items = [it for it in items if not Path(it["path"]).resolve().is_relative_to(output)]
         if not items:
             raise ForgeryError("Không có ảnh .jpg/.jpeg/.png nào có nhãn để kiểm định.")
-        th = {k: d["thresholds"] for k, d in cfg.data["detectors"].items() if d.get("enabled")}
+        th, exp = split_detectors(cfg)
+        primary = primary_key(cfg)
+        if primary:
+            notes.append(f"Kết luận cấp ứng dụng theo mô hình chính {primary} (ngưỡng trong cấu hình); các bộ khác chỉ tham khảo.")
         key = score_settings_key(cfg)
         work = output / "kiem_dinh" / f"{norm(root.name)[:40] or 'du_lieu'}_{hashlib.sha256(str(root).encode()).hexdigest()[:8]}"
         work.mkdir(parents=True, exist_ok=True)
@@ -451,7 +528,8 @@ def main(argv=None) -> int:
                         "real": n_real, "fake": n_fake},
              "dedup": dd, "warnings": warnings, "errors": errors,
              "detectors": {k: det_block(kept, k, t) for k, t in th.items()} if kept else {},
-             "product": product_block(kept, th) if kept else {"by_type": {}},
+             "experimental": {k: exp_block(kept, k) for k in exp} if kept else {},
+             "product": product_block(kept, th, primary) if kept else {"by_type": {}},
              "reference_thresholds": reference_thresholds(kept, th) if kept else {}}
         if not kept:
             raise ForgeryError("Không có ảnh nào chấm được (xem danh sách lỗi phía trên).")
@@ -466,6 +544,7 @@ def main(argv=None) -> int:
         cols = ["file", "label", "loai", "nhom", "status", "overall_decision", "overall_decision_vi"]
         for k in th:
             cols += [f"{k}_score", f"{k}_decision"]
+        cols += [f"{k}_score" for k in exp]                     # experimental: score only, no decision
         cols += ["error"]
         w = csv.DictWriter(buf, fieldnames=cols)
         w.writeheader()
@@ -475,7 +554,7 @@ def main(argv=None) -> int:
             row.update(file=r["file"], label=r["label"], loai=r["loai"], nhom=r.get("nhom") or "", status=r["status"],
                        error=r.get("error") or "")
             if r["status"] == "ok":
-                per, overall = decisions(r, th)
+                per, overall = decisions(r, th, primary)
                 if id(r) not in kept_ids:
                     row["status"] = "duplicate_or_conflict"
                 row.update(overall_decision=overall, overall_decision_vi=DEC_VI[overall])
@@ -483,6 +562,9 @@ def main(argv=None) -> int:
                     s = (r.get("scores") or {}).get(k)
                     row[f"{k}_score"] = "" if s is None else s
                     row[f"{k}_decision"] = per[k]
+                for k in exp:
+                    s = (r.get("scores") or {}).get(k)
+                    row[f"{k}_score"] = "" if s is None else s
             w.writerow(row)
         (rep_dir / "du_doan.csv").write_bytes(("﻿" + buf.getvalue()).encode("utf-8"))
         print(f"Xong. Báo cáo: {rep_dir / 'bao_cao_kiem_dinh.html'}", flush=True)

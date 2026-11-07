@@ -1,0 +1,291 @@
+{
+ "machine": {
+  "ram_total_gib": 7.42,
+  "available_before_gib": 1.59
+ },
+ "before": {
+  "app": {
+   "working_set_gib": 1.17,
+   "private_gib": 2.13
+  },
+  "server": {
+   "working_set_gib": 0.04,
+   "private_gib": 6.54
+  }
+ },
+ "images": {
+  "2MP_1920x1080": {
+   "bytes": 514308,
+   "runs": [
+    {
+     "client_seconds": 34.34,
+     "app_server_seconds": 34.34,
+     "analyze_seconds": 33.64,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 2.88
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.28
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.07
+      },
+      "defaker2": {
+       "total": 30.31,
+       "encode_png": 0.09,
+       "http_round_trip": 30.22,
+       "server_inference": 30.2
+      }
+     },
+     "overall_decision": "needs_review",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 2.8857102626860703e-05,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1920,
+       1088
+      ]
+     }
+    },
+    {
+     "client_seconds": 33.29,
+     "app_server_seconds": 33.28,
+     "analyze_seconds": 32.58,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 2.55
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.23
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.07
+      },
+      "defaker2": {
+       "total": 29.68,
+       "encode_png": 0.09,
+       "http_round_trip": 29.59,
+       "server_inference": 29.57
+      }
+     },
+     "overall_decision": "needs_review",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 2.8857102626860703e-05,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1920,
+       1088
+      ]
+     }
+    },
+    {
+     "client_seconds": 33.3,
+     "app_server_seconds": 33.29,
+     "analyze_seconds": 32.51,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 2.28
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.27
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.05
+      },
+      "defaker2": {
+       "total": 29.87,
+       "encode_png": 0.09,
+       "http_round_trip": 29.79,
+       "server_inference": 29.78
+      }
+     },
+     "overall_decision": "needs_review",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 2.8857102626860703e-05,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1920,
+       1088
+      ]
+     }
+    }
+   ],
+   "client_seconds_median": 33.3,
+   "defaker2_seconds_median": 29.87,
+   "peaks_so_far": {
+    "app_ws": 2.04,
+    "app_private": 3.32,
+    "server_ws": 0.4,
+    "server_private": 7.36,
+    "sum_ws": 2.35,
+    "sum_private": 10.63,
+    "sys_used": 6.74,
+    "pagefile_used": 1.34,
+    "gpu_mib": 3929,
+    "sys_min_available_gib": 0.68,
+    "samples": 184
+   }
+  },
+  "12MP_4000x3000": {
+   "bytes": 2950379,
+   "runs": [
+    {
+     "client_seconds": 50.59,
+     "app_server_seconds": 50.56,
+     "analyze_seconds": 45.65,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 2.92
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.34
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.11
+      },
+      "defaker2": {
+       "total": 41.99,
+       "encode_png": 0.52,
+       "http_round_trip": 41.47,
+       "server_inference": 41.4
+      }
+     },
+     "overall_decision": "suspicious",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 0.007695706437951427,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1792,
+       1344
+      ]
+     }
+    },
+    {
+     "client_seconds": 51.11,
+     "app_server_seconds": 51.08,
+     "analyze_seconds": 45.22,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 3.07
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.38
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.14
+      },
+      "defaker2": {
+       "total": 41.36,
+       "encode_png": 0.51,
+       "http_round_trip": 40.86,
+       "server_inference": 40.77
+      }
+     },
+     "overall_decision": "suspicious",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 0.007695706437951427,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1792,
+       1344
+      ]
+     }
+    },
+    {
+     "client_seconds": 51.05,
+     "app_server_seconds": 51.02,
+     "analyze_seconds": 45.44,
+     "per_detector_seconds": {
+      "mesorch": {
+       "inference_and_resize": 3.13
+      },
+      "commfor_aigen": {
+       "inference_and_resize": 0.48
+      },
+      "face_clip": {
+       "face_detection_and_inference": 0.2
+      },
+      "defaker2": {
+       "total": 41.36,
+       "encode_png": 0.65,
+       "http_round_trip": 40.71,
+       "server_inference": 40.65
+      }
+     },
+     "overall_decision": "suspicious",
+     "defaker2": {
+      "decision": "experimental",
+      "p_fake": 0.007695706437951427,
+      "warnings": [],
+      "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+      "model_input_size_wh": [
+       1792,
+       1344
+      ]
+     }
+    }
+   ],
+   "client_seconds_median": 51.05,
+   "defaker2_seconds_median": 41.36,
+   "peaks_so_far": {
+    "app_ws": 2.04,
+    "app_private": 4.14,
+    "server_ws": 0.7,
+    "server_private": 7.73,
+    "sum_ws": 2.35,
+    "sum_private": 11.8,
+    "sys_used": 7.32,
+    "pagefile_used": 2.1,
+    "gpu_mib": 3929,
+    "sys_min_available_gib": 0.1,
+    "samples": 465
+   }
+  }
+ },
+ "status": {
+  "ready": true,
+  "detectors": [
+   "mesorch",
+   "commfor_aigen",
+   "face_clip",
+   "defaker2"
+  ],
+  "evaluated_profile": "chuẩn (FPR ≤ 5 % / ≤ 20 % trên dev)",
+  "config_matches_evaluated": true,
+  "defaker2_server": {
+   "state": "ready",
+   "device": "cuda:0 (NVIDIA GeForce GTX 1650)",
+   "mode": "GPU fp16 + nén 8-bit (bitsandbytes)",
+   "message": null
+  }
+ },
+ "peaks": {
+  "app_ws": 2.04,
+  "app_private": 4.14,
+  "server_ws": 0.7,
+  "server_private": 7.73,
+  "sum_ws": 2.35,
+  "sum_private": 11.8,
+  "sys_used": 7.32,
+  "pagefile_used": 2.1,
+  "gpu_mib": 3929,
+  "sys_min_available_gib": 0.1,
+  "samples": 465
+ },
+ "os_peak_working_set_gib": {
+  "app": 2.43,
+  "server": 3.78
+ },
+ "dieu_kien": "Laptop MAY_A (AMD Ryzen 7 4800H, RAM 7,6 GB, GTX 1650 4 GB), Windows 11, 07/11/2026. Ứng dụng khác đang mở (Claude, Zalo, Edge, SQL Server, Defender). App chạy bằng RUN_APP.bat của bản demo, server bằng CHAY_DEFAKER2.bat; client tools: measure_demo.py (lấy mẫu RAM 0,5 s, nvidia-smi 2 s). Đơn vị bộ nhớ: GiB; *_ws = working set (RAM thật), *_private = private bytes (bộ nhớ ảo đã cam kết)."
+}

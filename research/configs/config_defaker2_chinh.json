@@ -1,0 +1,86 @@
+{
+ "schema_version": 2,
+ "limits": {
+  "max_file_mb": 25,
+  "max_pixels": 40000000,
+  "min_side": 16
+ },
+ "runtime": {
+  "threads": 0
+ },
+ "display": {
+  "overlay_alpha": 0.55,
+  "notice_vi": "Bản DefakerOne2 làm MÔ HÌNH CHÍNH: kết luận chỉ theo DefakerOne2, ngưỡng theo repo tác giả (mô hình trả lời 'Fake' ⇔ p_fake ≥ 0,5). Ba bộ phát hiện cũ đã TẮT. Cấu hình này khác bản đã đánh giá; ngưỡng chưa kiểm chứng trên dữ liệu của nhóm. Cần bật server addons\\defaker2\\CHAY_DEFAKER2.bat trước khi phân tích."
+ },
+ "detectors": {
+  "defaker2": {
+   "enabled": true,
+   "type": "defaker2_http",
+   "title_vi": "DefakerOne2 release (Qwen3.5-2B), mô hình chính, chạy qua server cục bộ",
+   "url": "http://127.0.0.1:8765/score",
+   "timeout_seconds": 120,
+   "note": "MÔ HÌNH CHÍNH: server tắt hoặc quá timeout_seconds → kết luận 'Chưa khả dụng'.",
+   "role": "primary",
+   "thresholds": {
+    "low": 0.5,
+    "high": 0.5,
+    "status": "Theo repo tác giả inclusionAI/DefakerOne2: kết luận là token trả lời Real/Fake (README: prompt 'Answer only Real or Fake', accuracy tính trên token này); logprob2score.py chuẩn hóa p_fake, 'Fake' ⇔ p_fake ≥ 0,5. Tác giả không công bố ngưỡng nào khác. Không chỉnh theo dữ liệu; chưa kiểm chứng trên dữ liệu công ty."
+   }
+  },
+  "mesorch": {
+   "enabled": false,
+   "type": "mesorch_onnx",
+   "model": "../../models/mesorch.onnx",
+   "image_score": "max",
+   "thresholds": {
+    "low": 0.960912,
+    "high": 0.997501,
+    "pixel": 0.5,
+    "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   },
+   "note": "Tắt: bản này chỉ dùng DefakerOne2."
+  },
+  "commfor_aigen": {
+   "enabled": false,
+   "type": "commfor_onnx",
+   "model": "../../models/commfor_vits16_384.onnx",
+   "thresholds": {
+    "low": 0.002326,
+    "high": 0.069494,
+    "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   },
+   "note": "Tắt: bản này chỉ dùng DefakerOne2."
+  },
+  "face_clip": {
+   "enabled": false,
+   "type": "face_clip_onnx",
+   "model": "../../models/face_clip_vitl14.onnx",
+   "face_model": "../../models/face_detection_yunet_2023mar.onnx",
+   "max_faces": 3,
+   "face_score_threshold": 0.7,
+   "thresholds": {
+    "low": 0.274283,
+    "high": 0.478866,
+    "status": "Ngưỡng chuẩn: chọn trên DEV ngày 2026-10-12 theo quy tắc high: FPR≤5 %, low: FPR≤20 % trên TỪNG nguồn ảnh thật của dev (research/derive_thresholds.py); chưa hiệu chỉnh xác suất; chưa kiểm chứng trên dữ liệu công ty"
+   },
+   "note": "Tắt: bản này chỉ dùng DefakerOne2."
+  },
+  "pscc_net": {
+   "enabled": false,
+   "type": "pscc_onnx",
+   "model": "../../models/pscc_net.onnx",
+   "policy": {
+    "mode": "bounded_native",
+    "max_side": 512,
+    "resample": "bilinear"
+   },
+   "thresholds": {
+    "low": 0.35,
+    "high": 0.65,
+    "pixel": 0.5,
+    "status": "v1 BASELINE (PSCC-Net, preprocessing and thresholds of v1) - kept only for before/after comparison; weak on independent data"
+   },
+   "note": "Tắt: bản này chỉ dùng DefakerOne2."
+  }
+ }
+}
