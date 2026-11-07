@@ -1,0 +1,25 @@
+{
+ "thoi_diem": "2026-11-07 ~17:42 (giờ máy), trước khi bật server lần 2",
+ "nguon": "PowerShell: Get-Process | Group-Object Name, tổng PrivateMemorySize64 (MB); Get-Counter Committed Bytes",
+ "bo_nho_rieng_mb_theo_ung_dung": {
+  "claude (15 tiến trình)": 2414,
+  "Zalo (9)": 1027,
+  "MsMpEng": 417,
+  "sqlservr": 414,
+  "svchost (76)": 377,
+  "msedge (7)": 237,
+  "explorer": 234,
+  "msedgewebview2 (6)": 173
+ },
+ "tong_bo_nho_rieng_moi_tien_trinh_mb": 7921,
+ "commit_mb": {
+  "da_dung": 12152,
+  "gioi_han": 15214
+ },
+ "pagefile_mb": {
+  "truoc_lan_nap_loi": 7614,
+  "sau_khi_windows_noi": 14735
+ },
+ "lan_nap_server_1": "crash 0xC0000005 (-1073741819) ở 'Loading weights 0/617' khi commit trống ~3 GB",
+ "lan_nap_server_2": "thành công; commit đỉnh trong lúc nạp 21 705 MB (pagefile đã được Windows nới)"
+}

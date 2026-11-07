@@ -1,0 +1,22 @@
+{
+ "do_app_cung_server_cau_hinh_demo.json": [
+  "measure_demo.json",
+  "c1a8289257f7e6ef635c52fea677ba2193372b3ad38ca3eb577a27578038d9a8"
+ ],
+ "do_app_cung_server_cau_hinh_tiet_kiem_ram.json": [
+  "measure_demo_ram.json",
+  "84bace0f00e8434a60067a6197297df86bab2c9c916e4bc3306e67f242c520e2"
+ ],
+ "log_server_tom_tat.txt:server_gpu.log": [
+  "server_gpu.log",
+  "6dfe74a0e5b99128fcc053bc76c9b77ecffc976a9cb6b8cda12ec42be558e967"
+ ],
+ "log_server_tom_tat.txt:server_demo.log": [
+  "server_demo.log",
+  "50d563db95224128966c3bcb0e49045853fbbec95211501efe49cad6c40a2431"
+ ],
+ "log_server_tom_tat.txt:server_demo2.log": [
+  "server_demo2.log",
+  "0f356174de8d2bdc84af2ca9cb13ea452b35e56bf8b0b91ba08e4d84c53245cd"
+ ]
+}

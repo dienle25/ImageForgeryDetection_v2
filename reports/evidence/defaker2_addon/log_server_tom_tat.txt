@@ -1,0 +1,37 @@
+== server_gpu.log
+17:22:04 Nạp mô hình: GPU fp16 + nén 8-bit (bitsandbytes) trên cuda:0 (NVIDIA GeForce GTX 1650) ...
+Loading weights:   0%|          | 0/617 [00:00<?, ?it/s]
+Loading weights:   0%|          | 1/617 [00:02<27:14,  2.65s/it]
+17:22:29 Đã nạp trọng số sau 68.9 s. RAM tiến trình 0.38 GiB; VRAM đang dùng 2915 MiB, đỉnh 2915 MiB
+17:22:42 Chạy khởi động (warm-up) xong sau 12.7 s. RAM tiến trình 1.16 GiB; VRAM đang dùng 2924 MiB, đỉnh 3088 MiB
+17:22:42 DA NAP XONG: server sẵn sàng tại http://127.0.0.1:8765/score (GPU fp16 + nén 8-bit (bitsandbytes), cuda:0 (NVIDIA GeForce GTX 1650)).
+17:24:04 #1 ảnh 1170x1433 -> p_fake=0.0396 (Real) trong 23.5 s
+17:24:27 #2 ảnh 1170x1433 -> p_fake=0.0396 (Real) trong 23.0 s
+17:24:36 #3 ảnh 862x872 -> p_fake=0.0041 (Real) trong 8.8 s
+17:24:45 #4 ảnh 862x872 -> p_fake=0.0041 (Real) trong 8.6 s
+17:24:49 #5 ảnh 335x267 -> p_fake=0.9425 (Fake) trong 3.9 s
+17:24:53 #6 ảnh 335x267 -> p_fake=0.9425 (Fake) trong 4.1 s
+
+== server_demo.log
+17:41:22 Nạp mô hình: GPU fp16 + nén 8-bit (bitsandbytes) trên cuda:0 (NVIDIA GeForce GTX 1650) ...
+Loading weights:   0%|          | 0/617 [00:00<?, ?it/s]
+Server dung voi ma loi -1073741819. Doc thong bao phia tren.
+
+== server_demo2.log
+17:43:40 Nạp mô hình: GPU fp16 + nén 8-bit (bitsandbytes) trên cuda:0 (NVIDIA GeForce GTX 1650) ...
+Loading weights:   0%|          | 0/617 [00:00<?, ?it/s]
+Loading weights:   0%|          | 1/617 [00:02<26:59,  2.63s/it]
+17:44:00 Đã nạp trọng số sau 40.1 s. RAM tiến trình 0.46 GiB (đỉnh 3.78 GiB, private 5.35 GiB); VRAM đang dùng 2915 MiB, đỉnh 2915 MiB
+17:44:12 Chạy khởi động (warm-up) xong sau 11.9 s. RAM tiến trình 1.23 GiB (đỉnh 3.78 GiB, private 6.54 GiB); VRAM đang dùng 2924 MiB, đỉnh 3088 MiB
+17:44:12 DA NAP XONG: server sẵn sàng tại http://127.0.0.1:8765/score (GPU fp16 + nén 8-bit (bitsandbytes), cuda:0 (NVIDIA GeForce GTX 1650)).
+17:45:46 #1 ảnh 1920x1080 -> p_fake=0.0000 (Real) trong 30.2 s
+17:46:20 #2 ảnh 1920x1080 -> p_fake=0.0000 (Real) trong 29.6 s
+17:46:53 #3 ảnh 1920x1080 -> p_fake=0.0000 (Real) trong 29.8 s
+17:47:41 #4 ảnh 4000x3000 -> p_fake=0.0077 (Real) trong 41.4 s
+17:48:31 #5 ảnh 4000x3000 -> p_fake=0.0077 (Real) trong 40.8 s
+17:49:23 #6 ảnh 4000x3000 -> p_fake=0.0077 (Real) trong 40.7 s
+17:51:09 #7 ảnh 1920x1080 -> p_fake=0.0000 (Real) trong 29.7 s
+17:51:43 #8 ảnh 1920x1080 -> p_fake=0.0000 (Real) trong 29.9 s
+17:52:31 #9 ảnh 4000x3000 -> p_fake=0.0077 (Real) trong 40.7 s
+17:53:24 #10 ảnh 4000x3000 -> p_fake=0.0077 (Real) trong 41.2 s
+

@@ -17,7 +17,7 @@ import numpy as np
 
 from . import __version__
 from .config import Config
-from .detectors.base import DECISIONS, TASKS, DetectorResult
+from .detectors.base import DECISIONS, TASKS, DetectorResult, is_experimental, task_label
 from .errors import ForgeryError
 from .image_io import LoadedImage, decoded_pixel_hash, read_image
 from .model_store import verify_model
@@ -61,6 +61,13 @@ class Analyzer:
         t0 = time.perf_counter()
         for key, det in config.data["detectors"].items():
             if not det.get("enabled"):
+                continue
+            if det["type"] == "defaker2_http":
+                # experimental add-on in its own process: no model file inside the app to verify
+                from .detectors.defaker2 import DefakerTwoHTTPDetector, model_info
+                self.model_info[key] = model_info(det)
+                self.detectors[key] = DefakerTwoHTTPDetector(det)
+                self.detectors[key].key = key
                 continue
             model_path = config.path(det["model"])
             manifest = model_path.parent / "manifest.json"   # the manifest always sits next to the model files
@@ -183,12 +190,14 @@ DECISION_KEYS = ("type", "thresholds", "image_score", "max_faces", "face_score_t
 def decision_config_hash(cfg: Config) -> str:
     """SHA-256 of everything in config.json that can change a score or a decision: which detectors are enabled,
     their type, thresholds (without the free-text 'status') and scoring settings.  Model files are pinned
-    separately by SHA-256 (models/manifest.json); paths, limits, threads and display settings are excluded."""
+    separately by SHA-256 (models/manifest.json); paths, limits, threads and display settings are excluded.
+    Experimental add-ons are excluded too: they are never part of the overall decision.  A primary add-on
+    (role "primary") decides, so its type, role and thresholds are included."""
     dets = {}
     for key, det in sorted(cfg.data["detectors"].items()):
-        if not det.get("enabled"):
+        if not det.get("enabled") or is_experimental(det):
             continue
-        d = {k: det[k] for k in DECISION_KEYS if k in det}
+        d = {k: det[k] for k in DECISION_KEYS + ("role",) if k in det}
         d["thresholds"] = {k: v for k, v in det.get("thresholds", {}).items() if k != "status"}
         dets[key] = d
     return hashlib.sha256(json.dumps(dets, sort_keys=True).encode()).hexdigest()
@@ -211,7 +220,43 @@ CONFIG_CHANGED_VI = ("Cấu hình bộ phát hiện/ngưỡng KHÁC với cấu 
                      "các số liệu chất lượng đã báo cáo không còn áp dụng cho kết quả này.")
 
 
+PRIMARY_BASIS_VI = ("Kết luận theo DefakerOne2 (mô hình chính, ngưỡng theo tác giả: trả lời 'Fake' ⇔ p_fake ≥ 0,5). "
+                    "Các bộ phát hiện còn lại chỉ để tham khảo.")
+START_HINT_VI = "Bật server (addons\\defaker2\\CHAY_DEFAKER2.bat), chờ dòng 'DA NAP XONG' rồi phân tích lại."
+PRIMARY_FALLBACK_VI = ("DefakerOne2 (mô hình chính) chưa khả dụng cho ảnh này: kết luận TẠM theo các bộ phát hiện "
+                       "còn lại. Bật server DefakerOne2 (addons\\defaker2\\CHAY_DEFAKER2.bat) rồi phân tích lại.")
+
+
 def summarize(results: list[DetectorResult], cfg: Config) -> dict:
+    primary = next((r for r in results if r.primary), None)
+    summary = _summarize(results, cfg)
+    if primary is None:
+        return summary
+    headline = {"suspicious": "Có dấu hiệu nghi vấn — cần người kiểm tra xem xét",
+                "no_clear_sign": "Chưa thấy dấu hiệu rõ trong phạm vi đã kiểm tra",
+                "needs_review": "Cần kiểm tra thêm — tín hiệu chưa rõ ràng"}
+    summary["primary_detector"] = primary.key
+    if primary.decision in headline:
+        summary.update(overall_decision=primary.decision, overall_decision_vi=DECISIONS[primary.decision],
+                       headline_vi=headline[primary.decision], basis_vi=PRIMARY_BASIS_VI, decided_by=primary.key,
+                       tasks_checked=[{"task": primary.task, "task_vi": task_label(primary.task)}],
+                       tasks_not_applicable=[], tasks_not_checked=[])
+    elif any(r.in_summary and not r.primary for r in results):
+        summary.update(basis_vi=PRIMARY_FALLBACK_VI, decided_by="fallback")
+        summary["warnings"].insert(0, PRIMARY_FALLBACK_VI)
+    else:   # DefakerOne2 is the only detector and could not score this image: no conclusion at all
+        text = "DefakerOne2 (mô hình chính) chưa chấm được ảnh này nên CHƯA có kết luận. " + START_HINT_VI
+        summary.update(overall_decision="unavailable", overall_decision_vi=DECISIONS["unavailable"],
+                       headline_vi="Chưa phân tích được — server DefakerOne2 chưa sẵn sàng", basis_vi=text,
+                       decided_by=None, tasks_checked=[], tasks_not_applicable=[])
+        summary["warnings"] = [text] + list(primary.warnings) + summary["warnings"]
+    return summary
+
+
+def _summarize(results: list[DetectorResult], cfg: Config) -> dict:
+    # experimental add-ons (in_summary=False) are shown on their own card only: they never change the overall
+    # decision, the task coverage or the summary warnings; the primary model is applied by summarize()
+    results = [r for r in results if r.in_summary and not r.primary]
     order = {"suspicious": 3, "needs_review": 2, "no_clear_sign": 1}
     applicable = [r for r in results if r.decision in order]
     worst = max((r.decision for r in applicable), key=lambda d: order[d], default="no_clear_sign")

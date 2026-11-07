@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## Chưa phát hành — gói phụ DefakerOne2 (THỬ NGHIỆM), 2026-11-07
+Cấu hình chuẩn, ngưỡng, mô hình ONNX và runtime của app **không đổi**. Kết luận chung với `config.json` vẫn như bản 2.0.0. Chi tiết, số đo và giới hạn: `docs/DEFAKER2_ADDON_VI.md`.
+
+- **Server DefakerOne2.** Thêm `addons/defaker2/` gồm `defaker2_server.py` và `CHAY_DEFAKER2.bat`.
+  - Server chạy trong môi trường conda riêng (PyTorch + ms-swift), chỉ nghe ở 127.0.0.1:8765.
+  - Mô hình chạy đúng pipeline README của tác giả. Trên GTX 1650 dùng GPU fp16 kèm nén 8-bit.
+- **Detector `defaker2_http`.** Gọi server bằng thư viện chuẩn, không qua proxy.
+  - Thẻ thứ tư "DefakerOne2 (thử nghiệm)" hiện p_fake; không có bản đồ vùng, không có ngưỡng.
+  - Thẻ này **không tính vào kết luận chung** và không vào hash cấu hình quyết định.
+  - Server tắt hoặc quá thời gian: thẻ báo "Chưa khả dụng".
+- **Cấu hình demo.** `research/configs/config_demo_defaker2.json` giữ hồ sơ "chuẩn". `config_demo_defaker2_tiet_kiem_ram.json` tắt `face_clip` và ghi rõ trên trang.
+- **Bộ kiểm định ảnh có nhãn.** Báo bộ phát hiện thử nghiệm ở mục riêng: AUROC/AP và mốc 0,5 là câu trả lời của mô hình. Kết luận cấp ứng dụng và ngưỡng tham khảo chỉ dùng các bộ đã đánh giá. Ảnh chưa chấm được do server gián đoạn sẽ được chấm bù ở lần sau.
+- **DefakerOne2 làm mô hình chính.** Thêm `RUN_APP_DEFAKER2.bat` và `research/configs/config_defaker2_chinh.json`.
+  - Chỉ bật DefakerOne2 với `role: "primary"`. Ngưỡng theo repo tác giả: trả lời "Fake" ⇔ p_fake ≥ 0,5.
+  - Server tắt: kết luận "Chưa khả dụng".
+  - Không áp dụng cho `config.json` và `RUN_APP.bat`.
+- **Kiểm thử.** Thêm `tests/test_defaker2.py`, dùng server giả lập: chạy được, server tắt, quá thời gian, lỗi trả về, cấu hình, web, bộ kiểm định.
+
 ## 2.0.0 — 2026-10-12/13 (bàn giao sau audit)
 ### Thay đổi chất lượng (có bằng chứng, xem EXPERIMENT_LOG.jsonl)
 - **Thay PSCC-Net bằng Mesorch** cho chỉnh sửa cục bộ (chọn trên dev: ctrl_mei dev AUROC 0,945 vs PSCC ≤ 0,56; Korus dev 0,58 vs 0,49). PSCC-Net giữ lại dạng ONNX, tắt mặc định, chỉ để đối chứng.

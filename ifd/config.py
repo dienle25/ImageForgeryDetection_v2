@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 import math
+import urllib.parse
 from pathlib import Path
 
 from .errors import ForgeryError
@@ -32,6 +33,30 @@ def validate_thresholds(th: dict, name: str) -> dict:
     return th
 
 
+LOCAL_HOSTS = ("127.0.0.1", "localhost")
+
+
+def validate_http_detector(key: str, det: dict) -> None:
+    """Experimental add-on reached over HTTP (e.g. DefakerOne2).  Only this machine is allowed: images never
+    leave the computer, as for the built-in detectors."""
+    url = det.get("url")
+    if not isinstance(url, str) or not url:
+        raise ForgeryError(f"Detector '{key}': thiếu địa chỉ 'url' của server.")
+    try:
+        parts = urllib.parse.urlsplit(url)
+        scheme, host, port = parts.scheme, parts.hostname, parts.port
+    except ValueError:
+        scheme = host = port = None
+    if scheme != "http" or host not in LOCAL_HOSTS or not port:
+        raise ForgeryError(f"Detector '{key}': 'url' phải là http://127.0.0.1:<cổng>/... (chỉ server trên chính máy này).")
+    _num(det.get("timeout_seconds", 120), f"{key}.timeout_seconds", 1, 600)
+    role = det.get("role", "experimental")
+    if role not in ("experimental", "primary"):
+        raise ForgeryError(f"Detector '{key}': 'role' phải là experimental hoặc primary.")
+    if role == "primary" and det.get("enabled"):
+        validate_thresholds(det.get("thresholds", {}), key)       # the primary model decides: thresholds required
+
+
 class Config:
     def __init__(self, data: dict, base_dir: Path):
         self.data = data
@@ -46,15 +71,24 @@ class Config:
         _num(lim.get("min_side"), "limits.min_side", 8, 4096, integer=True)
         _num(d.get("runtime", {}).get("threads", 0), "runtime.threads", 0, 256, integer=True)
         _num(d.get("display", {}).get("overlay_alpha", 0.55), "display.overlay_alpha", 0, 1)
+        notice = d.get("display", {}).get("notice_vi")
+        if notice is not None and (not isinstance(notice, str) or len(notice) > 1000):
+            raise ForgeryError("Cấu hình 'display.notice_vi' phải là chuỗi ≤ 1000 ký tự.")
         dets = d.get("detectors")
         if not isinstance(dets, dict) or not dets:
             raise ForgeryError("Cấu hình thiếu mục 'detectors'.")
-        known = {"pscc_onnx", "mesorch_onnx", "commfor_onnx", "face_clip_onnx"}
+        known = {"pscc_onnx", "mesorch_onnx", "commfor_onnx", "face_clip_onnx", "defaker2_http"}
+        primaries = [k for k, v in dets.items() if isinstance(v, dict) and v.get("enabled") and v.get("role") == "primary"]
+        if len(primaries) > 1:
+            raise ForgeryError(f"Chỉ được một mô hình chính (role primary), đang có: {', '.join(primaries)}.")
         for key, det in dets.items():
             if not isinstance(det, dict):
                 raise ForgeryError(f"Cấu hình detector '{key}' không hợp lệ.")
             if det.get("type") not in known:
                 raise ForgeryError(f"Detector '{key}': loại '{det.get('type')}' không hỗ trợ.")
+            if det["type"] == "defaker2_http":
+                validate_http_detector(key, det)      # no local model file and no thresholds: never decides
+                continue
             if not isinstance(det.get("model"), str) or not det["model"]:
                 raise ForgeryError(f"Detector '{key}': thiếu đường dẫn 'model'.")
             if det["type"] == "face_clip_onnx":
@@ -79,6 +113,10 @@ class Config:
     @property
     def overlay_alpha(self) -> float:
         return float(self.data.get("display", {}).get("overlay_alpha", 0.55))
+
+    @property
+    def notice_vi(self) -> str | None:
+        return self.data.get("display", {}).get("notice_vi")
 
     def detector(self, key: str) -> dict:
         return self.data["detectors"][key]

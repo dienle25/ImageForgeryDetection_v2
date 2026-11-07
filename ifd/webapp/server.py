@@ -28,7 +28,7 @@ from pathlib import Path
 from .. import __version__
 from ..analysis import Analyzer, report_files, zip_bytes
 from ..config import DEFAULT_CONFIG, load_config
-from ..detectors.base import TASKS
+from ..detectors.base import EXPERIMENTAL_TYPES, TASKS, is_primary, task_label
 from ..errors import ForgeryError
 from ..render import jpeg_preview
 
@@ -82,17 +82,30 @@ class State:
                 if det.get("enabled"):
                     obj = self.analyzer.detectors.get(key) if self.analyzer else None
                     task = getattr(obj, "task", None) or det.get("task") or TYPE_TASK.get(det.get("type"), "local_manipulation")
-                    dets.append({"key": key, "task": task, "task_vi": TASKS.get(task, task),
-                                 "title": det.get("title_vi", key), "thresholds": det.get("thresholds"),
-                                 "validation": (summaries.get(key) or {}).get("text_vi"),
-                                 "validation_status": (summaries.get(key) or {}).get("status")})
+                    item = {"key": key, "task": task, "task_vi": task_label(task),
+                            "title": det.get("title_vi", key), "thresholds": det.get("thresholds"),
+                            "validation": (summaries.get(key) or {}).get("text_vi"),
+                            "validation_status": (summaries.get(key) or {}).get("status")}
+                    if det.get("type") in EXPERIMENTAL_TYPES:
+                        from ..detectors.defaker2 import PRIMARY_VALIDATION, VALIDATION
+                        server = obj.health() if obj is not None and hasattr(obj, "health") else None
+                        if is_primary(det):
+                            item.update(primary=True, validation=PRIMARY_VALIDATION["text_vi"],
+                                        validation_status="author_rule", server=server)
+                        else:
+                            item.update(experimental=True, validation=VALIDATION["text_vi"],
+                                        validation_status="experimental", server=server)
+                    dets.append(item)
             covered = {d["task"] for d in dets}
+            if any(d.get("primary") for d in dets):      # the primary model judges the whole image (all types)
+                covered |= set(TASKS)
             if self.analyzer is not None:
                 data["config_matches_evaluated"] = self.analyzer.config_matches_evaluated()
                 data["evaluated_profile"] = self.analyzer.evaluated_profile()
             data.update(detectors=dets, max_file_mb=self.config.limits["max_file_mb"],
                         tasks_not_checked=[TASKS[t] for t in TASKS if t not in covered],
-                        models=self.analyzer.model_info if self.analyzer else None)
+                        models=self.analyzer.model_info if self.analyzer else None,
+                        notice_vi=self.config.notice_vi)
         return data
 
     def store(self, payload: dict) -> str:
@@ -108,7 +121,8 @@ class State:
 
 
 TYPE_TASK = {"pscc_onnx": "local_manipulation", "mesorch_onnx": "local_manipulation",
-             "commfor_onnx": "ai_generated", "face_clip_onnx": "face_deepfake"}
+             "commfor_onnx": "ai_generated", "face_clip_onnx": "face_deepfake",
+             "defaker2_http": "whole_image_authenticity"}
 
 
 def make_handler(state: State, allowed_hosts: set[str]):
