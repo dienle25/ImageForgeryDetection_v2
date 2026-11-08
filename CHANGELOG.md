@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Chưa phát hành — DefakerOne2 + Mesorch, cảnh báo độ tin cậy, script đo lại, 2026-11-08
+`config.json`, ngưỡng và mô hình của các detector cũ **không đổi**. Chưa có số đo mới: chỉ code và script, người dùng tự chạy đo. Chi tiết: `docs/DEFAKER2_ADDON_VI.md` mục 5.3–5.5 và 10.
+
+- **Bản DefakerOne2 + Mesorch.** `RUN_APP_DEFAKER2_MESORCH.bat` + `research/configs/config_defaker2_mesorch.json`: DefakerOne2 là kết luận chính, Mesorch hiện bản đồ vùng nghi sửa để tham khảo (ngưỡng Mesorch như `config.json`). Community Forensics và face_clip tắt. Không gộp điểm; hai mô hình trái nhau thì trang ghi "Hai mô hình không thống nhất, cần xem kỹ".
+- **Ngưỡng DefakerOne2 đọc từ config.** Giữa low và high là "Không kết luận" (mã `inconclusive`). Chưa có khối `calibration` thì ghi "Chưa hiệu chỉnh" và giữ 0,5 như hiện nay.
+- **Cảnh báo "Độ tin cậy thấp"** (`ifd/input_quality.py`): ảnh < 0,5 MP, dấu hiệu ảnh chụp màn hình, JPEG không EXIF < 2 MP. Hiện ở thẻ kết luận, trường `input_quality` trong JSON, cột và bảng riêng trong bộ kiểm định. Không đổi điểm hay kết luận.
+- **Script đo lại và chọn ngưỡng** (người dùng tự chạy): `tools/DO_LAI_DEFAKER2.bat`, `tools/CHON_NGUONG_DEFAKER2.bat`, `tools/tao_nhan_cong_khai.py`. Tập hiệu chỉnh là phần dev đã khóa (Korus dev, DeepFakeFace dev, OpenFake dev), tách khỏi mọi tập đo; script dừng nếu trùng.
+- **Sửa lỗi.** Khi DefakerOne2 tắt, cảnh báo "kết luận TẠM" nay đứng đầu, trước cảnh báo "cấu hình khác bản đã đánh giá" (test cũ `test_primary_with_other_detectors_falls_back_when_down` hỏng từ commit trước, nay đạt; không sửa test).
+- **Kiểm thử.** Thêm `tests/test_input_quality.py`, `tests/test_defaker2_mesorch.py`, `tests/test_tools_defaker2.py` (ảnh tạo trong test, server DefakerOne2 giả lập).
+
 ## Chưa phát hành — gói phụ DefakerOne2 (THỬ NGHIỆM), 2026-11-07
 Cấu hình chuẩn, ngưỡng, mô hình ONNX và runtime của app **không đổi**. Kết luận chung với `config.json` vẫn như bản 2.0.0. Chi tiết, số đo và giới hạn: `docs/DEFAKER2_ADDON_VI.md`.
 

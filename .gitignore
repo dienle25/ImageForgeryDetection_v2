@@ -12,3 +12,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .env
+# Đo lại DefakerOne2: nhật ký và file có tên ảnh riêng tư (bộ A–D từ data.zip) không đưa lên git
+/reports/defaker2/**/nhat_ky.log
+/reports/defaker2/**/rieng_tu/

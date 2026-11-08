@@ -14,6 +14,8 @@ Cách đặt dữ liệu (chọn một):
 Kết quả: <output>/kiem_dinh/<ten_thu_muc>_<ma>/bao_cao_<thời điểm>/ gồm bao_cao_kiem_dinh.html, .md, metrics.json,
 du_doan.csv.  Điểm của từng ảnh được lưu đệm (cache_predictions.jsonl) để chạy lại không phải chấm lại; quyết định luôn
 được tính lại từ điểm với ngưỡng HIỆN TẠI của config.json.  Công cụ chỉ báo cáo; không tự đổi ngưỡng.
+du_doan.csv có thêm cột input_quality (canh_bao / khong_canh_bao, xem ifd/input_quality.py), lý do và số giây mỗi ảnh;
+báo cáo có bảng đúng/sai tách theo "có cảnh báo / không cảnh báo", thời gian mỗi ảnh và RAM đỉnh của tiến trình.
 """
 from __future__ import annotations
 
@@ -36,10 +38,15 @@ from pathlib import Path
 import numpy as np
 
 from . import __version__
-from .analysis import config_hash, decision_config_hash, load_evaluated_configs
+from .analysis import MODEL_NAMES, config_hash, decision_config_hash, disagreeing, load_evaluated_configs
 from .config import DEFAULT_CONFIG, load_config
 from .detectors.base import decide, is_experimental, is_primary, task_label
 from .errors import ForgeryError
+from .input_quality import REASONS_VI as QUALITY_REASONS_VI
+from .input_quality import RULE_VERSION as QUALITY_RULE_VERSION
+from .input_quality import assess as assess_quality
+from .input_quality import compact as compact_quality
+from .sysinfo import peak_rss_mb
 
 try:
     from ifd_core.metrics import auroc, average_precision, bootstrap_ci, confusion, threshold_for_fpr
@@ -49,13 +56,14 @@ except ImportError:  # pragma: no cover - the delivered package always contains 
 EXTS = (".jpg", ".jpeg", ".png")
 LABEL_NAMES = {0: {"that", "real", "goc", "anh_that", "authentic", "pristine"},
                1: {"sua", "gia", "fake", "anh_sua", "anh_gia", "edited", "manipulated", "forged"}}
-ORDER = {"no_clear_sign": 1, "needs_review": 2, "suspicious": 3}
+ORDER = {"no_clear_sign": 1, "needs_review": 2, "inconclusive": 2, "suspicious": 3}
 TYPE_TASK = {"pscc_onnx": "local_manipulation", "mesorch_onnx": "local_manipulation",
              "commfor_onnx": "ai_generated", "face_clip_onnx": "face_deepfake",
              "defaker2_http": "whole_image_authenticity"}
 MODEL_ANSWER_POINT = 0.5     # experimental DefakerOne2: p_fake >= 0.5 <=> the model answers "Fake" (not a tuned threshold)
 DEC_VI = {"suspicious": "Nghi vấn", "needs_review": "Cần kiểm tra thêm", "no_clear_sign": "Chưa thấy dấu hiệu rõ",
-          "not_applicable": "Không áp dụng", "": ""}
+          "inconclusive": "Không kết luận", "not_applicable": "Không áp dụng", "": ""}
+SLOW_IMAGE_SECONDS = 60      # the report counts images slower than this (rule of thumb for a usable demo)
 log = logging.getLogger("ifd.company_eval")
 
 
@@ -187,6 +195,7 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
                     from .analysis import Analyzer  # noqa: PLC0415 - heavy import only when something must be scored
                     progress("Đang nạp mô hình...")
                     analyzer = Analyzer(cfg)
+                rec["scored_now"] = True
                 t0 = time.perf_counter()
                 hit = {"file": it["file"], "sha256": digest, "score_key": key, "app_version": __version__}
                 try:
@@ -195,7 +204,9 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
                                scores={r.key: r.score for r in rep.results},
                                faces_found={r.key: r.details.get("faces_found") for r in rep.results
                                             if r.task == "face_deepfake"},
-                               size_wh=rep.metadata["image"]["display_size_wh"])
+                               size_wh=rep.metadata["image"]["display_size_wh"],
+                               input_quality=compact_quality(rep.metadata.get("input_quality")),
+                               detector_seconds={r.key: _first_time(r.timing) for r in rep.results})
                     missing = {r.key: (r.warnings[0] if r.warnings else "") for r in rep.results
                                if (not r.in_summary or r.primary) and r.score is None}
                     if missing:
@@ -212,10 +223,35 @@ def analyze_all(items, cfg, cache_path: Path, key: str, progress=print) -> list[
                 f.write(json.dumps(hit, ensure_ascii=False) + "\n")
                 f.flush()
                 progress(f"[{i}/{n}] {it['file']} — {'OK' if hit['status'] == 'ok' else 'LỖI'} ({hit['seconds']:.1f} s)")
+            elif hit.get("status") == "ok" and (hit.get("input_quality") or {}).get("v") != QUALITY_RULE_VERSION:
+                # scored before the input-quality check existed: decode only (no model), store it for the next run
+                q = quality_of_file(it["path"], cfg)
+                if q is not None:
+                    hit = {**hit, "input_quality": q}
+                    f.write(json.dumps(hit, ensure_ascii=False) + "\n")
+                    f.flush()
             rec.update({k: hit.get(k) for k in ("status", "error", "sha256", "decoded_rgb_sha256", "scores",
-                                                 "faces_found", "seconds", "experimental_unavailable")})
+                                                 "faces_found", "seconds", "experimental_unavailable",
+                                                 "input_quality", "detector_seconds")})
             out.append(rec)
     return out
+
+
+def _first_time(timing: dict):
+    """Main duration of one detector (its first timing entry: 'total' for DefakerOne2, inference for ONNX models)."""
+    v = next(iter((timing or {}).values()), None)
+    return round(float(v), 3) if isinstance(v, (int, float)) else None
+
+
+def quality_of_file(path: Path, cfg) -> dict | None:
+    """Input-quality block of one image without running any model (for scores read from an older cache)."""
+    from .image_io import read_image
+    try:
+        lim = cfg.limits
+        img = read_image(path, max_file_mb=lim["max_file_mb"], max_pixels=lim["max_pixels"], min_side=lim["min_side"])
+        return compact_quality(assess_quality(img.metadata, img.source_name))
+    except (ForgeryError, OSError):
+        return None
 
 
 def decisions(rec: dict, th: dict, primary: str | None = None) -> tuple[dict, str]:
@@ -223,6 +259,8 @@ def decisions(rec: dict, th: dict, primary: str | None = None) -> tuple[dict, st
     for k, t in th.items():
         s = (rec.get("scores") or {}).get(k)
         per[k] = "not_applicable" if s is None else decide(float(s), t["low"], t["high"])
+        if k == primary and per[k] == "needs_review":           # the app shows "Không kết luận" for the main model
+            per[k] = "inconclusive"
     if primary is not None and per.get(primary) in ORDER:       # the primary model decides
         return per, per[primary]
     applicable = [d for k, d in per.items() if d in ORDER and k != primary]
@@ -326,6 +364,83 @@ def product_block(recs, th, primary=None) -> dict:
     return out
 
 
+def _counts(y: np.ndarray, flag: np.ndarray) -> dict:
+    tp, fp = int((flag & (y == 1)).sum()), int((flag & (y == 0)).sum())
+    fn, tn = int((~flag & (y == 1)).sum()), int((~flag & (y == 0)).sum())
+    n = int(y.size)
+    d = lambda a, b: (a / b) if b else None
+    return {"n": n, "n_that": int((y == 0).sum()), "n_sua": int((y == 1).sum()), "tp": tp, "fp": fp, "tn": tn, "fn": fn,
+            "dung": tp + tn, "sai": fp + fn, "ty_le_dung": d(tp + tn, n), "ty_le_sai": d(fp + fn, n),
+            "fpr": d(fp, fp + tn), "tpr": d(tp, tp + fn)}
+
+
+def _quality_flag(r: dict):
+    q = r.get("input_quality")
+    return None if not q else bool(q.get("low"))
+
+
+def quality_block(recs, th, primary=None, exp=()) -> dict:
+    """Right/wrong rates of the application-level decision split by the "Độ tin cậy thấp" warning (the warning itself
+    never changes a decision).  Images can have several reasons, so the per-reason rows overlap."""
+    groups = {"co_canh_bao": [r for r in recs if _quality_flag(r) is True],
+              "khong_canh_bao": [r for r in recs if _quality_flag(r) is False]}
+    unknown = [r for r in recs if _quality_flag(r) is None]
+    if unknown:
+        groups["khong_ro"] = unknown
+    for code in QUALITY_REASONS_VI:
+        groups[f"ly_do:{code}"] = [r for r in recs if code in ((r.get("input_quality") or {}).get("codes") or [])]
+    out = {}
+    for name, rs in groups.items():
+        y = np.array([r["label"] for r in rs], dtype=int)
+        dec = np.array([ORDER[decisions(r, th, primary)[1]] for r in rs], dtype=int)
+        entry = {"nghi_van_la_duong": _counts(y, dec >= 3), "tu_can_kiem_tra_tro_len_la_duong": _counts(y, dec >= 2)}
+        for det in exp:             # experimental add-on: its own answer point, on the images it could score
+            scored = [r for r in rs if (r.get("scores") or {}).get(det) is not None]
+            ys = np.array([r["label"] for r in scored], dtype=int)
+            ss = np.array([float(r["scores"][det]) for r in scored])
+            entry.setdefault("experimental", {})[det] = _counts(ys, ss >= MODEL_ANSWER_POINT)
+        out[name] = entry
+    return out
+
+
+def disagreement_block(recs, th, primary) -> dict | None:
+    """How often another enabled detector reaches the OPPOSITE conclusion of the main model (no score is combined)."""
+    if primary is None or len(th) < 2:
+        return None
+    flags = []
+    for r in recs:
+        per, _ = decisions(r, th, primary)
+        flags.append(bool(disagreeing(primary, per)))
+    y = np.array([r["label"] for r in recs], dtype=int)
+    f = np.array(flags, dtype=bool)
+    rate = lambda m: (float(f[m].mean()) if m.any() else None)
+    return {"n": int(f.size), "n_khong_thong_nhat": int(f.sum()), "ty_le": rate(np.ones(f.size, bool)),
+            "ty_le_anh_that": rate(y == 0), "ty_le_anh_sua": rate(y == 1),
+            "rule_vi": (f"Không thống nhất = một mô hình “Nghi vấn”, mô hình kia “Chưa thấy dấu hiệu rõ” (mỗi mô hình theo "
+                        f"ngưỡng của chính nó; không gộp điểm). Mô hình chính: {MODEL_NAMES.get(primary, primary)}.")}
+
+
+def _stats(values) -> dict:
+    v = np.asarray([float(x) for x in values if x is not None], dtype=np.float64)
+    if not v.size:
+        return {"n": 0}
+    return {"n": int(v.size), "mean": float(v.mean()), "median": float(np.median(v)), "p90": float(np.percentile(v, 90)),
+            "max": float(v.max()), "min": float(v.min())}
+
+
+def timing_block(recs) -> dict:
+    """Seconds per image (whole analysis) and per detector.  Cached images keep the time of their first scoring."""
+    out = _stats(r.get("seconds") for r in recs)
+    out["over_limit"] = int(sum(1 for r in recs if (r.get("seconds") or 0) > SLOW_IMAGE_SECONDS))
+    out["limit_seconds"] = SLOW_IMAGE_SECONDS
+    per = defaultdict(list)
+    for r in recs:
+        for k, v in (r.get("detector_seconds") or {}).items():
+            per[k].append(v)
+    out["by_detector"] = {k: _stats(v) for k, v in sorted(per.items())}
+    return out
+
+
 def reference_thresholds(recs, th, seed_text="20261012") -> dict:
     """Informational only: thresholds for a target FPR chosen on half A of the REAL images (split by group),
     checked on half B.  Never written into config.json."""
@@ -374,15 +489,51 @@ def render(m: dict) -> tuple[str, str]:
          f"- Ảnh trùng (cùng bytes hoặc cùng pixel) tính một lần: {m['dedup']['duplicates_counted_once']} · "
          f"trùng nhưng khác nhãn (đã loại): {len(m['dedup']['conflicting_labels_excluded'])}"]
     L += [f"- Lưu ý: {w}" for w in m["warnings"]]
+    primary = m.get("primary_detector")
+    mid = "“Không kết luận”" if primary else "“Cần kiểm tra thêm”"      # middle level shown by the app
     L += ["", "## Kết luận người dùng nhìn thấy (cấp ứng dụng)", "",
-          "| Nhóm | n | “Nghi vấn” | “Cần kiểm tra thêm” trở lên | “Chưa thấy dấu hiệu rõ” |", "|---|---|---|---|---|"]
+          f"| Nhóm | n | “Nghi vấn” | {mid} trở lên | “Chưa thấy dấu hiệu rõ” |", "|---|---|---|---|---|"]
     for k, b in m["product"]["by_type"].items():
         L.append(f"| {k} | {b['n']} | {pc(b['nghi_van'])} | {pc(b['can_kiem_tra_tro_len'])} | {pc(b['chua_thay_dau_hieu'])} |")
     L += ["", "Đếm dương tính = ảnh bị gắn mức đó (ảnh sửa/giả là lớp dương):", "",
           "| Cách đếm | TP | FP | TN | FN | Precision | Recall (TPR) | FPR | FNR |", "|---|---|---|---|---|---|---|---|---|"]
-    for name, title in (("nghi_van_la_duong", "“Nghi vấn”"), ("tu_can_kiem_tra_tro_len_la_duong", "“Cần kiểm tra thêm” trở lên")):
+    for name, title in (("nghi_van_la_duong", "“Nghi vấn”"), ("tu_can_kiem_tra_tro_len_la_duong", f"{mid} trở lên")):
         b = m["product"][name]
         L.append(f"| {title} | {b['tp']} | {b['fp']} | {b['tn']} | {b['fn']} | {pc(b['precision'])} | {pc(b['recall'])} | {pc(b['fpr'])} | {pc(b['fnr'])} |")
+    q = m.get("by_input_quality") or {}
+    if q:
+        names = {"co_canh_bao": "Có cảnh báo “Độ tin cậy thấp”", "khong_canh_bao": "Không cảnh báo",
+                 "khong_ro": "Không rõ (không đọc lại được ảnh)"}
+        names.update({f"ly_do:{c}": f"– lý do: {t}" for c, t in QUALITY_REASONS_VI.items()})
+        L += ["", "## Tách theo cảnh báo “Độ tin cậy thấp” (ảnh nhỏ / chụp màn hình / đã nén lại)", "",
+              "Cảnh báo không đổi điểm hay kết luận. Bảng cho biết kết luận cấp ứng dụng đúng/sai ra sao ở từng nhóm "
+              "(“Nghi vấn” là dương). Một ảnh có thể có nhiều lý do, nên các dòng “lý do” chồng lên nhau.", "",
+              "| Nhóm | n | ảnh thật | ảnh sửa | Đúng | Sai | Tỷ lệ đúng | Tỷ lệ sai | Báo nhầm (FPR) | Phát hiện (TPR) |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
+        for name, entry in q.items():
+            c = entry["nghi_van_la_duong"]
+            if not c["n"] and name.startswith("ly_do:"):
+                continue
+            L.append(f"| {names.get(name, name)} | {c['n']} | {c['n_that']} | {c['n_sua']} | {c['dung']} | {c['sai']} | "
+                     f"{pc(c['ty_le_dung'])} | {pc(c['ty_le_sai'])} | {pc(c['fpr'])} | {pc(c['tpr'])} |")
+        L += ["", f"Cùng bảng nhưng đếm {mid} trở lên là dương:", "",
+              "| Nhóm | n | Đúng | Sai | Tỷ lệ đúng | Báo nhầm (FPR) | Phát hiện (TPR) |", "|---|---|---|---|---|---|---|"]
+        for name in ("co_canh_bao", "khong_canh_bao"):
+            if name in q:
+                c = q[name]["tu_can_kiem_tra_tro_len_la_duong"]
+                L.append(f"| {names[name]} | {c['n']} | {c['dung']} | {c['sai']} | {pc(c['ty_le_dung'])} | {pc(c['fpr'])} | {pc(c['tpr'])} |")
+        for det in (m.get("experimental") or {}):
+            L += ["", f"Bộ thử nghiệm {det}, mốc p_fake ≥ 0,5 (chỉ ảnh chấm được):", "",
+                  "| Nhóm | n | Đúng | Sai | Tỷ lệ đúng | Báo nhầm (FPR) | Phát hiện (TPR) |", "|---|---|---|---|---|---|---|"]
+            for name in ("co_canh_bao", "khong_canh_bao"):
+                c = ((q.get(name) or {}).get("experimental") or {}).get(det)
+                if c:
+                    L.append(f"| {names[name]} | {c['n']} | {c['dung']} | {c['sai']} | {pc(c['ty_le_dung'])} | {pc(c['fpr'])} | {pc(c['tpr'])} |")
+    dis = m.get("disagreement")
+    if dis:
+        L += ["", "## Mô hình không thống nhất", "",
+              f"- {dis['n_khong_thong_nhat']}/{dis['n']} ảnh ({pc(dis['ty_le'])}) — ảnh thật: {pc(dis['ty_le_anh_that'])}, "
+              f"ảnh sửa: {pc(dis['ty_le_anh_sua'])}. {dis['rule_vi']}"]
     L += ["", "## Từng bộ phát hiện", "",
           "Mỗi bộ phát hiện chỉ nhắm một loại; ví dụ bộ “ảnh sinh hoàn toàn bằng AI” không được kỳ vọng bắt ảnh ghép. "
           "Hãy đọc dòng theo đúng “loại” ảnh sửa ở bảng nhóm bên dưới mỗi bộ.", ""]
@@ -394,7 +545,8 @@ def render(m: dict) -> tuple[str, str]:
         L.append(f"- AUROC: {f3(b.get('auroc'))}" + (f" [CI 95 %: {f3(ci[0])}–{f3(ci[1])}]" if ci else "") +
                  f" · AP: {f3(b.get('ap'))} · tỷ lệ áp dụng được: {pc(b.get('applicable_fraction'))} · vùng “cần kiểm tra”: {pc(b.get('abstain_fraction'))}")
         L += ["", "| Ngưỡng | TP | FP | TN | FN | Precision | TPR | FPR | FNR |", "|---|---|---|---|---|---|---|---|---|"]
-        for key, title in (("at_high", "high (“Nghi vấn”)"), ("at_low", "low (“Cần kiểm tra thêm”)")):
+        low_title = "low (“Không kết luận”)" if det == primary else "low (“Cần kiểm tra thêm”)"
+        for key, title in (("at_high", "high (“Nghi vấn”)"), ("at_low", low_title)):
             c = b[key]
             L.append(f"| {title} | {c['tp']} | {c['fp']} | {c['tn']} | {c['fn']} | {pc(c['precision'])} | {pc(c['recall'])} | {pc(c['fpr'])} | {pc(c['fnr'])} |")
         L += ["", "| Nhóm | n | ≥ high | ≥ low |", "|---|---|---|---|"]
@@ -422,6 +574,22 @@ def render(m: dict) -> tuple[str, str]:
         L += ["", "| Nhóm | n | chấm được | p_fake trung vị | p_fake ≥ 0,5 |", "|---|---|---|---|---|"]
         for k, v in b["by_type"].items():
             L.append(f"| {k} | {v['n']} | {v['n_scored']} | {f3(v['median_score'])} | {pc(v['ge_answer_point'])} |")
+        L.append("")
+    t = m.get("timing_seconds_per_image") or {}
+    if t.get("n"):
+        f1 = lambda x: "—" if x is None else f"{x:.1f}".replace(".", ",")
+        L += ["## Thời gian và bộ nhớ", "",
+              f"- Thời gian mỗi ảnh (cả phân tích): trung bình {f1(t['mean'])} s · trung vị {f1(t['median'])} s · "
+              f"p90 {f1(t['p90'])} s · lâu nhất {f1(t['max'])} s · {t['over_limit']} ảnh quá {t['limit_seconds']} s."]
+        for det, s in t.get("by_detector", {}).items():
+            if s.get("n"):
+                L.append(f"- Riêng {det}: trung vị {f1(s['median'])} s · lâu nhất {f1(s['max'])} s ({s['n']} ảnh).")
+        L.append("- Ảnh lấy từ lưu đệm giữ thời gian của lần chấm đầu tiên.")
+        ram = m.get("process_peak_ram_mb")
+        if ram:
+            gib = f"{ram / 1024:.2f}".replace(".", ",")
+            L.append(f"- RAM đỉnh của tiến trình kiểm định (KHÔNG gồm server DefakerOne2): {gib} GiB"
+                     + ("" if m.get("n_scored_now") else " — lần này mọi điểm lấy từ lưu đệm, không nạp mô hình."))
         L.append("")
     L += ["## Ngưỡng tham khảo theo ảnh thật của chính tập này (KHÔNG tự áp dụng)", "",
           "Chọn trên nửa A (chia ngẫu nhiên theo nhóm), kiểm tra trên nửa B. Chỉ để thảo luận; muốn áp dụng phải ghi quyết định và kiểm tra lại trên tập mới.", ""]
@@ -502,6 +670,9 @@ def main(argv=None) -> int:
         primary = primary_key(cfg)
         if primary:
             notes.append(f"Kết luận cấp ứng dụng theo mô hình chính {primary} (ngưỡng trong cấu hình); các bộ khác chỉ tham khảo.")
+            if cfg.detector(primary).get("type") == "defaker2_http":
+                from .detectors.defaker2 import threshold_info
+                notes.append(f"Ngưỡng {primary}: " + threshold_info(cfg.detector(primary))["text_vi"])
         key = score_settings_key(cfg)
         work = output / "kiem_dinh" / f"{norm(root.name)[:40] or 'du_lieu'}_{hashlib.sha256(str(root).encode()).hexdigest()[:8]}"
         work.mkdir(parents=True, exist_ok=True)
@@ -530,7 +701,15 @@ def main(argv=None) -> int:
              "detectors": {k: det_block(kept, k, t) for k, t in th.items()} if kept else {},
              "experimental": {k: exp_block(kept, k) for k in exp} if kept else {},
              "product": product_block(kept, th, primary) if kept else {"by_type": {}},
-             "reference_thresholds": reference_thresholds(kept, th) if kept else {}}
+             "reference_thresholds": reference_thresholds(kept, th) if kept else {},
+             "primary_detector": primary,
+             "input_quality_rule": {"version": QUALITY_RULE_VERSION, "reasons_vi": QUALITY_REASONS_VI,
+                                    "note_vi": "Cảnh báo chỉ để hiển thị; không đổi điểm hay kết luận (ifd/input_quality.py)."},
+             "by_input_quality": quality_block(kept, th, primary, exp) if kept else {},
+             "disagreement": disagreement_block(kept, th, primary) if kept else None,
+             "timing_seconds_per_image": timing_block(kept) if kept else {},
+             "n_scored_now": sum(1 for r in recs if r.get("scored_now")),
+             "process_peak_ram_mb": peak_rss_mb()}
         if not kept:
             raise ForgeryError("Không có ảnh nào chấm được (xem danh sách lỗi phía trên).")
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -545,6 +724,9 @@ def main(argv=None) -> int:
         for k in th:
             cols += [f"{k}_score", f"{k}_decision"]
         cols += [f"{k}_score" for k in exp]                     # experimental: score only, no decision
+        cols += ["input_quality", "input_quality_ly_do", "seconds"]
+        if m["disagreement"] is not None:
+            cols += ["mo_hinh_khong_thong_nhat"]
         cols += ["error"]
         w = csv.DictWriter(buf, fieldnames=cols)
         w.writeheader()
@@ -565,6 +747,12 @@ def main(argv=None) -> int:
                 for k in exp:
                     s = (r.get("scores") or {}).get(k)
                     row[f"{k}_score"] = "" if s is None else s
+                flag = _quality_flag(r)
+                row["input_quality"] = "" if flag is None else ("canh_bao" if flag else "khong_canh_bao")
+                row["input_quality_ly_do"] = (r.get("input_quality") or {}).get("text_vi") or ""
+                row["seconds"] = "" if r.get("seconds") is None else r["seconds"]
+                if "mo_hinh_khong_thong_nhat" in row:
+                    row["mo_hinh_khong_thong_nhat"] = int(bool(disagreeing(primary, per)))
             w.writerow(row)
         (rep_dir / "du_doan.csv").write_bytes(("﻿" + buf.getvalue()).encode("utf-8"))
         print(f"Xong. Báo cáo: {rep_dir / 'bao_cao_kiem_dinh.html'}", flush=True)

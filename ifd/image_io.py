@@ -66,6 +66,14 @@ def _exif_summary(image: Image.Image) -> dict:
     return out
 
 
+def _exif_tag_ids(image: Image.Image) -> list[int]:
+    """IFD0 tag numbers present (metadata only; used by ifd.input_quality to tell 'no EXIF' from 'some EXIF')."""
+    try:
+        return sorted(int(t) for t in image.getexif().keys())
+    except Exception:
+        return []
+
+
 def read_image(source: str | Path | bytes, *, max_file_mb: float, max_pixels: int, min_side: int,
                name: str | None = None) -> LoadedImage:
     limit = int(max_file_mb * 1024 * 1024)
@@ -106,6 +114,7 @@ def read_image(source: str | Path | bytes, *, max_file_mb: float, max_pixels: in
                 image.load()
                 jpeg_quality = estimate_jpeg_quality(image) if fmt == "JPEG" else None
                 exif = _exif_summary(image)
+                exif_tags = _exif_tag_ids(image)
                 icc = bool(image.info.get("icc_profile"))
                 progressive = bool(image.info.get("progressive") or image.info.get("progression"))
                 orientation = image.getexif().get(274, 1) if hasattr(image, "getexif") else 1
@@ -117,8 +126,14 @@ def read_image(source: str | Path | bytes, *, max_file_mb: float, max_pixels: in
                     image = Image.fromarray(np.clip(np.round(arr / peak * 255), 0, 255).astype(np.uint8), "L")
                     notes.append("Ảnh 16-bit/xám đã được chuyển về 8-bit để đưa vào mô hình.")
                 has_alpha = image.mode in ("RGBA", "LA") or (image.mode == "P" and "transparency" in image.info)
+                alpha_info = {"present": False}
                 if has_alpha:
                     rgba = image.convert("RGBA")
+                    a_channel = rgba.getchannel("A")
+                    hist = a_channel.histogram()           # 256 bins; 255 = fully opaque
+                    alpha_info = {"present": True, "min": int(a_channel.getextrema()[0]),
+                                  "transparent_fraction": float(1.0 - hist[255] / max(1, sum(hist)))}
+                    del a_channel
                     background = Image.new("RGBA", rgba.size, (255, 255, 255, 255))
                     image = Image.alpha_composite(background, rgba).convert("RGB")
                     notes.append("Ảnh có kênh trong suốt (alpha) đã được ghép lên nền trắng trước khi phân tích; "
@@ -138,7 +153,7 @@ def read_image(source: str | Path | bytes, *, max_file_mb: float, max_pixels: in
             "encoded_size_wh": [width, height], "display_size_wh": [int(rgb.shape[1]), int(rgb.shape[0])],
             "original_mode": mode, "exif_orientation": orientation, "has_icc_profile": icc,
             "jpeg_quality_estimate": jpeg_quality, "jpeg_progressive": progressive if fmt == "JPEG" else None,
-            "exif": exif, "coordinate_space": "EXIF-oriented display RGB",
+            "exif": exif, "exif_tags": exif_tags, "alpha": alpha_info, "coordinate_space": "EXIF-oriented display RGB",
             "metadata_note": "EXIF/ICC chỉ mang tính tham khảo, dễ bị sửa; không dùng làm bằng chứng thật/giả.",
             "warnings": notes,
         })

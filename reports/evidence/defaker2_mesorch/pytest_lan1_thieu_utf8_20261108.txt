@@ -1,0 +1,242 @@
+# Toàn bộ pytest, lần 1 — cùng lệnh nhưng KHÔNG đặt PYTHONUTF8 / PYTHONIOENCODING: 8 test chạy tiến trình con (test_cli.py, test_company_eval.py) hỏng vì tiến trình con in tiếng Việt bằng bảng mã của Windows (UnicodeDecodeError / UnicodeEncodeError).
+# Code gốc (commit d5b700a, kiểm bằng git stash) cũng hỏng y như vậy trong môi trường này: lỗi môi trường chạy test, không do thay đổi. Lần 2 (pytest_toan_bo_20261108.txt) chạy đúng môi trường của các file .bat: 129/129 đạt.
+FFF.FFFFF............................................................... [ 56%]
+........................................................                 [100%]
+================================== FAILURES ===================================
+________________ test_folder_run_with_corrupt_file_and_history ________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_folder_run_with_corrupt_f0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_folder_run_with_corrupt_f0/config_light.json')
+
+    def test_folder_run_with_corrupt_file_and_history(tmp_path, light_config):
+        src = tmp_path / "in"
+        (src / "sub").mkdir(parents=True)
+        rng = np.random.default_rng(1)
+        (src / "a.png").write_bytes(encode(rng.integers(0, 255, (90, 130, 3), dtype=np.uint8)))
+        (src / "sub" / "b.jpg").write_bytes(encode(rng.integers(0, 255, (70, 70, 3), dtype=np.uint8), "JPEG"))
+        (src / "broken.jpg").write_bytes(b"not a jpeg")
+        (src / "notes.txt").write_text("ignored")
+        out = tmp_path / "out"
+        r1 = run([src, "--output", out, "--recursive"], config=light_config)
+        assert r1.returncode == 1, r1.stderr  # partial failure
+>       latest = json.loads((out / "latest_run.json").read_text())
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pathlib\_local.py:546: in read_text
+    ???
+pathlib\_abc.py:632: in read_text
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_folder_run_with_corrupt_f0/out/latest_run.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '<THU_MUC>\\AppData\\Local\\Temp\\pytest-of-<THU_MUC>\\pytest-11\\test_folder_run_with_corrupt_f0\\out\\latest_run.json'
+
+pathlib\_local.py:537: FileNotFoundError
+_______________________ test_single_file_and_bad_paths ________________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_single_file_and_bad_paths0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_single_file_and_bad_paths0/config_light.json')
+
+    def test_single_file_and_bad_paths(tmp_path, light_config):
+        img = tmp_path / "x.png"
+        img.write_bytes(encode(np.full((64, 64, 3), 120, np.uint8)))
+        r = run([img, "--output", tmp_path / "o"], config=light_config)
+>       assert r.returncode == 0, r.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<frozen runpy>", line 203, in _run_module_as_main
+E           File "<frozen runpy>", line 88, in _run_code
+E           File "<THU_MUC>\repo\ifd\__main__.py", line 3, in <module>
+E             raise SystemExit(main())
+E                              ~~~~^^
+E           File "<THU_MUC>\repo\ifd\cli.py", line 105, in main
+E             print(json.dumps(row, ensure_ascii=False), flush=True)
+E             ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "encodings\cp1252.py", line 19, in encode
+E         UnicodeEncodeError: 'charmap' codec can't encode character '\u1ea7' in position 96: character maps to <undefined>
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n').returncode
+
+tests\test_cli.py:60: AssertionError
+___________________ test_output_inside_input_not_rescanned ____________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_output_inside_input_not_r0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_output_inside_input_not_r0/config_light.json')
+
+    def test_output_inside_input_not_rescanned(tmp_path, light_config):
+        src = tmp_path / "in"
+        src.mkdir()
+        (src / "a.png").write_bytes(encode(np.full((40, 40, 3), 90, np.uint8)))
+        out = src / "results"
+>       assert run([src, "--output", out, "--recursive"], config=light_config).returncode == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n').returncode
+E        +    where CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n') = run([WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_output_inside_input_not_r0/in'), '--outpu...'<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_output_inside_input_not_r0/in/results'), '--recursive'], config=WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_output_inside_input_not_r0/config_light.json'))
+
+tests\test_cli.py:76: AssertionError
+__________________ test_csv_has_one_column_pair_per_detector __________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_has_one_column_pair_p0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_has_one_column_pair_p0/config_light.json')
+
+    def test_csv_has_one_column_pair_per_detector(tmp_path, light_config):
+        img = tmp_path / "x.jpg"
+        img.write_bytes(encode(np.full((50, 60, 3), 30, np.uint8), "JPEG"))
+        out = tmp_path / "o"
+>       assert run([img, "--output", out], config=light_config).returncode == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n').returncode
+E        +    where CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n') = run([WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_has_one_column_pair_p0/x.jpg'), '--output', WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_has_one_column_pair_p0/o')], config=WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_has_one_column_pair_p0/config_light.json'))
+
+tests\test_cli.py:100: AssertionError
+___________________ test_no_images_writes_only_result_json ____________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_no_images_writes_only_res0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_no_images_writes_only_res0/config_light.json')
+
+    def test_no_images_writes_only_result_json(tmp_path, light_config):
+        src = tmp_path / "in"
+        src.mkdir()
+        (src / "a.png").write_bytes(encode(np.full((80, 120, 3), 90, np.uint8)))
+        out = tmp_path / "out"
+        r = run([src, "--output", out, "--no-images"], config=light_config)
+>       assert r.returncode == 0, r.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<frozen runpy>", line 203, in _run_module_as_main
+E           File "<frozen runpy>", line 88, in _run_code
+E           File "<THU_MUC>\repo\ifd\__main__.py", line 3, in <module>
+E             raise SystemExit(main())
+E                              ~~~~^^
+E           File "<THU_MUC>\repo\ifd\cli.py", line 105, in main
+E             print(json.dumps(row, ensure_ascii=False), flush=True)
+E             ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "encodings\cp1252.py", line 19, in encode
+E         UnicodeEncodeError: 'charmap' codec can't encode character '\u1ea7' in position 96: character maps to <undefined>
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...odeEncodeError: \'charmap\' codec can\'t encode character \'\\u1ea7\' in position 96: character maps to <undefined>\n').returncode
+
+tests\test_cli.py:113: AssertionError
+___________________ test_folder_mode_report_cache_and_dedup ___________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_folder_mode_report_cache_0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_folder_mode_report_cache_0/config_light.json')
+
+    def test_folder_mode_report_cache_and_dedup(tmp_path, light_config):
+        data = make_folder_dataset(tmp_path)
+        out = tmp_path / "out"
+        r = run([data, "--output", out], light_config)
+        assert r.returncode == 1, r.stderr                                      # one unreadable file
+>       assert "Đang nạp mô hình" in r.stdout
+E       AssertionError: assert 'Đang nạp mô hình' in ''
+E        +  where '' = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...\Local\\Temp\\pytest-of-<THU_MUC>\\pytest-11\\test_folder_mode_report_cache_0\\config_light.json'], returncode=1, stdout='').stdout
+
+tests\test_company_eval.py:47: AssertionError
+___________________ test_csv_mode_conflicts_and_path_escape ___________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_mode_conflicts_and_pa0')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_csv_mode_conflicts_and_pa0/config_light.json')
+
+    def test_csv_mode_conflicts_and_path_escape(tmp_path, light_config):
+        data = tmp_path / "d"
+        data.mkdir()
+        shutil.copy(DATA / "authentic1.png", data / "x.png")
+        shutil.copy(DATA / "authentic1.png", data / "x_again.png")              # same pixels, opposite label -> excluded
+        shutil.copy(DATA / "splice1.png", data / "s.png")
+        shutil.copy(DATA / "authentic3.png", data / "y.png")
+        (tmp_path / "outside.png").write_bytes((DATA / "authentic3.png").read_bytes())
+        labels = tmp_path / "nhan.csv"
+        labels.write_text("file,label,loai,nhom\nx.png,0,cam,g1\nx_again.png,1,ghep,g1\ns.png,sua,ghep,g2\n"
+                          "y.png,that,cam,g3\n../outside.png,0,cam,g4\nmissing_label.png,,cam,g5\n", encoding="utf-8")
+        out = tmp_path / "out"
+        r = run([data, "--labels", labels, "--output", out], light_config)
+>       assert r.returncode == 0, r.stderr
+E       AssertionError: None
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['<THU_MUC>\\repo\\runtime\\python.exe', '-m', 'i...\Local\\Temp\\pytest-of-<THU_MUC>\\pytest-11\\test_csv_mode_conflicts_and_pa0\\config_light.json'], returncode=1, stdout='').returncode
+
+tests\test_company_eval.py:88: AssertionError
+___________________________ test_bad_inputs_exit_2 ____________________________
+
+tmp_path = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_bad_inputs_exit_20')
+light_config = WindowsPath('<THU_MUC>/AppData/Local/Temp/pytest-of-<THU_MUC>/pytest-11/test_bad_inputs_exit_20/config_light.json')
+
+    def test_bad_inputs_exit_2(tmp_path, light_config):
+        empty = tmp_path / "e"
+        empty.mkdir()
+        (empty / "a.png").write_bytes(encode(np.zeros((32, 32, 3), np.uint8)))
+        r = run([empty, "--output", tmp_path / "o"], light_config)
+>       assert r.returncode == 2 and "Không thấy thư mục nhãn" in r.stderr
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: argument of type 'NoneType' is not iterable
+
+tests\test_company_eval.py:101: TypeError
+============================== warnings summary ===============================
+tests/test_company_eval.py::test_folder_mode_report_cache_and_dedup
+  <THU_MUC>\AppData\Local\Temp\claude\48670bd5d1e67b4e\b63a22c8-66d7-48fe-880a-176c0b385f81\scratchpad\pytest_site\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-14 (_readerthread)
+  
+  Traceback (most recent call last):
+    File "threading.py", line 1044, in _bootstrap_inner
+    File "threading.py", line 995, in run
+    File "subprocess.py", line 1616, in _readerthread
+    File "<frozen codecs>", line 325, in decode
+  UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 480: invalid continuation byte
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_company_eval.py::test_csv_mode_conflicts_and_path_escape
+  <THU_MUC>\AppData\Local\Temp\claude\48670bd5d1e67b4e\b63a22c8-66d7-48fe-880a-176c0b385f81\scratchpad\pytest_site\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-16 (_readerthread)
+  
+  Traceback (most recent call last):
+    File "threading.py", line 1044, in _bootstrap_inner
+    File "threading.py", line 995, in run
+    File "subprocess.py", line 1616, in _readerthread
+    File "<frozen codecs>", line 325, in decode
+  UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 480: invalid continuation byte
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_company_eval.py::test_bad_inputs_exit_2
+  <THU_MUC>\AppData\Local\Temp\claude\48670bd5d1e67b4e\b63a22c8-66d7-48fe-880a-176c0b385f81\scratchpad\pytest_site\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-18 (_readerthread)
+  
+  Traceback (most recent call last):
+    File "threading.py", line 1044, in _bootstrap_inner
+    File "threading.py", line 995, in run
+    File "subprocess.py", line 1616, in _readerthread
+    File "<frozen codecs>", line 325, in decode
+  UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf4 in position 12: invalid continuation byte
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 8 durations =============================
+26.18s call     tests/test_defaker2.py::test_validation_kit_reports_defaker2_separately
+11.56s call     tests/test_defaker2.py::test_validation_kit_rescoring_after_server_outage
+9.78s setup    tests/test_models_and_parity.py::test_mesorch_score_is_max_of_fixed_scale_map
+9.76s call     tests/test_input_quality.py::test_validation_kit_column_and_table_by_warning
+9.19s call     tests/test_models_and_parity.py::test_probe_outputs_match_reference[face_clip_vitl14.onnx]
+8.72s call     tests/test_models_and_parity.py::test_mesorch_score_is_max_of_fixed_scale_map
+6.28s call     tests/test_defaker2.py::test_primary_with_other_detectors_falls_back_when_down
+4.76s call     tests/test_webapp.py::test_results_are_isolated_per_upload
+=========================== short test summary info ===========================
+FAILED tests/test_cli.py::test_folder_run_with_corrupt_file_and_history - Fil...
+FAILED tests/test_cli.py::test_single_file_and_bad_paths - AssertionError: Tr...
+FAILED tests/test_cli.py::test_output_inside_input_not_rescanned - AssertionE...
+FAILED tests/test_cli.py::test_csv_has_one_column_pair_per_detector - Asserti...
+FAILED tests/test_cli.py::test_no_images_writes_only_result_json - AssertionE...
+FAILED tests/test_company_eval.py::test_folder_mode_report_cache_and_dedup - ...
+FAILED tests/test_company_eval.py::test_csv_mode_conflicts_and_path_escape - ...
+FAILED tests/test_company_eval.py::test_bad_inputs_exit_2 - TypeError: argume...
+8 failed, 120 passed, 3 warnings in 172.85s (0:02:52)
+EXIT=1

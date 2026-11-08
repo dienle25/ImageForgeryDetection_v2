@@ -87,14 +87,17 @@ class State:
                             "validation": (summaries.get(key) or {}).get("text_vi"),
                             "validation_status": (summaries.get(key) or {}).get("status")}
                     if det.get("type") in EXPERIMENTAL_TYPES:
-                        from ..detectors.defaker2 import PRIMARY_VALIDATION, VALIDATION
+                        from ..detectors.defaker2 import VALIDATION, primary_validation, threshold_info
                         server = obj.health() if obj is not None and hasattr(obj, "health") else None
                         if is_primary(det):
-                            item.update(primary=True, validation=PRIMARY_VALIDATION["text_vi"],
-                                        validation_status="author_rule", server=server)
+                            pv = primary_validation(det)
+                            item.update(primary=True, validation=pv["text_vi"], validation_status=pv["status"],
+                                        threshold_info=threshold_info(det), server=server)
                         else:
                             item.update(experimental=True, validation=VALIDATION["text_vi"],
                                         validation_status="experimental", server=server)
+                    elif any(d.get("enabled") and is_primary(d) for d in self.config.data["detectors"].values()):
+                        item["reference"] = True        # another model decides; this one is shown for reference
                     dets.append(item)
             covered = {d["task"] for d in dets}
             if any(d.get("primary") for d in dets):      # the primary model judges the whole image (all types)

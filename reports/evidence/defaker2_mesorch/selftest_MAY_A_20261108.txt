@@ -1,0 +1,17 @@
+ifd 2.0.0 self-test 20261108T034141Z
+{"os": "Windows-11-10.0.26300-SP0", "machine": "AMD64", "python": "3.13.16", "python_executable": "<THU_MUC>\\repo\\runtime\\python.exe", "cpu": "AMD Ryzen 7 4800H with Radeon Graphics", "logical_cpus": 16, "ram_mb": 7599.109375}
+
+PASS  imports  (1.242s)
+PASS  model_files_sha256  (1.066s)
+PASS  model_numeric_parity_vs_build_machine  (11.305s)
+PASS  cli_folder_full_pipeline_subprocess  (15.983s)
+PASS  analyzer_load_and_reference_samples  (20.495s)
+PASS  input_formats_and_rejections  (22.758s)
+PASS  config_validation  (0.019s)
+PASS  corrupt_or_missing_model  (0.084s)
+PASS  cli_runs_and_artifacts  (6.662s)
+PASS  company_validation_kit  (9.117s)
+PASS  web_ui_api_downloads_security_port  (4.35s)
+PASS  cpu_timing  (57.875s)
+
+PASS=12 FAIL=0 SKIP=0

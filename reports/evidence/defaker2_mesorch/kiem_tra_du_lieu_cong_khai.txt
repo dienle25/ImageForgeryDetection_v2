@@ -1,0 +1,14 @@
+# tools/tao_nhan_cong_khai.py --kiem-tra (chỉ đọc danh mục ZIP và cột row_id của OpenFake; không giải nén, không chạy mô hình)
+# Thời điểm: 2026-11-08 10:34:09 · Python venv_research 3.13 (có pyarrow) · thư mục nguồn: <_cloud_bridge>\downloads
+CocoGlide (test): 1024/1024 ảnh có trong file tải về
+Korus: 8 phần, tổng 1697070982 byte (bản gốc 1697070982 byte)
+Korus dev_korus: 144/144 ảnh có trong file tải về
+Korus test_korus: 296/296 ảnh có trong file tải về
+DeepFakeFace dev/inpainting: 300/300 ảnh có trong file tải về
+DeepFakeFace dev/insight: 300/300 ảnh có trong file tải về
+DeepFakeFace dev/text2img: 300/300 ảnh có trong file tải về
+DeepFakeFace dev/wiki: 300/300 ảnh có trong file tải về
+OpenFake: 12/12 phần row group đúng kích thước
+OpenFake dev: 569/569 ảnh có trong các row group đã tải (chỉ đọc cột row_id)
+Kiểm tra xong: đủ ảnh.
+# mã thoát: 0

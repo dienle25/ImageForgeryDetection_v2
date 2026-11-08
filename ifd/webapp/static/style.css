@@ -79,3 +79,11 @@ footer{padding:4px 16px 28px}
 .det.main{border:2px solid var(--accent)}
 .badge-main{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:.4px;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;vertical-align:middle}
 .verdict.unavailable{background:var(--gray-bg);color:var(--muted)}
+.verdict.inconclusive{background:var(--amber-bg);color:var(--amber)}
+.chip.inconclusive{background:var(--amber-bg);color:var(--amber)}
+.verdict-flag{margin-top:8px;padding:8px 10px;border-left:4px solid var(--amber);background:#fffdf5;color:var(--amber);border-radius:6px}
+.primary-slot{margin-bottom:12px}
+.viewer-title{font-weight:600;margin:0 0 8px}
+.det.ref{border-style:dashed}
+.badge-ref{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:.4px;color:#fff;background:var(--muted);border-radius:4px;padding:1px 6px;vertical-align:middle}
+.primary-slot:empty{display:none}

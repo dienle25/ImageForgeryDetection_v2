@@ -20,6 +20,7 @@ from .config import Config
 from .detectors.base import DECISIONS, TASKS, DetectorResult, is_experimental, task_label
 from .errors import ForgeryError
 from .image_io import LoadedImage, decoded_pixel_hash, read_image
+from .input_quality import assess as assess_input_quality
 from .model_store import verify_model
 from .render import binary_mask, colorize, draw_face_boxes, overlay, png_bytes
 
@@ -129,11 +130,16 @@ class Analyzer:
         summary = summarize(results, cfg)
         matches = self.config_matches_evaluated(cfg)
         if matches is False:
-            summary["warnings"].insert(0, CONFIG_CHANGED_VI)
+            # the main model could not score this image: that message stays first, the config note comes next
+            primary_down = summary.get("decided_by") == "fallback" or (
+                summary.get("primary_detector") and summary.get("overall_decision") == "unavailable")
+            summary["warnings"].insert(1 if primary_down and summary["warnings"] else 0, CONFIG_CHANGED_VI)
         metadata = {
             "schema_version": SCHEMA_VERSION, "app_version": __version__,
             "analyzed_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "source_name": image.source_name, "image": image.metadata,
+            # display-only warning (small / screenshot / re-compressed input); never changes a score or a decision
+            "input_quality": assess_input_quality(image.metadata, image.source_name),
             "decoded_rgb_sha256": decoded_pixel_hash(image.rgb),
             "models": self.model_info, "config_sha256": config_hash(cfg), "config": cfg.to_json(),
             "decision_config_sha256": decision_config_hash(cfg), "config_matches_evaluated": matches,
@@ -192,13 +198,14 @@ def decision_config_hash(cfg: Config) -> str:
     their type, thresholds (without the free-text 'status') and scoring settings.  Model files are pinned
     separately by SHA-256 (models/manifest.json); paths, limits, threads and display settings are excluded.
     Experimental add-ons are excluded too: they are never part of the overall decision.  A primary add-on
-    (role "primary") decides, so its type, role and thresholds are included."""
+    (role "primary") decides, so its type, role and thresholds are included (without the descriptive 'calibration'
+    block that tools/chon_nguong_defaker2.py writes next to low/high)."""
     dets = {}
     for key, det in sorted(cfg.data["detectors"].items()):
         if not det.get("enabled") or is_experimental(det):
             continue
         d = {k: det[k] for k in DECISION_KEYS + ("role",) if k in det}
-        d["thresholds"] = {k: v for k, v in det.get("thresholds", {}).items() if k != "status"}
+        d["thresholds"] = {k: v for k, v in det.get("thresholds", {}).items() if k not in ("status", "calibration")}
         dets[key] = d
     return hashlib.sha256(json.dumps(dets, sort_keys=True).encode()).hexdigest()
 
@@ -227,20 +234,61 @@ PRIMARY_FALLBACK_VI = ("DefakerOne2 (mô hình chính) chưa khả dụng cho �
                        "còn lại. Bật server DefakerOne2 (addons\\defaker2\\CHAY_DEFAKER2.bat) rồi phân tích lại.")
 
 
+PRIMARY_HEADLINES = {"suspicious": "Có dấu hiệu nghi vấn — cần người kiểm tra xem xét",
+                     "no_clear_sign": "Chưa thấy dấu hiệu rõ trong phạm vi đã kiểm tra",
+                     "needs_review": "Cần kiểm tra thêm — tín hiệu chưa rõ ràng",
+                     "inconclusive": "Không kết luận — điểm DefakerOne2 nằm giữa hai ngưỡng, cần người kiểm tra xem xét"}
+DISAGREE_VI = "Hai mô hình không thống nhất, cần xem kỹ"
+DISAGREE_MANY_VI = "Các mô hình không thống nhất, cần xem kỹ"
+MODEL_NAMES = {"defaker2": "DefakerOne2", "mesorch": "Mesorch", "commfor_aigen": "Community Forensics",
+               "face_clip": "face_clip", "pscc_net": "PSCC-Net"}
+CONCLUSIVE = ("suspicious", "no_clear_sign")
+
+
+def disagreeing(primary_key: str, decisions: dict) -> list[str]:
+    """Detectors whose OWN decision (own thresholds) is the opposite conclusion of the primary model: one says
+    'Nghi vấn', the other 'Chưa thấy dấu hiệu rõ'.  No score is ever combined; 'Cần kiểm tra thêm', 'Không kết luận',
+    'Không áp dụng' or 'Chưa khả dụng' never count as a disagreement."""
+    p = decisions.get(primary_key)
+    if p not in CONCLUSIVE:
+        return []
+    opposite = "no_clear_sign" if p == "suspicious" else "suspicious"
+    return [k for k, d in decisions.items() if k != primary_key and d == opposite]
+
+
+def _disagreement(primary: DetectorResult, results: list[DetectorResult]) -> dict | None:
+    others = {r.key: r for r in results if r.in_summary and not r.primary}
+    keys = disagreeing(primary.key, {primary.key: primary.decision, **{k: r.decision for k, r in others.items()}})
+    if not keys:
+        return None
+    name = lambda k: MODEL_NAMES.get(k, k)
+    parts = [f"{name(primary.key)}: {DECISIONS[primary.decision]}"] + [f"{name(k)}: {DECISIONS[others[k].decision]}" for k in keys]
+    return {"text_vi": DISAGREE_VI if len(keys) == 1 else DISAGREE_MANY_VI, "detectors": [primary.key] + keys,
+            "detail_vi": "; ".join(parts) + f". Không gộp điểm các mô hình; kết luận vẫn theo {name(primary.key)} (mô hình chính)."}
+
+
+def _primary_basis(primary: DetectorResult) -> str:
+    info = primary.details.get("threshold_info") or {}
+    if info.get("status") in (None, "author_rule"):
+        return PRIMARY_BASIS_VI
+    return f"Kết luận theo DefakerOne2 (mô hình chính). {info['text_vi']} Các bộ phát hiện còn lại chỉ để tham khảo."
+
+
 def summarize(results: list[DetectorResult], cfg: Config) -> dict:
     primary = next((r for r in results if r.primary), None)
     summary = _summarize(results, cfg)
     if primary is None:
         return summary
-    headline = {"suspicious": "Có dấu hiệu nghi vấn — cần người kiểm tra xem xét",
-                "no_clear_sign": "Chưa thấy dấu hiệu rõ trong phạm vi đã kiểm tra",
-                "needs_review": "Cần kiểm tra thêm — tín hiệu chưa rõ ràng"}
+    headline = PRIMARY_HEADLINES
     summary["primary_detector"] = primary.key
     if primary.decision in headline:
         summary.update(overall_decision=primary.decision, overall_decision_vi=DECISIONS[primary.decision],
-                       headline_vi=headline[primary.decision], basis_vi=PRIMARY_BASIS_VI, decided_by=primary.key,
+                       headline_vi=headline[primary.decision], basis_vi=_primary_basis(primary), decided_by=primary.key,
                        tasks_checked=[{"task": primary.task, "task_vi": task_label(primary.task)}],
                        tasks_not_applicable=[], tasks_not_checked=[])
+        dis = _disagreement(primary, results)
+        if dis:
+            summary["disagreement"] = dis
     elif any(r.in_summary and not r.primary for r in results):
         summary.update(basis_vi=PRIMARY_FALLBACK_VI, decided_by="fallback")
         summary["warnings"].insert(0, PRIMARY_FALLBACK_VI)
