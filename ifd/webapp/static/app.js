@@ -8,9 +8,11 @@
     local_manipulation: "Tìm dấu vết ghép ảnh, sao chép vùng, xóa/thay thế nội dung. Có bản đồ nhiệt.",
     ai_generated: "Đánh giá cả ảnh có phải do AI sinh ra hoàn toàn. Chỉ có điểm toàn ảnh, không chỉ ra vùng.",
     face_deepfake: "Tìm khuôn mặt rồi đánh giá từng khuôn mặt có bị hoán đổi/tạo giả.",
-    whole_image_authenticity: "Mô hình DefakerOne2 hỏi “ảnh này thật hay giả?” cho cả ảnh và trả p_fake. Chỉ có điểm toàn ảnh, không chỉ ra vùng. Chạy ngoài ứng dụng (server cục bộ), không tính vào kết luận chung.",
+    whole_image_authenticity: "Mô hình DefakerOne2 hỏi “ảnh này thật hay giả?” cho cả ảnh và trả p_fake. Chỉ có điểm toàn ảnh, không chỉ ra vùng. Chạy ngoài ứng dụng (server cục bộ).",
   };
+  const EXP_SUFFIX = " Không tính vào kết luận chung.";
   const SERVER_STATE = {ready: "sẵn sàng", loading: "đang nạp mô hình…", down: "chưa chạy", error: "lỗi"};
+  const NAMES = {mesorch: "Mesorch", pscc_net: "PSCC-Net", defaker2: "DefakerOne2"};
 
   function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
   function show(id, on) { $(id).hidden = !on; }
@@ -40,11 +42,14 @@
     const grid = el("div", "scope-grid");
     (st.detectors || []).forEach((d) => {
       const it = el("div", "scope-item ok" + (d.validation_status === "experimental" ? " exp" : ""));
-      const head = el("div", "strong", (d.primary ? "Mô hình chính: " : d.experimental ? "Thử nghiệm, không tính vào kết luận: " : "Có kiểm tra: ") + (d.task_vi || d.task));
+      const prefix = d.primary ? "Mô hình chính: " : d.experimental ? "Thử nghiệm, không tính vào kết luận: " : d.reference ? "Tham khảo, không quyết định kết luận: " : "Có kiểm tra: ";
+      const head = el("div", "strong", prefix + (d.task_vi || d.task));
       if (d.validation_status === "experimental") head.appendChild(el("span", "badge-exp", "THỬ NGHIỆM"));
       if (d.primary) head.appendChild(el("span", "badge-main", "MÔ HÌNH CHÍNH"));
+      if (d.reference) head.appendChild(el("span", "badge-ref", "THAM KHẢO"));
       it.appendChild(head);
-      it.appendChild(el("div", "small", TASK_HELP[d.task] || ""));
+      it.appendChild(el("div", "small", (TASK_HELP[d.task] || "") + (d.experimental ? EXP_SUFFIX : "")));
+      if (d.primary && d.threshold_info) it.appendChild(el("div", "small " + (d.threshold_info.calibrated ? "muted" : "warn-text"), d.threshold_info.text_vi));
       it.appendChild(el("div", "small muted", "Mô hình: " + d.title));
       if (d.validation) it.appendChild(el("div", "small " + (d.validation_status === "experimental" ? "warn-text" : "muted"), d.validation));
       if (d.server) {
@@ -112,7 +117,7 @@
     c.appendChild(h);
     const val = det.validation;
     if (val && (val.short_vi || val.text_vi)) c.appendChild(el("div", "small warn-text", val.short_vi || val.text_vi));
-    c.appendChild(el("div", "small muted", TASK_HELP[d.task] || ""));
+    c.appendChild(el("div", "small muted", (TASK_HELP[d.task] || "") + EXP_SUFFIX));
     if (typeof d.score === "number") {
       c.appendChild(el("div", "score", "p_fake " + fmtScore(d.score)));
       c.appendChild(scoreBar(d.score, {low: 0.5}));
@@ -130,12 +135,17 @@
   }
 
   // Primary model (DefakerOne2 as the main model): its decision is the overall decision.
+  // Thresholds come from the config: calibrated (low/high + "Không kết luận" between) or not yet (0.5, authors' rule).
   function primaryCard(d) {
     const c = el("div", "det main");
     const det = d.details || {};
+    const th = d.thresholds || {};
+    const info = det.threshold_info || {low: th.low, high: th.high, band: th.low < th.high, calibrated: false,
+      text_vi: "Ngưỡng: p_fake ≥ " + th.high + " → “Nghi vấn”."};
     const h = el("div", "det-head");
     const title = el("div", "strong", "DefakerOne2");
     title.appendChild(el("span", "badge-main", "MÔ HÌNH CHÍNH"));
+    if (!info.calibrated) title.appendChild(el("span", "badge-exp", "CHƯA HIỆU CHỈNH"));
     h.appendChild(title);
     h.appendChild(el("span", "chip " + d.decision, d.decision_vi));
     c.appendChild(h);
@@ -143,31 +153,36 @@
     if (val && (val.short_vi || val.text_vi)) c.appendChild(el("div", "small muted", val.short_vi || val.text_vi));
     if (typeof d.score === "number") {
       c.appendChild(el("div", "score", "p_fake " + fmtScore(d.score)));
-      c.appendChild(scoreBar(d.score, {low: (d.thresholds || {}).high}));
-      c.appendChild(el("div", "small muted", "Ngưỡng theo tác giả: p_fake ≥ " + ((d.thresholds || {}).high ?? 0.5) + " (mô hình trả lời “Fake”) → “Nghi vấn”; thấp hơn → “Chưa thấy dấu hiệu rõ”."));
+      c.appendChild(scoreBar(d.score, info.band ? {low: info.low, high: info.high} : {low: info.high}));
+      c.appendChild(el("div", "small " + (info.calibrated ? "muted" : "warn-text"), info.text_vi));
       const ans = det.answer ? "Mô hình trả lời: " + det.answer + " · " : "";
       c.appendChild(el("div", "small", ans + "p_real " + fmtScore(typeof det.p_real === "number" ? det.p_real : 1 - d.score)));
       const run = [det.device, det.mode].filter(Boolean).join(", ");
       const secs = (d.timing_seconds || {}).server_inference;
       if (run || typeof secs === "number") c.appendChild(el("div", "small muted", "Chạy trên: " + (run || "—") + (typeof secs === "number" ? " · " + secs.toFixed(1) + " s" : "")));
+    } else if (info.text_vi) {
+      c.appendChild(el("div", "small " + (info.calibrated ? "muted" : "warn-text"), info.text_vi));
     }
     (d.warnings || []).forEach((w) => c.appendChild(el("div", "small warn-text", w)));
-    c.appendChild(el("div", "small muted", "Đánh giá cả ảnh (chỉnh sửa, ảnh AI, deepfake); không có bản đồ vùng."));
+    c.appendChild(el("div", "small muted", "Đánh giá cả ảnh (chỉnh sửa, ảnh AI, deepfake); bản thân mô hình không có bản đồ vùng."));
     c.appendChild(el("div", "small muted fine", d.score_type));
     return c;
   }
 
-  function detCard(d) {
+  // reference = another model (the primary DefakerOne2) decides; this card is shown for reference only
+  function detCard(d, reference) {
     if (d.primary) return primaryCard(d);
     if (d.in_summary === false) return expCard(d);
-    const c = el("div", "det");
+    const c = el("div", "det" + (reference ? " ref" : ""));
     const h = el("div", "det-head");
     const title = el("div", "strong", d.task_vi);
     const val = (d.details || {}).validation;
     if (val && val.status === "experimental") title.appendChild(el("span", "badge-exp", "THỬ NGHIỆM"));
+    if (reference) title.appendChild(el("span", "badge-ref", "THAM KHẢO"));
     h.appendChild(title);
     h.appendChild(el("span", "chip " + d.decision, d.decision_vi));
     c.appendChild(h);
+    if (reference) c.appendChild(el("div", "small muted", "Chỉ để tham khảo: không quyết định kết luận, không gộp điểm với DefakerOne2. Ngưỡng giữ như cấu hình đã khóa."));
     const vtext = val && (val.short_vi || val.text_vi);
     if (vtext) c.appendChild(el("div", "small " + (val.status === "experimental" ? "warn-text" : "muted"), vtext));
     c.appendChild(el("div", "small muted", TASK_HELP[d.task] || ""));
@@ -198,18 +213,40 @@
     $("res-name").textContent = "— " + rep.source_name;
     const v = $("verdict"); v.className = "verdict " + rep.summary.overall_decision;
     $("verdict-title").textContent = rep.summary.headline_vi;
+    // "Độ tin cậy thấp" (input quality): display only, never changes the score or the decision
+    const q = rep.input_quality, qBox = $("verdict-quality"); qBox.textContent = "";
+    const lowQ = !!(q && q.low_confidence);
+    if (lowQ) {
+      qBox.appendChild(el("div", "strong", q.headline_vi));
+      qBox.appendChild(el("div", "small", "Lý do: " + (q.reasons || []).map((r) => r.text_vi).join("; ") + ". " + (q.note_vi || "")));
+    }
+    show("verdict-quality", lowQ);
+    // main model and a reference model reach opposite conclusions: say so, never merge their scores
+    const dis = rep.summary.disagreement, dBox = $("verdict-disagree"); dBox.textContent = "";
+    if (dis) { dBox.appendChild(el("div", "strong", dis.text_vi)); dBox.appendChild(el("div", "small", dis.detail_vi)); }
+    show("verdict-disagree", !!dis);
     const na = (rep.summary.tasks_not_applicable || []).map((t) => t.task_vi + " (" + t.reason_vi + ")");
     const nc = (rep.summary.tasks_not_checked || []).map((t) => t.task_vi);
     const exp = rep.detectors.some((d) => d.in_summary === false) ? " Thẻ “DefakerOne2 (thử nghiệm)” không được tính vào kết luận này." : "";
     const basis = rep.summary.basis_vi ? " " + rep.summary.basis_vi : "";
     $("verdict-scope").textContent = ((na.length ? "Không áp dụng: " + na.join("; ") + ". " : "") + (nc.length ? "Không kiểm tra: " + nc.join("; ") + "." : "") + exp + basis).trim();
-    if (rep.summary.primary_detector) $("verdict-note").textContent = "Điểm là điểm thô của mô hình, chưa hiệu chỉnh. Kết luận theo mô hình chính DefakerOne2; chỉ để hỗ trợ người kiểm tra, không thay thế thẩm định.";
+    if (rep.summary.primary_detector) $("verdict-note").textContent = "Điểm là điểm thô của mô hình, chưa hiệu chỉnh thành xác suất. Kết luận theo mô hình chính DefakerOne2; các mô hình khác chỉ để tham khảo. Chỉ để hỗ trợ người kiểm tra, không thay thế thẩm định.";
+    // primary mode: DefakerOne2 card first, right under it the reference heatmap, then the other cards
+    const primary = rep.detectors.find((d) => d.primary);
+    const slot = $("primary-slot"); slot.textContent = "";
+    if (primary) slot.appendChild(detCard(primary));
     const dets = $("detectors"); dets.textContent = "";
-    rep.detectors.slice().sort((a, b) => (b.primary ? 1 : 0) - (a.primary ? 1 : 0)).forEach((d) => dets.appendChild(detCard(d)));
+    rep.detectors.filter((d) => !d.primary).forEach((d) => dets.appendChild(detCard(d, !!primary)));
+    show("detectors", dets.childElementCount > 0);
     const w = $("warnings"); w.textContent = "";
     const allw = (rep.summary.warnings || []).concat(rep.image.warnings || []);
     Array.from(new Set(allw)).forEach((t) => w.appendChild(el("div", "banner warn", t)));
     const has = (n) => resp.previews.indexOf(n) >= 0;
+    const heatUnderMain = !!primary && has("preview_overlay.jpg");
+    $("result").insertBefore($("viewer"), heatUnderMain ? $("detectors") : $("downloads"));
+    const heatKey = (rep.visualization || {}).heatmap_detector;
+    $("viewer-title").textContent = heatUnderMain ? "Vùng nghi sửa (" + (NAMES[heatKey] || heatKey) + "), tham khảo" : "";
+    show("viewer-title", heatUnderMain);
     document.querySelectorAll(".tab").forEach((b) => { b.hidden = !has("preview_" + b.dataset.view + ".jpg"); });
     setView(has("preview_overlay.jpg") ? "overlay" : (has("preview_faces.jpg") ? "faces" : "original"), rid);
     const dl = $("dl-links"); dl.textContent = "";

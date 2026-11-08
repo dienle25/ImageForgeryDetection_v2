@@ -74,7 +74,30 @@ class Engine:
         return {"ready": self.ready, "loading": self.loading, "error": self.error, "device": self.device,
                 "mode": self.mode, "model": str(self.model), "load_seconds": self.load_seconds,
                 "requests": self.requests, "prompt": PROMPT,
-                "pixels_policy": {"MIN_PIXELS": int(os.environ["MIN_PIXELS"]), "MAX_PIXELS": int(os.environ["MAX_PIXELS"])}}
+                "pixels_policy": {"MIN_PIXELS": int(os.environ["MIN_PIXELS"]), "MAX_PIXELS": int(os.environ["MAX_PIXELS"])},
+                "memory": self.memory_status()}
+
+    def memory_status(self) -> dict:
+        """RAM of this server process and GPU memory (MiB), for tools/do_lai_defaker2.py.  Never imports torch itself."""
+        out = {}
+        try:
+            import psutil
+            mi = psutil.Process().memory_info()
+            out["rss_mib"] = round(mi.rss / 2**20, 1)
+            if hasattr(mi, "peak_wset"):
+                out["peak_working_set_mib"] = round(mi.peak_wset / 2**20, 1)
+            if hasattr(mi, "private"):
+                out["private_mib"] = round(mi.private / 2**20, 1)
+        except Exception:
+            pass
+        torch = sys.modules.get("torch")
+        try:
+            if torch is not None and torch.cuda.is_available():
+                out["vram_mib"] = round(torch.cuda.memory_allocated() / 2**20, 1)
+                out["vram_peak_mib"] = round(torch.cuda.max_memory_allocated() / 2**20, 1)
+        except Exception:
+            pass
+        return out
 
     def load(self, warmup: bool) -> None:
         self.loading = True

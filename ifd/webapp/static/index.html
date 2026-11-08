@@ -46,12 +46,16 @@
     <h2>2. Kết quả <span id="res-name" class="muted"></span></h2>
     <div id="verdict" class="verdict">
       <div id="verdict-title" class="verdict-title"></div>
+      <div id="verdict-quality" class="verdict-flag" hidden></div>
+      <div id="verdict-disagree" class="verdict-flag" hidden></div>
       <div id="verdict-scope" class="verdict-scope"></div>
       <div id="verdict-note" class="verdict-note">Điểm là điểm thô của mô hình, <b>không phải xác suất</b> và không phải phần trăm ảnh bị sửa. Kết luận lấy mức cao nhất giữa các bài kiểm tra; chỉ để hỗ trợ người kiểm tra, không thay thế thẩm định.</div>
     </div>
+    <div id="primary-slot" class="primary-slot"></div>
     <div id="detectors" class="detectors"></div>
     <div id="warnings"></div>
-    <div class="viewer">
+    <div id="viewer" class="viewer">
+      <div id="viewer-title" class="viewer-title" hidden></div>
       <div class="tabs" role="tablist">
         <button class="tab active" data-view="overlay">Chồng lớp</button>
         <button class="tab" data-view="heatmap">Bản đồ nhiệt</button>
@@ -67,7 +71,7 @@
         </figcaption>
       </figure>
     </div>
-    <div class="downloads">
+    <div id="downloads" class="downloads">
       <h3>Tải kết quả</h3>
       <div id="dl-links" class="dl-links"></div>
     </div>

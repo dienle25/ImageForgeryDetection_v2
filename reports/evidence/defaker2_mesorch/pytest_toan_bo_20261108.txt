@@ -1,0 +1,13 @@
+# Toàn bộ pytest, lần 2 (kết quả dùng để báo cáo) — 2026-11-08, runtime python.exe 3.13 của gói; pytest 8.4.2 lấy từ wheel trong _cloud_bridge, giải nén ra thư mục tạm, không cài vào runtime
+# Môi trường như SELF_TEST.bat / RUN_APP.bat: PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONNOUSERSITE=1
+# Lệnh: runtime python.exe -X utf8 run_pytest.py -p no:cacheprovider -q -rfE --durations=5 tests
+........................................................................ [ 55%]
+.........................................................                [100%]
+============================= slowest 5 durations =============================
+26.02s call     tests/test_defaker2.py::test_validation_kit_reports_defaker2_separately
+12.56s call     tests/test_models_and_parity.py::test_mesorch_score_is_max_of_fixed_scale_map
+11.16s call     tests/test_defaker2.py::test_validation_kit_rescoring_after_server_outage
+9.95s call     tests/test_input_quality.py::test_validation_kit_column_and_table_by_warning
+8.72s setup    tests/test_models_and_parity.py::test_mesorch_score_is_max_of_fixed_scale_map
+129 passed in 214.71s (0:03:34)
+EXIT=0

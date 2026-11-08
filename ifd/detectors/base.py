@@ -15,6 +15,8 @@ DECISIONS = {
     "no_clear_sign": "Chưa thấy dấu hiệu rõ",
     "needs_review": "Cần kiểm tra thêm",
     "suspicious": "Nghi vấn",
+    # only the primary DefakerOne2 uses it: p_fake between its calibrated low and high thresholds
+    "inconclusive": "Không kết luận",
     "not_applicable": "Không áp dụng",
     "unavailable": "Chưa khả dụng",
     "experimental": "Thử nghiệm — không tính vào kết luận",

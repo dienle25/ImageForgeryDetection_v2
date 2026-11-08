@@ -69,6 +69,81 @@ def current_rss_mb() -> float | None:
     return None
 
 
+def process_memory_mb(pid: int) -> dict | None:
+    """Working set, peak working set and private bytes of ANOTHER process in MiB (Windows), or VmRSS/VmHWM (Linux).
+    None when the process is gone or not readable."""
+    try:
+        if os.name == "nt":
+            import ctypes
+            from ctypes import wintypes
+
+            class PMCX(ctypes.Structure):
+                _fields_ = [("cb", wintypes.DWORD), ("PageFaultCount", wintypes.DWORD),
+                            ("PeakWorkingSetSize", ctypes.c_size_t), ("WorkingSetSize", ctypes.c_size_t),
+                            ("QuotaPeakPagedPoolUsage", ctypes.c_size_t), ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                            ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t), ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                            ("PagefileUsage", ctypes.c_size_t), ("PeakPagefileUsage", ctypes.c_size_t),
+                            ("PrivateUsage", ctypes.c_size_t)]
+
+            k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+            k32.OpenProcess.restype = wintypes.HANDLE
+            k32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+            k32.CloseHandle.argtypes = [wintypes.HANDLE]
+            fn = k32.K32GetProcessMemoryInfo
+            fn.argtypes = [wintypes.HANDLE, ctypes.POINTER(PMCX), wintypes.DWORD]
+            fn.restype = wintypes.BOOL
+            h = k32.OpenProcess(0x1000 | 0x0010, False, int(pid))   # QUERY_LIMITED_INFORMATION | VM_READ
+            if not h:
+                return None
+            try:
+                pmc = PMCX()
+                pmc.cb = ctypes.sizeof(PMCX)
+                if not fn(h, ctypes.byref(pmc), pmc.cb):
+                    return None
+                return {"working_set": pmc.WorkingSetSize / 2 ** 20, "peak_working_set": pmc.PeakWorkingSetSize / 2 ** 20,
+                        "private": pmc.PrivateUsage / 2 ** 20}
+            finally:
+                k32.CloseHandle(h)
+        out = {}
+        with open(f"/proc/{int(pid)}/status", encoding="ascii") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    out["working_set"] = int(line.split()[1]) / 1024
+                elif line.startswith("VmHWM:"):
+                    out["peak_working_set"] = int(line.split()[1]) / 1024
+        return out or None
+    except Exception:
+        return None
+
+
+def system_memory_mb() -> dict | None:
+    """{"total": MiB, "available": MiB} of the whole machine."""
+    try:
+        if os.name == "nt":
+            import ctypes
+
+            class MS(ctypes.Structure):
+                _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                            ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                            ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                            ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                            ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+            ms = MS()
+            ms.dwLength = ctypes.sizeof(MS)
+            if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(ms)):
+                return None
+            return {"total": ms.ullTotalPhys / 2 ** 20, "available": ms.ullAvailPhys / 2 ** 20}
+        info = {}
+        with open("/proc/meminfo", encoding="ascii") as f:
+            for line in f:
+                k, v = line.split(":", 1)
+                info[k] = int(v.split()[0]) / 1024
+        return {"total": info["MemTotal"], "available": info.get("MemAvailable", info.get("MemFree", 0.0))}
+    except Exception:
+        return None
+
+
 def total_ram_mb() -> float | None:
     try:
         if os.name == "nt":

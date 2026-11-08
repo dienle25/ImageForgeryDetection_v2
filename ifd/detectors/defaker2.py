@@ -6,8 +6,11 @@ the decoded image there with the Python standard library (no new dependency in t
 
 * Score = p_fake of the model's first answer token, computed by the server exactly like the README +
   logprob2score.py of the DefakerOne2 repository.  Raw, NOT calibrated, no validated thresholds.
-* The result never decides anything: decision "experimental", in_summary=False (own card, not in the overall
-  decision, not in the decision-config hash).
+* role "experimental" (default): the result never decides anything: decision "experimental", in_summary=False
+  (own card, not in the overall decision, not in the decision-config hash).
+* role "primary": the overall decision follows p_fake and the low/high thresholds of the config:
+  >= high "Nghi vấn", between low and high "Không kết luận" (decision "inconclusive"), < low "Chưa thấy dấu hiệu rõ".
+  Thresholds without a 'calibration' block are reported as "chưa hiệu chỉnh" (today: 0.5/0.5, the authors' answer).
 * Server not running / still loading / timeout / bad answer -> decision "unavailable" ("Chưa khả dụng"); the app
   keeps working with its evaluated detectors.
 * Proxies are disabled for this connection: the image goes to 127.0.0.1 only, never through a system proxy.
@@ -45,11 +48,64 @@ PRIMARY_SCORE_TYPE = ("DefakerOne2 p_fake — xác suất của token 'Fake' ở
                       "'Fake' (p_fake ≥ 0,5) là 'Nghi vấn'. Điểm thô, chưa hiệu chỉnh, chưa kiểm chứng trên dữ liệu của nhóm.")
 PRIMARY_VALIDATION = {
     "status": "author_rule",
-    "short_vi": "Mô hình chính. Ngưỡng 0,5 theo cách tác giả ra kết luận (token Real/Fake); chưa kiểm định trên dữ liệu của nhóm.",
+    "short_vi": ("Mô hình chính. Ngưỡng chưa hiệu chỉnh: 0,5 theo cách tác giả ra kết luận (token Real/Fake); "
+                 "chưa kiểm định trên dữ liệu của nhóm."),
     "text_vi": ("DefakerOne2 là mô hình chính: kết luận chung theo câu trả lời Real/Fake của mô hình (p_fake ≥ 0,5 ⇒ "
-                "'Nghi vấn'), đúng cách repo tác giả tính accuracy. Repo tác giả không công bố ngưỡng nào khác. Số liệu "
-                "công bố chưa kiểm chứng độc lập; chạy nén 8-bit/fp16 có thể làm số liệu đó không còn đúng."),
+                "'Nghi vấn'), đúng cách repo tác giả tính accuracy. Repo tác giả không công bố ngưỡng nào khác. Ngưỡng "
+                "chưa hiệu chỉnh trên dữ liệu của nhóm. Số liệu công bố chưa kiểm chứng độc lập; chạy nén 8-bit/fp16 có "
+                "thể làm số liệu đó không còn đúng."),
 }
+CALIBRATED_VALIDATION = {
+    "status": "calibrated",
+    "short_vi": ("Mô hình chính. Ngưỡng đã hiệu chỉnh trên tập hiệu chỉnh riêng (tỷ lệ báo nhầm khoảng 5 % trên ảnh thật "
+                 "của tập đó); chưa kiểm định trên dữ liệu công ty."),
+    "text_vi": ("DefakerOne2 là mô hình chính. Ngưỡng low/high chọn bằng tools/chon_nguong_defaker2.py trên tập hiệu chỉnh "
+                "riêng (phần dev của dữ liệu công khai, tách khỏi mọi tập test): high giữ tỷ lệ báo nhầm ≤ 5 % trên từng "
+                "nguồn ảnh thật, low ≤ 20 %. Giữa hai ngưỡng là “Không kết luận”. Điểm vẫn là điểm thô, chưa hiệu chỉnh "
+                "thành xác suất; số liệu trên tập hiệu chỉnh không thay cho kiểm định trên dữ liệu công ty."),
+}
+AUTHOR_POINT = 0.5      # the model's own answer: "Fake" <=> p_fake >= 0.5 (logprob2score.py)
+
+
+def _num_vi(x: float) -> str:
+    return f"{float(x):.9f}".rstrip("0").rstrip(".").replace(".", ",")   # thresholds are rounded up to 9 decimals
+
+
+def threshold_info(settings: dict) -> dict:
+    """low/high of the primary DefakerOne2 as written in its config, and whether they come from the calibration
+    script (a 'calibration' block inside 'thresholds', written by tools/chon_nguong_defaker2.py --ghi).  Without that
+    block the thresholds are 'chưa hiệu chỉnh' (the current config: 0.5 / 0.5 = the authors' answer point)."""
+    th = settings.get("thresholds") or {}
+    low, high = float(th.get("low", AUTHOR_POINT)), float(th.get("high", AUTHOR_POINT))
+    cal = th.get("calibration") if isinstance(th.get("calibration"), dict) else None
+    band = low < high
+    rule = f"p_fake ≥ {_num_vi(high)} → “Nghi vấn”; "
+    if band:
+        rule += f"{_num_vi(low)} ≤ p_fake < {_num_vi(high)} → “Không kết luận”; "
+    rule += f"p_fake < {_num_vi(low)} → “Chưa thấy dấu hiệu rõ”."
+    if cal:
+        when = str(cal.get("date") or "")[:10]
+        status, text = "calibrated", f"Ngưỡng đã hiệu chỉnh trên tập hiệu chỉnh riêng{' ngày ' + when if when else ''}: {rule}"
+    elif low == high == AUTHOR_POINT:
+        status = "author_rule"
+        text = ("Chưa hiệu chỉnh: ngưỡng 0,5 theo tác giả (mô hình trả lời “Fake” ⇔ p_fake ≥ 0,5) → “Nghi vấn”; "
+                "thấp hơn → “Chưa thấy dấu hiệu rõ”.")
+    else:
+        status, text = "uncalibrated", f"Chưa hiệu chỉnh: ngưỡng ghi trong cấu hình: {rule}"
+    return {"low": low, "high": high, "calibrated": bool(cal), "status": status, "band": band, "text_vi": text}
+
+
+def primary_validation(settings: dict) -> dict:
+    return dict(CALIBRATED_VALIDATION if threshold_info(settings)["calibrated"] else PRIMARY_VALIDATION)
+
+
+def primary_score_type(settings: dict) -> str:
+    info = threshold_info(settings)
+    if info["status"] == "author_rule":
+        return PRIMARY_SCORE_TYPE
+    return ("DefakerOne2 p_fake — xác suất của token 'Fake' ở câu trả lời đầu tiên, chuẩn hóa Real/Fake theo "
+            "logprob2score.py của tác giả. MÔ HÌNH CHÍNH: " + info["text_vi"] +
+            " Điểm thô, chưa hiệu chỉnh thành xác suất.")
 IMAGE_SENT_VI = ("Ảnh đã đọc của ứng dụng (đã xoay theo EXIF, nền trong suốt ghép lên nền trắng), gửi dạng PNG "
                  "không mất dữ liệu tới server cục bộ; server tự thu nhỏ theo MIN_PIXELS/MAX_PIXELS như README.")
 
@@ -114,23 +170,30 @@ class DefakerTwoHTTPDetector:
     def primary(self) -> bool:
         return self.settings.get("role") == "primary"
 
-    def _result(self, t0: float, score=None, decision="unavailable", warnings=None, details=None, timing=None):
+    def _result(self, t0: float, score=None, decision="unavailable", warnings=None, details=None, timing=None,
+                settings: dict | None = None):
+        s = settings or self.settings
         det = {"model": MODEL_ID, "server_url": self._settings(None)[0],
-               "validation": dict(PRIMARY_VALIDATION if self.primary else VALIDATION),
+               "validation": primary_validation(s) if self.primary else dict(VALIDATION),
                "image_sent": IMAGE_SENT_VI, "localization": "Không có bản đồ vùng: mô hình chỉ cho điểm toàn ảnh."}
+        if self.primary:
+            det["threshold_info"] = threshold_info(s)
         det.update(details or {})
         tim = {"total": time.perf_counter() - t0}
         tim.update(timing or {})
         if self.primary and score is not None:
-            th = self.settings["thresholds"]
-            decision = decide(score, th["low"], th["high"])
+            info = det["threshold_info"]
+            decision = decide(score, info["low"], info["high"])
+            if decision == "needs_review":          # between low and high: the app shows "Không kết luận"
+                decision = "inconclusive"
         return DetectorResult(key=self.key, task=self.task, score=score,
-                              score_type=PRIMARY_SCORE_TYPE if self.primary else SCORE_TYPE, calibrated=False,
-                              decision=decision, thresholds=dict(self.settings.get("thresholds", {})) if self.primary else {},
+                              score_type=primary_score_type(s) if self.primary else SCORE_TYPE, calibrated=False,
+                              decision=decision, thresholds=dict(s.get("thresholds", {})) if self.primary else {},
                               heatmap=None, heatmap_type=None, details=det, warnings=list(warnings or []), timing=tim,
                               in_summary=self.primary, primary=self.primary)
 
     def predict(self, rgb: np.ndarray, settings: dict | None = None) -> DetectorResult:
+        settings = settings or self.settings
         url, timeout = self._settings(settings)
         t0 = time.perf_counter()
         body = encode_png(rgb)
@@ -147,28 +210,28 @@ class DefakerTwoHTTPDetector:
                 text = f"Server DefakerOne2 chưa sẵn sàng: {msg}"
             else:
                 text = f"Server DefakerOne2 báo lỗi (HTTP {exc.code}): {msg}"
-            return self._result(t0, warnings=[text], timing={"encode_png": t_enc})
+            return self._result(t0, settings=settings, warnings=[text], timing={"encode_png": t_enc})
         except (TimeoutError, socket.timeout):
-            return self._result(t0, warnings=[f"Server DefakerOne2 không trả lời trong {timeout:g} giây; bỏ qua "
+            return self._result(t0, settings=settings, warnings=[f"Server DefakerOne2 không trả lời trong {timeout:g} giây; bỏ qua "
                                               "bộ phát hiện thử nghiệm này cho ảnh này."], timing={"encode_png": t_enc})
         except urllib.error.URLError as exc:
             if isinstance(exc.reason, (TimeoutError, socket.timeout)):
                 text = f"Server DefakerOne2 không trả lời trong {timeout:g} giây."
             else:
                 text = f"Chưa kết nối được server DefakerOne2 tại {url}. {START_HINT}"
-            return self._result(t0, warnings=[text], timing={"encode_png": t_enc})
+            return self._result(t0, settings=settings, warnings=[text], timing={"encode_png": t_enc})
         except OSError as exc:  # connection reset/aborted while reading
-            return self._result(t0, warnings=[f"Mất kết nối với server DefakerOne2 ({type(exc).__name__})."],
+            return self._result(t0, settings=settings, warnings=[f"Mất kết nối với server DefakerOne2 ({type(exc).__name__})."],
                                 timing={"encode_png": t_enc})
         rtt = time.perf_counter() - t1
         try:
             data = json.loads(raw.decode("utf-8"))
             p_fake, p_real = float(data["p_fake"]), float(data["p_real"])
         except (ValueError, KeyError, TypeError, UnicodeDecodeError):
-            return self._result(t0, warnings=["Server DefakerOne2 trả về dữ liệu không hợp lệ."],
+            return self._result(t0, settings=settings, warnings=["Server DefakerOne2 trả về dữ liệu không hợp lệ."],
                                 timing={"encode_png": t_enc, "http_round_trip": rtt})
         if not (math.isfinite(p_fake) and math.isfinite(p_real) and 0.0 <= p_fake <= 1.0):
-            return self._result(t0, warnings=["Server DefakerOne2 trả về điểm không hợp lệ (NaN/inf hoặc ngoài [0, 1])."],
+            return self._result(t0, settings=settings, warnings=["Server DefakerOne2 trả về điểm không hợp lệ (NaN/inf hoặc ngoài [0, 1])."],
                                 timing={"encode_png": t_enc, "http_round_trip": rtt})
         details = {"p_fake": p_fake, "p_real": p_real, "answer": data.get("answer"),
                    "device": data.get("device"), "mode": data.get("mode"),
@@ -177,4 +240,4 @@ class DefakerTwoHTTPDetector:
                    "transform": {"sent": "PNG không mất dữ liệu của ảnh đã đọc",
                                  "server_resize": data.get("pixels_policy")}}
         timing = {"encode_png": t_enc, "http_round_trip": rtt, "server_inference": data.get("seconds")}
-        return self._result(t0, score=p_fake, decision="experimental", details=details, timing=timing)
+        return self._result(t0, settings=settings, score=p_fake, decision="experimental", details=details, timing=timing)

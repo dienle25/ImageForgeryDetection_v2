@@ -1,0 +1,61 @@
+# Kiểm tra hiển thị của ifd/webapp/static/app.js (2026-11-08): chạy app.js THẬT trên DOM giả tối thiểu (harness.js, Node v22.17.0),
+# với JSON thật của /api/status và /api/analyze (make_responses.py: cấu hình DefakerOne2 + Mesorch, server DefakerOne2 GIẢ LẬP, Mesorch ONNX thật, ảnh tạo ngẫu nhiên).
+# Không phải ảnh chụp màn hình trình duyệt: kiểm thứ tự khối, chữ hiển thị và lỗi JavaScript lúc chạy.
+
+## make_responses.py
+analyze_mesorch.json suspicious [('defaker2', 'suspicious', 0.93), ('mesorch', 'no_clear_sign', 0.5728)] khong_thong_nhat do_tin_cay_thap
+analyze_mesorch_2.json no_clear_sign [('defaker2', 'no_clear_sign', 0.1), ('mesorch', 'no_clear_sign', 0.2239)] - -
+
+## harness.js với analyze_mesorch.json
+{
+ "errors": [],
+ "result_hidden": false,
+ "order": [
+  "verdict",
+  "primary-slot[1]",
+  "viewer",
+  "detectors",
+  "warnings",
+  "downloads"
+ ],
+ "verdict_class": "verdict suspicious",
+ "headline": "Có dấu hiệu nghi vấn — cần người kiểm tra xem xét",
+ "quality_shown": true,
+ "quality": "Độ tin cậy thấp: ảnh nhỏ hoặc đã qua nén lại Lý do: 0,12 MP, nhỏ hơn 0,5 MP; tên file “Screenshot 2026-10-18 181055.png” giống ảnh chụp màn hình. Chỉ là cảnh bá",
+ "disagree_shown": true,
+ "disagree": "Hai mô hình không thống nhất, cần xem kỹ DefakerOne2: Nghi vấn; Mesorch: Chưa thấy dấu hiệu rõ. Không gộp điểm các mô hì",
+ "primary_card": "det main | DefakerOne2MÔ HÌNH CHÍNH CHƯA HIỆU CHỈNH Nghi vấn Mô hình chính. Ngưỡng chưa hiệu chỉnh: 0,5 theo cách tác giả ra kết luận (token Real/Fake); chưa kiểm định trên dữ liệu của nhóm. p_fake 0.930   Chưa ",
+ "viewer_title_shown": true,
+ "viewer_title": "Vùng nghi sửa (Mesorch), tham khảo",
+ "other_cards": [
+  "det ref | Chỉnh sửa cục bộ (ghép, sao chép vùng, xóa/thay thế)THỬ NGHIỆM THAM KHẢO Chưa thấy dấu hiệ"
+ ],
+ "scope": "Cấu hình (bộ phát hiện/ngưỡng) đã khác bản được đánh giá trong báo cáo chất lượng — các số liệu chất lượng không còn áp dụng. Bản DefakerOne2 + Mesorch: kết luận CHỈ theo DefakerOne2 (mô hình chính). Mesorch bật thêm để hiện bản đồ vùng nghi sửa, chỉ để tham khảo; ngưỡng Mesorch giữ như cấu hình đã khóa. Không gộp điểm hai mô hình: khi hai mô hình trái nhau, trang ghi 'Hai mô hình không thống nhất"
+}
+
+## harness.js với analyze_mesorch_2.json
+{
+ "errors": [],
+ "result_hidden": false,
+ "order": [
+  "verdict",
+  "primary-slot[1]",
+  "viewer",
+  "detectors",
+  "warnings",
+  "downloads"
+ ],
+ "verdict_class": "verdict no_clear_sign",
+ "headline": "Chưa thấy dấu hiệu rõ trong phạm vi đã kiểm tra",
+ "quality_shown": false,
+ "quality": "",
+ "disagree_shown": false,
+ "disagree": "",
+ "primary_card": "det main | DefakerOne2MÔ HÌNH CHÍNH CHƯA HIỆU CHỈNH Chưa thấy dấu hiệu rõ Mô hình chính. Ngưỡng chưa hiệu chỉnh: 0,5 theo cách tác giả ra kết luận (token Real/Fake); chưa kiểm định trên dữ liệu của nhóm. p_fake ",
+ "viewer_title_shown": true,
+ "viewer_title": "Vùng nghi sửa (Mesorch), tham khảo",
+ "other_cards": [
+  "det ref | Chỉnh sửa cục bộ (ghép, sao chép vùng, xóa/thay thế)THỬ NGHIỆM THAM KHẢO Chưa thấy dấu hiệ"
+ ],
+ "scope": "Cấu hình (bộ phát hiện/ngưỡng) đã khác bản được đánh giá trong báo cáo chất lượng — các số liệu chất lượng không còn áp dụng. Bản DefakerOne2 + Mesorch: kết luận CHỈ theo DefakerOne2 (mô hình chính). Mesorch bật thêm để hiện bản đồ vùng nghi sửa, chỉ để tham khảo; ngưỡng Mesorch giữ như cấu hình đã khóa. Không gộp điểm hai mô hình: khi hai mô hình trái nhau, trang ghi 'Hai mô hình không thống nhất"
+}
